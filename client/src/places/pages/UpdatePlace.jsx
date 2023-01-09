@@ -46,6 +46,10 @@ const UpdatePlace = (props) => {
         value: place.title,
         isValid: true,
       },
+      description: {
+        value: "",
+        isValid: true,
+      },
     },
     true
   );

@@ -38,6 +38,7 @@ const ErrorModal = ({ open, layoutStyles, onClose }) => {
                 variant="outlined"
                 size="large"
                 color="error"
+                onClick={onClose}
               ></Button>
               <Button
                 type="submit"
