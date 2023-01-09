@@ -7,7 +7,7 @@ const UserIterm = ({ id, name, image, placeCount }) => {
     <li className="p-6 max-w-sm bg-white hover:bg-gray-100 rounded-lg border border-gray-200 shadow-md mb-5">
       <div className="userCard">
         <Link
-          onClick={console.log(`${id} + ${name} + ${image}`)}
+          // onClick={console.log(`${id} + ${name} + ${image}`)}
           to={`/${id}/places`}
         >
           <div className="picture">

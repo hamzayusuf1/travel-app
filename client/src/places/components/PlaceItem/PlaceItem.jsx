@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { Send } from "@mui/icons-material";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 import Map from "../Modal/Map";
 import MapModal from "../Modal/MapModal";
 import ErrorModal from "../Modal/ErrorModal";
 
 const PlaceItem = (props) => {
-  const auth = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
   const [openModal, setOpenModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
@@ -60,7 +60,7 @@ const PlaceItem = (props) => {
           >
             View on map
           </button>
-          {auth.isLoggedIn && (
+          {isLoggedIn && (
             <>
               <Link to={`/places/${props.id}`}>
                 <button className="text-white bg-yellow-400 hover:bg-yellow-500 font-medium rounded-full text-sm px-5  mr-2 mb-2 transition-all">

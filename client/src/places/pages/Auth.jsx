@@ -8,12 +8,14 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../utils/validators";
 import { useForm } from "../../hooks/FormHook";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const Auth = () => {
-  const auth = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const [loggedIn, setLoggedIn] = useState(true);
+
+  console.log(loggedIn);
 
   const [formState, formHandler, resetData] = useForm(
     {
@@ -28,12 +30,6 @@ const Auth = () => {
     },
     false
   );
-
-  const authSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log(formState.inputs);
-    auth.login();
-  };
 
   const signUp = () => {
     if (loggedIn) {
@@ -57,6 +53,12 @@ const Auth = () => {
       );
     }
     setLoggedIn(!loggedIn);
+  };
+
+  const authSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(formState.inputs);
+    login();
   };
 
   return (

@@ -46,7 +46,7 @@ const NewPlace = () => {
         />
         <Input
           id="description"
-          element={"text"}
+          element="textarea"
           label="Trip description"
           validators={[VALIDATOR_MINLENGTH(5)]}
           errorText="Please enter a valid description"

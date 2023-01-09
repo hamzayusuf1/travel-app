@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
+
 import Button from "../../places/components/Button/button";
 
 const NavLinks = () => {
-  const auth = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
+  console.log(isLoggedIn);
 
   return (
     <div className="flex">
@@ -19,7 +21,7 @@ const NavLinks = () => {
         />
       </Link>
 
-      {auth.isLoggedIn && (
+      {isLoggedIn && (
         <Link to={"/:userId/places"}>
           <Button
             color="secondary"
@@ -29,7 +31,7 @@ const NavLinks = () => {
           />
         </Link>
       )}
-      {auth.isLoggedIn && (
+      {isLoggedIn && (
         <Link to={"/places/new"}>
           <Button
             color="inherit"
@@ -39,7 +41,7 @@ const NavLinks = () => {
           />
         </Link>
       )}
-      {!auth.isLoggedIn && (
+      {!isLoggedIn && (
         <Link to={"/auth"}>
           <Button
             variant="text"
@@ -49,9 +51,9 @@ const NavLinks = () => {
           />
         </Link>
       )}
-      {auth.isLoggedIn && (
+      {isLoggedIn && (
         <Button
-          onClick={auth.logout()}
+          onClick={logout}
           variant="text"
           value="logout"
           disabled={true}
