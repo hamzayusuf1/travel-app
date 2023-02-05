@@ -29,6 +29,20 @@ const DUMMY_DATA = [
       lng: -73.9878531,
     },
   },
+  {
+    id: 3,
+    title: "Burj Khalifa",
+    description: "The tallest skyscraper in the world",
+    imageURL:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
+    address:
+      "Sheikh Mohammed bin Rashid Blvd - Downtown Dubai - Dubai - United Arab Emirates",
+    creator: "u3",
+    location: {
+      lat: 25.197197,
+      lng: 55.2721877,
+    },
+  },
 ];
 
 const UserPlaces = (props) => {
