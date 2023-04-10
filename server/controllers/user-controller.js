@@ -1,6 +1,8 @@
 const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const User = require("../models/User");
+const Place = require("../models/Place");
+const { Error } = require("mongoose");
 
 let DUMMY_USERS = [
   {
@@ -24,64 +26,84 @@ let DUMMY_USERS = [
 module.exports = {
   getUsers(req, res) {
     try {
-      res.json({ DUMMY_USERS });
+      User.find().then((users) => res.json(users));
     } catch (error) {
       res.status(500).json(error);
     }
   },
-  signUp(req, res) {
-    // try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      console.log(errors);
-      throw new Error("Invalid inputs passed, please check your information");
-    }
+  async signUp(req, res) {
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   console.log(errors);
+    //   throw new Error("Invalid inputs passed, please check your information");
+    // }
 
     const { name, email, password } = req.body;
 
-    const userExists = DUMMY_USERS.find((u) => {
-      return u.email === email;
-    });
+    let existingUser;
 
-    console.log(userExists);
+    existingUser = await User.findOne({ email: email });
 
-    if (userExists) {
-      throw new Error("User already exists");
+    if (existingUser) {
+      res.status(404);
     }
+    // .then((user) => {
+    //   !user
+    //     ? res.json(user)
+    //     : res
+    //         .status(404)
+    //         .json({ error: "User exists, please login instead" });
+    // })
+    // .catch((err) => {
+    //   res.status(500).json(err);
+    // });
 
-    const createdUser = {
-      id: uuidv4(),
-      name,
-      email,
-      password,
-    };
-
-    DUMMY_USERS.push(createdUser);
-
-    res.status(201).json(createdUser);
-    // } catch (error) {
-    //   res.status(500).json({ message: "User already exists" });
-    // }
-  },
-  login(req, res) {
-    try {
-      const { email, password } = req.body;
-
-      console.log(password);
-
-      const user = DUMMY_USERS.find((u) => {
-        return u.email == email;
+    User.create({ ...req.body, id: uuidv4() })
+      .then((user) => {
+        res.json({ user: user });
+      })
+      .catch((err) => {
+        res.status(500).json(err);
       });
 
-      console.log(user);
+    // try {
+    //   newUser = await Place.create({ ...req.body, id: uuidv4() });
+    // } catch (error) {
+    //   res.status(500).json({ error: "Creating place failed" });
+    // }
 
-      if (!user || user.password != password) {
-        throw new Error("Could not indentify the user", { statusbar: 404 });
-      }
-      res.json({ message: "You have been logged in succesfully" });
+    // res.status(201).json({ user: newUser });
+  },
+  async login(req, res, next) {
+    // try {
+    //   const { email, password } = req.body;
+    //   console.log(user);
+    //   if (!user || user.password != password) {
+    //     throw new Error("Could not indentify the user", { statusbar: 404 });
+    //   }
+    //   res.json({ message: "You have been logged in succesfully" });
+    // } catch (error) {
+    //   console.log(error);
+    //   res.status(500).json(error);
+    // }
+
+    let existingUser;
+
+    try {
+      existingUser = await User.findOne({ email: req.body.email });
     } catch (error) {
-      console.log(error);
-      res.status(500).json(error);
+      res.status(500).json(err);
     }
+
+    if (!existingUser) {
+      // throw new Error("No user that matches that email address");
+      return res.status(400).json({ message: "Can't find this user" });
+    }
+
+    if (existingUser.password !== req.body.password) {
+      return res.status(400).json({ message: "Wrong password!" });
+    }
+
+    res.status(201).json({ message: "lOGGED IN" });
   },
 };

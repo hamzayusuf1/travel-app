@@ -1,19 +1,19 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, default: mongoose } = require("mongoose");
 
 const placeSchema = new Schema({
-  title: { type: String, require: true },
-  description: { type: String, require: true },
-  image: { type: String, require: true },
-  address: { type: String, require: true },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  image: { type: String },
+  address: { type: String, required: true },
   location: {
-    lat: { type: Number, require: true },
-    lng: { type: Number, require: true },
+    lat: { type: Number },
+    lng: { type: Number },
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  creator: { type: String, require: true },
+  creator: { type: Schema.Types.ObjectId, required: true, ref: "User" },
 });
 
 const Place = model("Place", placeSchema);

@@ -1,9 +1,9 @@
 const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const Place = require("../models/Place");
+const User = require("../models/User");
 
 const convertAdressToCoordinates = require("../utils/address");
-const { json } = require("body-parser");
 const { find } = require("../models/Place");
 
 let DUMMY_DATA = [
@@ -89,29 +89,49 @@ module.exports = {
   },
 
   async createPlace(req, res) {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        console.log(errors);
-        throw new Error("Invalid inputs passed, please check your information");
-      }
-    } catch (err) {
-      res.status(404).json({
-        message: "Invalid inputs passed, please check your information",
-      });
-    }
-
-    const { address } = req.body;
-
+    const { address, creator } = req.body;
     let coordinates;
+    let user;
 
     try {
       coordinates = await convertAdressToCoordinates(address);
     } catch (error) {}
 
+    console.log(coordinates);
+
     Place.create({ ...req.body, location: coordinates })
-      .then((place) => res.json(place))
-      .catch((err) => res.status(500).json(err));
+      .then((place) => {
+        user1 = User.findOneAndUpdate(
+          { _id: req.body.creator },
+          { $addToSet: { places: place.creator } },
+          { new: true }
+        );
+        console.log(user1);
+      })
+      .then((user) =>
+        !user
+          ? res.status(404).json({
+              message: "Place created, but found no user with that ID",
+              place: { user },
+            })
+          : res.json("Created the place 🎉")
+      )
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+
+    // try {
+    //   user = await User.findOne({ _id: creator });
+    // } catch (error) {
+    //   return res.status(500).json({ message: "Could not create the place" });
+    // }
+
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ message: "Couldn't find user for the provided id" });
+    // }
   },
 
   async updatePlace(req, res) {

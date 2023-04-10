@@ -1,25 +1,3 @@
-// const { Schema, model } = require("mongoose");
-
-// const placeSchema = new Schema({
-//   title: { type: String, require: true },
-//   description: { type: String, require: true },
-//   image: { type: String, require: true },
-//   address: { type: String, require: true },
-//   location: {
-//     lat: { type: Number, require: true },
-//     lng: { type: Number, require: true },
-//   },
-//   createdAt: {
-//     type: Date,
-//     default: Date.now,
-//   },
-//   creator: { type: String, require: true },
-// });
-
-// const Place = model("Place", placeSchema);
-
-// module.exports = Place;
-
 const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema({
@@ -40,7 +18,6 @@ const userSchema = new Schema({
   },
   image: {
     type: String,
-    required: true,
   },
   places: [
     {
@@ -52,4 +29,4 @@ const userSchema = new Schema({
 
 const User = model("User", userSchema);
 
-module.expost = User;
+module.exports = User;
