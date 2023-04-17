@@ -87,6 +87,7 @@ const Auth = () => {
           />
           <Input
             id="password"
+            type="password"
             onInput={formHandler}
             label="Password"
             validators={[VALIDATOR_MINLENGTH(5)]}

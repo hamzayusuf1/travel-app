@@ -32,12 +32,6 @@ module.exports = {
     }
   },
   async signUp(req, res) {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   console.log(errors);
-    //   throw new Error("Invalid inputs passed, please check your information");
-    // }
-
     const { name, email, password } = req.body;
 
     let existingUser;
@@ -47,16 +41,6 @@ module.exports = {
     if (existingUser) {
       res.status(404);
     }
-    // .then((user) => {
-    //   !user
-    //     ? res.json(user)
-    //     : res
-    //         .status(404)
-    //         .json({ error: "User exists, please login instead" });
-    // })
-    // .catch((err) => {
-    //   res.status(500).json(err);
-    // });
 
     User.create({ ...req.body, id: uuidv4() })
       .then((user) => {
@@ -65,28 +49,8 @@ module.exports = {
       .catch((err) => {
         res.status(500).json(err);
       });
-
-    // try {
-    //   newUser = await Place.create({ ...req.body, id: uuidv4() });
-    // } catch (error) {
-    //   res.status(500).json({ error: "Creating place failed" });
-    // }
-
-    // res.status(201).json({ user: newUser });
   },
   async login(req, res, next) {
-    // try {
-    //   const { email, password } = req.body;
-    //   console.log(user);
-    //   if (!user || user.password != password) {
-    //     throw new Error("Could not indentify the user", { statusbar: 404 });
-    //   }
-    //   res.json({ message: "You have been logged in succesfully" });
-    // } catch (error) {
-    //   console.log(error);
-    //   res.status(500).json(error);
-    // }
-
     let existingUser;
 
     try {
@@ -96,7 +60,6 @@ module.exports = {
     }
 
     if (!existingUser) {
-      // throw new Error("No user that matches that email address");
       return res.status(400).json({ message: "Can't find this user" });
     }
 

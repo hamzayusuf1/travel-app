@@ -4,54 +4,11 @@ const Place = require("../models/Place");
 const User = require("../models/User");
 
 const convertAdressToCoordinates = require("../utils/address");
-const { find } = require("../models/Place");
-
-let DUMMY_DATA = [
-  {
-    id: 1,
-    title: "empire state building",
-    description: "One of the most tallest skyscrapers in the world",
-    imageURL:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    creator: "u1",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878531,
-    },
-  },
-  {
-    id: 2,
-    title: "empire state building",
-    description: "One of the most tallest skyscrapers in the world",
-    imageURL:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    creator: "u2",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878531,
-    },
-  },
-  {
-    id: 3,
-    title: "Burj Khalifa",
-    description: "The tallest skyscraper in the world",
-    imageURL:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
-    address:
-      "Sheikh Mohammed bin Rashid Blvd - Downtown Dubai - Dubai - United Arab Emirates",
-    creator: "u1",
-    location: {
-      lat: 25.197197,
-      lng: 55.2721877,
-    },
-  },
-];
+const { find, create } = require("../models/Place");
 
 module.exports = {
-  getPlaces(req, res) {
-    Place.find()
+  async getPlaces(req, res) {
+    await Place.find()
       .then((places) => res.json(places))
       .catch((err) => {
         console.error({ message: err });
@@ -106,6 +63,7 @@ module.exports = {
           { $addToSet: { places: place.creator } },
           { new: true }
         );
+
         console.log(user1);
       })
       .then((user) =>
@@ -120,18 +78,6 @@ module.exports = {
         console.log(err);
         return res.status(500).json(err);
       });
-
-    // try {
-    //   user = await User.findOne({ _id: creator });
-    // } catch (error) {
-    //   return res.status(500).json({ message: "Could not create the place" });
-    // }
-
-    // if (!user) {
-    //   return res
-    //     .status(404)
-    //     .json({ message: "Couldn't find user for the provided id" });
-    // }
   },
 
   async updatePlace(req, res) {

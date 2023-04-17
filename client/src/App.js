@@ -1,5 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useCallback, useState, useEff } from "react";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
 
 import Users from "./user/pages/Users";
 import Header from "./components/Header/Header";
@@ -8,7 +14,6 @@ import NewPlace from "./places/pages/NewPlace";
 import UpdatePlace from "./places/pages/UpdatePlace";
 import Auth from "./places/pages/Auth";
 import { AuthContext } from "./context/AuthContext";
-import { useEffect } from "react";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -13,7 +13,7 @@ async function convertAdressToCoordinates(address) {
 
   if (!data || data.status === "ZERO_RESULTS") {
     throw new Error({
-      message: "Could not find location for thr given address",
+      message: "Could not find location for the given address",
     });
   }
   const coordinates = data.results[0].geometry.location;
