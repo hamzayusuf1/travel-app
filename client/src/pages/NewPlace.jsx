@@ -2,10 +2,10 @@ import React from "react";
 import Input from "../components/Input/Input";
 import Button from "../components/Button/button";
 
-import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../utils/validators";
-import { INPUT_CHANGE } from "../../utils/actions";
+import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../utils/validators";
+import { INPUT_CHANGE } from "../utils/actions";
 import { useCallback } from "react";
-import { useForm } from "../../hooks/FormHook";
+import { useForm } from "../hooks/FormHook";
 
 const NewPlace = () => {
   const [formState, formHandler] = useForm(

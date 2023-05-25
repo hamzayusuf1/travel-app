@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useCallback, useState, useEff } from "react";
+import React, { useCallback, useState, useEffect } from "react";
+import { setContext } from "@apollo/client/link/context";
 import {
   ApolloClient,
   InMemoryCache,
@@ -7,13 +8,35 @@ import {
   createHttpLink,
 } from "@apollo/client";
 
-import Users from "./user/pages/Users";
+import Users from "./pages/Users";
 import Header from "./components/Header/Header";
-import UserPlaces from "./places/pages/UserPlaces";
-import NewPlace from "./places/pages/NewPlace";
-import UpdatePlace from "./places/pages/UpdatePlace";
-import Auth from "./places/pages/Auth";
+import UserPlaces from "./pages/UserPlaces";
+import NewPlace from "./pages/NewPlace";
+import UpdatePlace from "./pages/UpdatePlace";
+import Auth from "./pages/Auth";
 import { AuthContext } from "./context/AuthContext";
+import LoginForm from "./components/Login/LoginForm";
+
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("id_token");
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const client = new ApolloClient({
+  //configure client to execute the 'authlink' middleware prior to every request to the backend
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,27 +61,28 @@ function App() {
         <Route path="/auth" element={<Auth />} />
       </Routes>
     );
-    console.log(validRoutes);
   } else {
     validRoutes = (
       <Routes>
         <Route path="/" element={<Users />} />
         <Route path="/:userId/places" element={<UserPlaces />} />
         <Route path="/auth" element={<Auth />} />
+        <Route path="/getme" element={<LoginForm />} />
       </Routes>
     );
-    console.log(validRoutes);
   }
 
   return (
-    <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
-    >
-      <Router>
-        <Header />
-        {validRoutes}
-      </Router>
-    </AuthContext.Provider>
+    <ApolloProvider client={client}>
+      <AuthContext.Provider
+        value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      >
+        <Router>
+          <Header />
+          {validRoutes}
+        </Router>
+      </AuthContext.Provider>
+    </ApolloProvider>
   );
 }
 

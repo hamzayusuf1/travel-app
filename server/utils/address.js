@@ -16,6 +16,7 @@ async function convertAdressToCoordinates(address) {
       message: "Could not find location for the given address",
     });
   }
+  console.log(data);
   const coordinates = data.results[0].geometry.location;
 
   return coordinates;

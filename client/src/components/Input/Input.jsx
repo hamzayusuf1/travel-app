@@ -1,8 +1,8 @@
 import React, { useReducer, useEffect } from "react";
 import { CgAddR } from "react-icons/cg";
 
-import { TITLE_INPUT } from "../../../utils/actions";
-import { validate } from "../../../utils/validators";
+import { TITLE_INPUT } from "../../utils/actions";
+import { validate } from "../../utils/validators";
 
 import "../Input/input.css";
 
@@ -22,7 +22,7 @@ const inputReducer = (state, action) => {
 
 const Input = (props) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: props.initialValue || " ",
+    value: props.initialValue || "",
     isValid: props.initialValid || false,
   });
 

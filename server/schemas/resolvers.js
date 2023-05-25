@@ -8,10 +8,16 @@ const { AuthenticationError } = require("apollo-server-express");
 const resolvers = {
   Query: {
     users: async (parent, args, context) => {
-      await User.find().populate("places");
+      if (context.user) {
+        await User.find().populate("places");
+      }
+      console.log(context);
+      throw new AuthenticationError("Please login");
     },
-    user: async (parent, { username }) => {
-      return User.findOne({ username }).populate("places");
+    user: async (parent, { username }, context) => {
+      User.findOne({ username }).populate("places");
+      console.log(context.user);
+      throw new AuthenticationError("Please login");
     },
     place: async (parent, { placeId }) => {
       return Place.findOne({ _id: placeId });
@@ -22,18 +28,19 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
       const token = signToken(user);
       return { token, user };
     },
 
     addPlace: async (_, { title, description, address, image, creator }) => {
       let coordinates;
-      try {
-        coordinates = await convertAdressToCoordinates(address);
-      } catch (error) {}
+      // try {
+      //   coordinates = await convertAdressToCoordinates(address);
+      // } catch (error) {}
 
+      coordinates = await convertAdressToCoordinates(address);
       console.log(coordinates);
 
       const place = await Place.create({

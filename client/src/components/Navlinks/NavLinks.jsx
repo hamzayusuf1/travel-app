@@ -2,8 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
+import Auth from "../../utils/Auth";
 
-import Button from "../../places/components/Button/button";
+import Button from "../Button/button";
 
 const NavLinks = () => {
   const { isLoggedIn, logout } = useContext(AuthContext);
@@ -11,6 +12,18 @@ const NavLinks = () => {
 
   return (
     <div className="flex">
+      {Auth.loggedIn() && (
+        <Link to={"/"}>
+          <Button
+            className="mx-2"
+            color="success"
+            disabled={true}
+            variant="text"
+            value="Logged In Users"
+          />
+        </Link>
+      )}
+
       <Link to={"/"}>
         <Button
           className="mx-2"

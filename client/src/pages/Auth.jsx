@@ -6,9 +6,9 @@ import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
-} from "../../utils/validators";
-import { useForm } from "../../hooks/FormHook";
-import { AuthContext } from "../../context/AuthContext";
+} from "../utils/validators";
+import { useForm } from "../hooks/FormHook";
+import { AuthContext } from "../context/AuthContext";
 
 const Auth = () => {
   const { login } = useContext(AuthContext);
@@ -24,7 +24,7 @@ const Auth = () => {
         isValid: false,
       },
       password: {
-        value: "hello",
+        value: "",
         isValid: false,
       },
     },
@@ -58,6 +58,7 @@ const Auth = () => {
   const authSubmitHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs);
+    console.log("works");
     login();
   };
 
@@ -92,6 +93,7 @@ const Auth = () => {
             label="Password"
             validators={[VALIDATOR_MINLENGTH(5)]}
             errorText="Please enter a valid passowrd, minimum 5 characters"
+            onInput={formHandler}
           ></Input>
 
           <Button
@@ -99,6 +101,9 @@ const Auth = () => {
             value={loggedIn ? "Login" : "SignUp"}
             variant="contained"
             disabled={formState.isValid}
+            onClick={() => {
+              console.log(formState.inputs);
+            }}
           />
           <Button
             value={loggedIn ? "Switch to SignUp" : "Switch to Login"}
