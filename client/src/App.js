@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
 import React, { useCallback, useState, useEffect } from "react";
 import { setContext } from "@apollo/client/link/context";
 import {
@@ -16,6 +21,9 @@ import UpdatePlace from "./pages/UpdatePlace";
 import Auth from "./pages/Auth";
 import { AuthContext } from "./context/AuthContext";
 import LoginForm from "./components/Login/LoginForm";
+import Landing from "./pages/Landing/Landing";
+
+import router from "./Layout/Routes";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -77,10 +85,14 @@ function App() {
       <AuthContext.Provider
         value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
       >
-        <Router>
+        {/* <Router>
           <Header />
-          {validRoutes}
-        </Router>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="home" element={<Users />} />
+          </Routes>
+        </Router> */}
+        <RouterProvider router={router}></RouterProvider>
       </AuthContext.Provider>
     </ApolloProvider>
   );
