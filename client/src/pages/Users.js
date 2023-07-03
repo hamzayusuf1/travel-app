@@ -1,6 +1,7 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
-import { UserList } from "../components/UserList/UserList";
+import UserItem from "../components/UserItem/UserIterm";
 
 const Users = () => {
   const USERS = [
@@ -17,7 +18,31 @@ const Users = () => {
       places: 10,
     },
   ];
-  return <UserList users={USERS} />;
+
+  if (USERS.length === 0) {
+    return (
+      <div className="flex justify-center align-center">
+        <h2>No users found</h2>
+      </div>
+    );
+  }
+  return (
+    <div className="w-full h-screen flex justify-center align-center bg-gray-900 p-5">
+      <ul>
+        {USERS.map((user) => {
+          return (
+            <UserItem
+              key={user.id}
+              id={user.id}
+              placeCount={user.places}
+              name={user.name}
+              image={user.image}
+            />
+          );
+        })}
+      </ul>
+    </div>
+  );
 };
 
 export default Users;

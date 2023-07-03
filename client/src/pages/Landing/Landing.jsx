@@ -8,8 +8,22 @@ const Landing = () => {
   return (
     <div className="bg flex justify-center">
       <div className="overlay">
+        <div className="absolute top-10 flex min-w-[600px] justify-between">
+          <div className="hidden md:flex">HamzaCodes</div>
+          <div className="flex gap-16">
+            <div>
+              <a href="">Home</a>
+            </div>
+            <div>
+              <a href="">Destinations</a>
+            </div>
+            <div>
+              <a href="">Account</a>
+            </div>
+          </div>
+        </div>
         <div className="absolute top-40">
-          <h1 className="font-bold  text-5xl mb-4 text-center">
+          <h1 className="font-bold  text-5xl mb-4 text-center ">
             Welcome to NomadNarnia
           </h1>
           <p className="text-center mb-4">

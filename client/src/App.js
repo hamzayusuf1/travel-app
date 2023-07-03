@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   RouterProvider,
+  Outlet,
 } from "react-router-dom";
 import React, { useCallback, useState, useEffect } from "react";
 import { setContext } from "@apollo/client/link/context";

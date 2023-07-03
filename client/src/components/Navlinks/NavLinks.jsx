@@ -11,7 +11,7 @@ const NavLinks = () => {
   console.log(isLoggedIn);
 
   return (
-    <div className="flex">
+    <div className="flex bg-charcoal justify-center items-center ">
       {Auth.loggedIn() && (
         <Link to={"/"}>
           <Button
@@ -24,15 +24,13 @@ const NavLinks = () => {
         </Link>
       )}
 
-      <Link to={"/"}>
-        <Button
-          className="mx-2"
-          color="success"
-          disabled={true}
-          variant="text"
-          value="All Users"
-        />
-      </Link>
+      <Button
+        className="mx-2"
+        color="success"
+        disabled={true}
+        variant="text"
+        value="All Users"
+      />
 
       {isLoggedIn && (
         <Link to={"/:userId/places"}>
