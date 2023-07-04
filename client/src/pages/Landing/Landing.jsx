@@ -7,7 +7,7 @@ import "./Landing.css";
 const Landing = () => {
   return (
     <div className="bg flex justify-center">
-      <div className="overlay">
+      <div className="overlay1">
         <div className="absolute top-10 flex min-w-[600px] justify-between">
           <div className="hidden md:flex">HamzaCodes</div>
           <div className="flex gap-16">
@@ -23,14 +23,14 @@ const Landing = () => {
           </div>
         </div>
         <div className="absolute top-40">
-          <h1 className="font-bold  text-5xl mb-4 text-center ">
+          <h1 className="font-bold  text-5xl mb-4 text-center">
             Welcome to NomadNarnia
           </h1>
-          <p className="text-center mb-4">
+          <p className="text-center mb-4 ">
             Explore breathtaking trips as inspiration for your next destination
           </p>
           <div className="flex flex-col items-center justify-center">
-            <Link to={"/home"}>
+            <Link to={"/home/posts"}>
               <button className="bg-greenText text-lg p-5 flex items-center rounded-xl">
                 Start Exploring
               </button>

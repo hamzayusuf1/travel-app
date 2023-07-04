@@ -1,6 +1,7 @@
 import React from "react";
-import PlaceList from "../components/PlaceList/PlaceList";
 import { useParams } from "react-router-dom";
+
+import PlaceItem from "../../components/PlaceItem/PlaceItem";
 
 const DUMMY_DATA = [
   {
@@ -50,7 +51,27 @@ const UserPlaces = (props) => {
   const userPlaces = DUMMY_DATA.filter(
     (places) => places.creator.trim() === userId
   );
-  return <PlaceList places={userPlaces} />;
+  return (
+    <div className="w-full h-full flex justify-center align-center bg-gray-500 p-6">
+      <ul>
+        {userPlaces.map((place) => {
+          return (
+            <PlaceItem
+              key={place.id}
+              id={place.id}
+              image={place.imageURL}
+              title={place.title}
+              description={place.description}
+              address={place.address}
+              creatorId={place.creator}
+              coordinates={place.location}
+            />
+          );
+        })}
+      </ul>
+    </div>
+  );
+  // <PlaceList places={userPlaces} />;
 };
 
 export default UserPlaces;

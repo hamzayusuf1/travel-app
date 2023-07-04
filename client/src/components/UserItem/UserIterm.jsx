@@ -8,7 +8,7 @@ const UserIterm = ({ id, name, image, placeCount }) => {
       <div className="userCard">
         <Link
           // onClick={console.log(`${id} + ${name} + ${image}`)}
-          to={`/${id}/places`}
+          to={`/home/${id}`}
         >
           <div className="picture">
             {/* <img src={image} /> */}

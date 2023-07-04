@@ -14,11 +14,10 @@ import {
   createHttpLink,
 } from "@apollo/client";
 
-import { Landing, Auth } from "./pages";
+import { Landing, Auth, UserPlaces } from "./pages";
 
 import Users from "./pages/UsersPosts/Users";
 import Header from "./components/Header/Header";
-import UserPlaces from "./pages/UserPlaces";
 import NewPlace from "./pages/NewPlace";
 import UpdatePlace from "./pages/UpdatePlace";
 
