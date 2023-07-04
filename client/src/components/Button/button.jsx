@@ -6,7 +6,7 @@ import ButtonCSS from "../Button/Button.css";
 
 const button = (props) => {
   return (
-    <div className="flex justify-center mt-4 mx-4">
+    <div className="flex justify-center items-center  mx-4">
       <Button
         variant={props.variant}
         disabled={!props.disabled}

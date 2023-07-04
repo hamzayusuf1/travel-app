@@ -11,7 +11,7 @@ const NavLinks = () => {
   console.log(isLoggedIn);
 
   return (
-    <div className="flex bg-charcoal justify-center items-center ">
+    <div className="flex bg-charcoal justify-center items-center h-[40px]">
       {Auth.loggedIn() && (
         <Link to={"/"}>
           <Button
@@ -24,13 +24,15 @@ const NavLinks = () => {
         </Link>
       )}
 
-      <Button
-        className="mx-2"
-        color="success"
-        disabled={true}
-        variant="text"
-        value="All Users"
-      />
+      <Link>
+        <Button
+          className="mx-2"
+          color="success"
+          disabled={true}
+          variant="text"
+          value="All Users"
+        />
+      </Link>
 
       {isLoggedIn && (
         <Link to={"/:userId/places"}>
@@ -53,7 +55,7 @@ const NavLinks = () => {
         </Link>
       )}
       {!isLoggedIn && (
-        <Link to={"/auth"}>
+        <Link to={"/home/auth"}>
           <Button
             variant="text"
             value="Authenticate"

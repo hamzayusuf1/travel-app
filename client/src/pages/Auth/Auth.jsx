@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
 
-import Input from "../components/Input/Input";
-import Button from "../components/Button/button";
+import Input from "../../components/Input/Input";
+import Button from "../../components/Button/button";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
-} from "../utils/validators";
-import { useForm } from "../hooks/FormHook";
-import { AuthContext } from "../context/AuthContext";
+} from "../../utils/validators";
+import { useForm } from "../../hooks/FormHook";
+import { AuthContext } from "../../context/AuthContext";
 
 const Auth = () => {
   const { login } = useContext(AuthContext);
@@ -63,8 +63,8 @@ const Auth = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center">
-      <div className="w-3/5 h-3/6 border-2 border-black rounded-lg">
+    <div className="h-screen w-full flex justify-center items-center">
+      <div className="w-3/5 bg-slate-300 h-3/6 border-2 border-black rounded-lg">
         <h2 className="border-b-2 border-black px-2">Login Required</h2>
         <form onSubmit={authSubmitHandler}>
           {!loggedIn && (

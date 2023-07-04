@@ -8,6 +8,9 @@ module.exports = {
         lightBlue: "#A0AECD",
         charcoal: "#454444",
       },
+      fontFamily: {
+        title: "Lora",
+      },
     },
   },
   plugins: [],

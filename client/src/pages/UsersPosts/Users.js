@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-import UserItem from "../components/UserItem/UserIterm";
+import UserItem from "../../components/UserItem/UserIterm";
 
 const Users = () => {
   const USERS = [

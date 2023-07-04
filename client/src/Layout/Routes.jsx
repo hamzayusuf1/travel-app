@@ -1,9 +1,10 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
 // import Landing from "../pages/Landing/Landing";
-import Users from "../pages/Users";
+
 import NewPlace from "../pages/NewPlace";
 import NavLinks from "../components/Navlinks/NavLinks";
-import { Landing, Home } from "../pages";
+import { Landing, Home, Users, Auth } from "../pages";
+import Banner from "../components/Banner/Banner";
 
 export const Nav = () => {
   return (
@@ -24,7 +25,7 @@ export const Nav = () => {
 export const Main = () => {
   return (
     <div>
-      <NavLinks />
+      <Banner />
       <Outlet />;
     </div>
   );
@@ -42,10 +43,16 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <Home></Home>,
-      },
-      {
-        path: "/home/posts",
-        element: <Users />,
+        children: [
+          {
+            path: "/home/posts",
+            element: <Users />,
+          },
+          {
+            path: "/home/auth",
+            element: <Auth />,
+          },
+        ],
       },
     ],
   },
