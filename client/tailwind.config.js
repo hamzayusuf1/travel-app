@@ -9,7 +9,7 @@ module.exports = {
         charcoal: "#454444",
       },
       fontFamily: {
-        title: "Lora",
+        title: "Playfair Display",
       },
     },
   },

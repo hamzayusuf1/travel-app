@@ -3,13 +3,13 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 
 import NewPlace from "../pages/NewPlace";
 import NavLinks from "../components/Navlinks/NavLinks";
-import { Landing, Home, Users, Auth, UserPlaces } from "../pages";
+import { Landing, Home, Users, Auth, UserPlaces, Recents } from "../pages";
 import Banner from "../components/Banner/Banner";
 
 export const Main = () => {
   return (
     <div>
-      <Banner />
+      {/* <Banner /> */}
       <Outlet />;
     </div>
   );
@@ -39,6 +39,10 @@ const router = createBrowserRouter([
           {
             path: "/home/:userId",
             element: <UserPlaces />,
+          },
+          {
+            path: "/home/recents",
+            element: <Recents />,
           },
         ],
       },

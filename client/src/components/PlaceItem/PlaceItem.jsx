@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { Delete, Send } from "@mui/icons-material";
 import { AuthContext } from "../../context/AuthContext";
 
+import "./PlaceItem.css";
 import Map from "../Modal/Map";
 import MapModal from "../Modal/MapModal";
 import ErrorModal from "../Modal/ErrorModal";
@@ -22,8 +23,9 @@ const PlaceItem = (props) => {
     setConfirmModal(false);
   };
 
-  const confirmDeleteHandler = () => {
-    console.log("deleting...");
+  const mapOpen = () => {
+    setOpenModal(true);
+    console.log(props.coordinates);
   };
 
   return (
@@ -42,11 +44,15 @@ const PlaceItem = (props) => {
         onClose={cancelDeleteHandler}
         layoutStyles={{ width: "75%", bgcolor: "error.main" }}
       />
-      <li className="p-6 max-w-sm bg-white hover:bg-gray-100 rounded-lg border border-gray-200 shadow-md mb-5 mx-3">
-        <div>
-          <img className="" src={props.image} alt={props.title} />
+      <div className="max-w-md bg-white hover:bg-gray-100 rounded-lg border border-gray-200 shadow-md mb-5 mx-3">
+        <div className="">
+          <img
+            className="rounded-lg photo"
+            src={props.image}
+            alt={props.title}
+          />
         </div>
-        <div>
+        <div className="p-6">
           <h2 className="font-semibold text-3xl text-center mb-2">
             {props.title}
           </h2>
@@ -54,7 +60,7 @@ const PlaceItem = (props) => {
         </div>
         <div className="flex justify-evenly mx-3">
           <button
-            className="text-center  px-5 mr-2 mb-2 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 hover:bg-gray-200 hover:text-blue-700 transition-all"
+            className="text-center  px-5 mr-2 mb-2 text-sm font-medium text-gray-900 bg-lightBlue rounded-full border border-gray-200 hover:bg-gray-200 hover:text-blue-700 transition-all"
             onClick={() => setOpenModal(true)}
           >
             View on map
@@ -75,7 +81,10 @@ const PlaceItem = (props) => {
             </>
           )}
         </div>
-      </li>
+      </div>
+      {/* <div className="w-[500px] bg-white hover:bg-gray-100 rounded-lg border border-gray-200  ">
+        <img className="rounded-lg" src={props.image} alt={props.title} />
+      </div> */}
     </>
   );
 };

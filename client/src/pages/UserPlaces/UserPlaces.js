@@ -52,7 +52,7 @@ const UserPlaces = (props) => {
     (places) => places.creator.trim() === userId
   );
   return (
-    <div className="w-full h-full flex justify-center align-center bg-gray-500 p-6">
+    <div className="w-full h-full flex justify-center align-center p-6">
       <ul>
         {userPlaces.map((place) => {
           return (

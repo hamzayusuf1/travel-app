@@ -1,10 +1,13 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
+import Banner from "../../components/Banner/Banner";
+
+import PlaceItem from "../../components/PlaceItem/PlaceItem";
 
 const menuLinks = [
   {
     name: "Home",
-    link: "/home/posts",
+    link: "/home/recents",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +28,7 @@ const menuLinks = [
   },
   {
     name: "Dashboard",
-    link: "/",
+    link: "/home",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +52,7 @@ const menuLinks = [
   },
   {
     name: "Posts",
-    link: "/",
+    link: "/home/posts",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -93,11 +96,56 @@ const menuLinks = [
   },
 ];
 
+const DUMMY_DATA = [
+  {
+    id: 1,
+    title: "empire state building",
+    description: "One of the most tallest skyscrapers in the world",
+    imageURL:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
+    address: "20 W 34th St, New York, NY 10001",
+    creator: "u1",
+    location: {
+      lat: 40.7484405,
+      lng: -73.9878531,
+    },
+  },
+  {
+    id: 2,
+    title: "empire state building",
+    description: "One of the most tallest skyscrapers in the world",
+    imageURL:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
+    address: "20 W 34th St, New York, NY 10001",
+    creator: "u2",
+    location: {
+      lat: 40.7484405,
+      lng: -73.9878531,
+    },
+  },
+  {
+    id: 3,
+    title: "Burj Khalifa",
+    description: "The tallest skyscraper in the world",
+    imageURL:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
+    address:
+      "Sheikh Mohammed bin Rashid Blvd - Downtown Dubai - Dubai - United Arab Emirates",
+    creator: "u3",
+    location: {
+      lat: 25.197197,
+      lng: 55.2721877,
+    },
+  },
+];
+
 const Home = () => {
+  const { link } = useParams();
+
   return (
-    <div className="w-full h-screen bg-lightBlue md:flex">
+    <div className="w-full h-full bg-lightBlue md:flex">
       {/* Sidebar */}
-      <div className="h-[60px] md:h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out">
+      <div className="h-[60px] md:h-screen md:block shadow-[rgba(0,15,15,0)_10px_5px_4px_0px] px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out">
         {" "}
         <div
           id="menu"
@@ -116,7 +164,8 @@ const Home = () => {
         </div>
       </div>
       {/* Main div */}
-      <div className="w-full flex items-center">
+      <div className="h-fit w-full">
+        <Banner></Banner>
         <Outlet></Outlet>
       </div>
     </div>

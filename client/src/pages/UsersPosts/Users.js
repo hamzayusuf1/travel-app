@@ -7,7 +7,7 @@ const Users = () => {
   const USERS = [
     {
       id: "u1",
-      name: "Hamza yusuf",
+      name: "Jane Doe",
       image: "https://picsum.photos/200/300",
       places: 1,
     },
@@ -27,8 +27,11 @@ const Users = () => {
     );
   }
   return (
-    <div className="w-full h-screen flex justify-center align-center bg-gray-900 p-5">
-      <ul>
+    <div className="w-full h-screen justify-center align-center bg-lightBlue p-5">
+      <ul
+        className="flex flex-col
+       items-center"
+      >
         {USERS.map((user) => {
           return (
             <UserItem
