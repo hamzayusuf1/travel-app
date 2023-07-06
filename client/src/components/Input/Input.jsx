@@ -45,8 +45,8 @@ const Input = (props) => {
       <textarea
         className={
           inputState.isValid
-            ? "rounded-lg text-sm font-medium  border border-grey-400 placeholder-grey-400 w-full p-1.5 h-40"
-            : "rounded-lg text-sm font-medium  border border-red-400  bg-red-100 placeholder-grey-400 w-full p-1.5 h-40"
+            ? "rounded-lg text-sm font-medium  border border-grey-400 placeholder-grey-400 w-full p-1.5 h-40 min-w-[300px]"
+            : "rounded-lg text-sm font-medium  border border-red-400  bg-red-100 placeholder-grey-400 w-full p-1.5 h-40 min-w-[300px]"
         }
         rows={props.rows || 3}
         id={props.id}
@@ -59,8 +59,8 @@ const Input = (props) => {
           id={props.id}
           className={
             inputState.isValid
-              ? "rounded-lg text-sm font-medium  border border-grey-400 placeholder-grey-400 w-full p-1.5"
-              : "rounded-lg text-sm font-medium  border border-red-400  bg-red-100 placeholder-grey-400 w-full p-1.5"
+              ? "rounded-lg text-sm font-medium  border border-grey-400 placeholder-grey-400 w-full p-1.5 min-w-[300px]"
+              : "rounded-lg text-sm font-medium  border border-red-400  bg-red-100 placeholder-grey-400 w-full p-1.5 min-w-[300px]"
           }
           type={props.type}
           placeholder={props.placeholder}
@@ -80,7 +80,7 @@ const Input = (props) => {
       </label>
 
       {element}
-      {!inputState.isValid && <p>{props.errorText}</p>}
+      {!inputState.isValid && <p className="text-sm">{props.errorText}</p>}
     </div>
   );
 };
