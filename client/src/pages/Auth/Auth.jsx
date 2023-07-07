@@ -75,7 +75,7 @@ const Auth = () => {
         </h2>
 
         <p className="font-rubik max-w-[450px] text-center">
-          Use our simple signin method to access all the great features in our
+          Use our simple login method to access all the great features in our
           app!
         </p>
 
