@@ -22,7 +22,7 @@ const AuthForm = () => {
 
   console.log(authMode);
 
-  const [loginUser, { error }] = useMutation(LOGIN_USER);
+  // const [loginUser, { error }] = useMutation(LOGIN_USER);
   const [addUser, { error2 }] = useMutation(ADD_USER);
 
   const [formState, formHandler, resetData] = useForm(
@@ -69,17 +69,33 @@ const AuthForm = () => {
     console.log(formState.inputs);
     console.log("hello");
 
-    try {
-      const { data } = await loginUser({
-        variables: {
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        },
-      });
-      Auth.login(data?.login?.token);
-    } catch (error) {
-      console.error(error);
-      // toast.error(error[0].message);
+    if (authMode) {
+      // try {
+      //   const { data } = await loginUser({
+      //     variables: {
+      //       email: formState.inputs.email.value,
+      //       password: formState.inputs.password.value,
+      //     },
+      //   });
+      //   Auth.login(data?.login?.token);
+      // } catch (error) {
+      //   console.error(error);
+      //   // toast.error(error[0].message);
+      // }
+    } else {
+      try {
+        const { data } = await addUser({
+          variables: {
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+            username: formState.inputs.username.value,
+          },
+        });
+        console.log(data);
+        Auth.login(data?.login?.token);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     // if (authMode) {
@@ -115,11 +131,11 @@ const AuthForm = () => {
         <form onSubmit={authSubmitHandler}>
           {!authMode && (
             <Input
-              id="name"
+              id="username"
               type="text"
-              label="Your Name"
+              label="Your username"
               validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please enter your name"
+              errorText="Please enter your username"
               onInput={formHandler}
             />
           )}
