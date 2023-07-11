@@ -3,6 +3,7 @@ import { Link, Outlet, useParams } from "react-router-dom";
 import Banner from "../../components/Banner/Banner";
 
 import PlaceItem from "../../components/PlaceItem/PlaceItem";
+import Auth from "../../utils/Auth";
 
 const menuLinks = [
   {
@@ -72,28 +73,28 @@ const menuLinks = [
       </svg>
     ),
   },
-  {
-    name: "Login",
-    link: "/home/auth",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="icon icon-tabler icon-tabler-login"
-        width="44"
-        height="44"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="#2c3e50"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-        <path d="M20 12h-13l3 -3m0 6l-3 -3" />
-      </svg>
-    ),
-  },
+  // {
+  //   name: "Login",
+  //   link: "/home/auth",
+  //   icon: (
+  //     <svg
+  //       xmlns="http://www.w3.org/2000/svg"
+  //       class="icon icon-tabler icon-tabler-login"
+  //       width="44"
+  //       height="44"
+  //       viewBox="0 0 24 24"
+  //       stroke-width="1.5"
+  //       stroke="#2c3e50"
+  //       fill="none"
+  //       stroke-linecap="round"
+  //       stroke-linejoin="round"
+  //     >
+  //       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  //       <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+  //       <path d="M20 12h-13l3 -3m0 6l-3 -3" />
+  //     </svg>
+  //   ),
+  // },
 ];
 
 const DUMMY_DATA = [
@@ -161,6 +162,63 @@ const Home = () => {
               <span className="text-lg hidden md:block">{nav.name}</span>
             </Link>
           ))}
+
+          {!Auth.loggedIn(localStorage.getItem("id_token")) ? (
+            <Link
+              key={"Login"}
+              to={`/home/auth`}
+              className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-black hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out text-black flex items-center space-x-2"
+            >
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-login"
+                  width="44"
+                  height="44"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="#2c3e50"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                  <path d="M20 12h-13l3 -3m0 6l-3 -3" />
+                </svg>
+              </div>
+              <span className="text-lg hidden md:block">Login</span>
+            </Link>
+          ) : (
+            <Link
+              key={"Logout"}
+              onClick={() => {
+                Auth.logout();
+              }}
+              className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-black hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out text-black flex items-center space-x-2"
+            >
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-logout"
+                  width="44"
+                  height="44"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="#2c3e50"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                  <path d="M9 12h12l-3 -3" />
+                  <path d="M18 15l3 -3" />
+                </svg>
+              </div>
+              <span className="text-lg hidden md:block">Logout</span>
+            </Link>
+          )}
         </div>
       </div>
       {/* Main div */}

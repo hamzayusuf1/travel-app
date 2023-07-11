@@ -5,8 +5,9 @@ class AuthService {
     return decode(this.getToken());
   }
 
-  loggedIn() {
-    const token = this.getToken();
+  loggedIn(token) {
+    // const token = this.getToken();
+
     return !!token && !this.isTokenExpired(token);
   }
 
@@ -29,14 +30,14 @@ class AuthService {
   login(idToken) {
     //saves the user token to localStorage
     localStorage.setItem("id_token", idToken);
-    window.location.assign("/");
+    window.location.assign("/home");
   }
 
   logout() {
     //clears user token from localStorage
     localStorage.removeItem("id_token");
     //this will reload the page and hence reset the state of the application
-    window.location.assign("/");
+    window.location.assign("/home");
   }
 }
 

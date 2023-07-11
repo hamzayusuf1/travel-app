@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { toast } from "react-hot-toast";
 
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/button";
@@ -7,15 +8,22 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from "../../utils/validators";
+
 import { useForm } from "../../hooks/FormHook";
 import { AuthContext } from "../../context/AuthContext";
+import { LOGIN_USER, ADD_USER } from "../../utils/mutations";
+import { useMutation } from "@apollo/client";
+import Auth from "../../utils/Auth";
 
-const Auth = () => {
+const AuthForm = () => {
   const { login } = useContext(AuthContext);
 
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [authMode, setAuthMode] = useState(true);
 
-  console.log(loggedIn);
+  console.log(authMode);
+
+  const [loginUser, { error }] = useMutation(LOGIN_USER);
+  const [addUser, { error2 }] = useMutation(ADD_USER);
 
   const [formState, formHandler, resetData] = useForm(
     {
@@ -32,7 +40,7 @@ const Auth = () => {
   );
 
   const signUp = () => {
-    if (loggedIn) {
+    if (authMode) {
       resetData(
         {
           ...formState.inputs,
@@ -52,14 +60,36 @@ const Auth = () => {
         false
       );
     }
-    setLoggedIn(!loggedIn);
+    setAuthMode(!authMode);
   };
 
-  const authSubmitHandler = (e) => {
+  const authSubmitHandler = async (e) => {
     e.preventDefault();
+
     console.log(formState.inputs);
-    console.log("works");
-    login();
+    console.log("hello");
+
+    try {
+      const { data } = await loginUser({
+        variables: {
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value,
+        },
+      });
+      Auth.login(data?.login?.token);
+    } catch (error) {
+      console.error(error);
+      // toast.error(error[0].message);
+    }
+
+    // if (authMode) {
+    // } else {
+    //   try {
+    //     const { data } = await addUser({
+    //       variables: {},
+    //     });
+    //   } catch (error) {}
+    // }
   };
 
   return (
@@ -70,7 +100,10 @@ const Auth = () => {
           src={"/images/logo.png"}
           alt=""
         />
-        <h2 className="px-2 font-montserrat font-bold text-2xl">
+        <h2
+          className="px-2 font-montserrat font-bold text-2xl"
+          onClick={() => console.log(Auth.getToken())}
+        >
           Welcome Back
         </h2>
 
@@ -80,7 +113,7 @@ const Auth = () => {
         </p>
 
         <form onSubmit={authSubmitHandler}>
-          {!loggedIn && (
+          {!authMode && (
             <Input
               id="name"
               type="text"
@@ -112,15 +145,13 @@ const Auth = () => {
           <div className="mt-6">
             <Button
               type="sumbit"
-              value={loggedIn ? "Login" : "SignUp"}
+              value={authMode ? "Login" : "SignUp"}
               variant="contained"
               disabled={formState.isValid}
-              onClick={() => {
-                console.log(formState.inputs);
-              }}
+              onClick={() => {}}
             />
             <Button
-              value={loggedIn ? "Switch to SignUp" : "Switch to Login"}
+              value={authMode ? "Switch to SignUp" : "Switch to Login"}
               variant="outlined"
               disabled={true}
               onClick={signUp}
@@ -132,4 +163,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default AuthForm;
