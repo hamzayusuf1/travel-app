@@ -144,7 +144,7 @@ const Home = () => {
   const { link } = useParams();
 
   return (
-    <div className="w-full h-full bg-lightBlue md:flex">
+    <div className="w-full h-full bg-lightBlue bg-lightBlue md:flex">
       {/* Sidebar */}
       <div className="h-[60px] md:h-screen md:block shadow-[rgba(0,15,15,0)_10px_5px_4px_0px] px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out">
         {" "}
@@ -162,6 +162,35 @@ const Home = () => {
               <span className="text-lg hidden md:block">{nav.name}</span>
             </Link>
           ))}
+
+          {Auth.loggedIn(localStorage.getItem("id_token")) && (
+            <Link
+              key={"Create"}
+              to={`/home/add`}
+              className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-black hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out text-black flex items-center space-x-2"
+            >
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-square-plus"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="#2c3e50"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                  <path d="M9 12l6 0" />
+                  <path d="M12 9l0 6" />
+                </svg>
+              </div>
+              <span className="text-lg hidden md:block">Create</span>
+            </Link>
+          )}
 
           {!Auth.loggedIn(localStorage.getItem("id_token")) ? (
             <Link
@@ -201,10 +230,10 @@ const Home = () => {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="icon icon-tabler icon-tabler-logout"
-                  width="44"
-                  height="44"
+                  width="36"
+                  height="36"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  stroke-width="2.5"
                   stroke="#2c3e50"
                   fill="none"
                   stroke-linecap="round"

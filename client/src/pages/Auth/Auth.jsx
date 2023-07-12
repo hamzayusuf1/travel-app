@@ -22,7 +22,7 @@ const AuthForm = () => {
 
   console.log(authMode);
 
-  // const [loginUser, { error }] = useMutation(LOGIN_USER);
+  const [loginUser, { error }] = useMutation(LOGIN_USER);
   const [addUser, { error2 }] = useMutation(ADD_USER);
 
   const [formState, formHandler, resetData] = useForm(
@@ -70,18 +70,18 @@ const AuthForm = () => {
     console.log("hello");
 
     if (authMode) {
-      // try {
-      //   const { data } = await loginUser({
-      //     variables: {
-      //       email: formState.inputs.email.value,
-      //       password: formState.inputs.password.value,
-      //     },
-      //   });
-      //   Auth.login(data?.login?.token);
-      // } catch (error) {
-      //   console.error(error);
-      //   // toast.error(error[0].message);
-      // }
+      try {
+        const { data } = await loginUser({
+          variables: {
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          },
+        });
+        Auth.login(data?.login?.token);
+      } catch (error) {
+        console.error(error);
+        // toast.error(error[0].message);
+      }
     } else {
       try {
         const { data } = await addUser({

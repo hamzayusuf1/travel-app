@@ -17,8 +17,7 @@ import {
 import { Landing, Auth, UserPlaces } from "./pages";
 
 import Users from "./pages/UsersPosts/Users";
-import Header from "./components/Header/Header";
-import NewPlace from "./pages/NewPlace";
+import NewPlace from "./pages/NewPlace/NewPlace";
 import UpdatePlace from "./pages/UpdatePlace";
 
 import { AuthContext } from "./context/AuthContext";

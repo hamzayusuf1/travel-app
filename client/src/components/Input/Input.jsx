@@ -30,14 +30,16 @@ const Input = (props) => {
   const { value, isValid } = inputState;
 
   useEffect(() => {
-    onInput(id, value, isValid);
+    if (onInput) {
+      onInput(id, value, isValid);
+    }
   }, [id, value, isValid, onInput]);
 
   const handleChange = (e) => {
     dispatch({
       type: TITLE_INPUT,
       value: e.target.value,
-      validators: props.validators,
+      validators: props.validators ? props.validators : null,
     });
   };
   const element =
