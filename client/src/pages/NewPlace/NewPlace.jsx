@@ -2,7 +2,11 @@ import React from "react";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/button";
 
-import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../utils/validators";
+import {
+  VALIDATOR_MINLENGTH,
+  VALIDATOR_REQUIRE,
+  VALIDATOR_FILE,
+} from "../../utils/validators";
 import { INPUT_CHANGE } from "../../utils/actions";
 import { useForm } from "../../hooks/FormHook";
 
@@ -21,9 +25,15 @@ const NewPlace = () => {
         value: "",
         isValid: false,
       },
+      image: {
+        value: "",
+        isValid: false,
+      },
     },
     false
   );
+
+  console.log(formState.inputs.image.value);
 
   const placeSumbitHandler = (e) => {
     e.preventDefault();
@@ -70,7 +80,10 @@ const NewPlace = () => {
           label="Image"
           type="file"
           errorText="Please upload an image of your trip"
+          validators={[VALIDATOR_REQUIRE()]}
+          onInput={formHandler}
         />
+
         <Button
           type="sumbit"
           value="Add place"

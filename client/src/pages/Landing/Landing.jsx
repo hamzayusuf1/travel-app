@@ -30,7 +30,7 @@ const Landing = () => {
             Explore breathtaking trips as inspiration for your next destination
           </p>
           <div className="flex flex-col items-center justify-center">
-            <Link to={"/home/posts"}>
+            <Link to={"/home/recents"}>
               <button className="bg-greenText text-lg p-5 flex items-center rounded-xl">
                 Start Exploring
               </button>

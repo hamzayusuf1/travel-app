@@ -39,7 +39,7 @@ const Input = (props) => {
     dispatch({
       type: TITLE_INPUT,
       value: e.target.value,
-      validators: props.validators ? props.validators : null,
+      validators: props.validators,
     });
   };
   const element =
