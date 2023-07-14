@@ -74,7 +74,7 @@ const UpdatePlace = (props) => {
       );
     }
     setLoading(false);
-  }, [place]);
+  }, [placeId, resetData]);
 
   console.log(place);
 
@@ -91,41 +91,40 @@ const UpdatePlace = (props) => {
   }
 
   return (
-    formState.inputs.title.value && (
-      <form action="">
-        <Input
-          id="title"
-          validators={[VALIDATOR_REQUIRE()]}
-          label="Trip title"
-          element={"input"}
-          type="text"
-          errorText="Please enter a valid title"
-          initialValue={formState.inputs.title.value}
-          initialValid={formState.inputs.title.isValid}
-          valid={true}
-          onInput={formHandler}
-        />
-        <Input
-          id="description"
-          element="textarea"
-          label="Trip description"
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText="Please enter a valid description"
-          initialValue={formState.inputs.description.value}
-          initialValid={formState.inputs.description.isValid}
-          valid={true}
-          onInput={formHandler}
-        />
-        <Button
-          variant="contained"
-          type="sumbit"
-          value="UPDATE PLACE"
-          disabled={formState.isValid}
-        >
-          Update Place
-        </Button>
-      </form>
-    )
+    // formState.inputs.title.value &&
+    <form action="" className="w-[50%] mx-auto">
+      <Input
+        id="title"
+        element={"input"}
+        type="text"
+        label="Trip title"
+        errorText="Please enter a valid title"
+        validators={[VALIDATOR_REQUIRE()]}
+        initialValue={formState.inputs.title.value}
+        initialValid={formState.inputs.title.isValid}
+        // valid={true}
+        onInput={formHandler}
+      />
+      <Input
+        id="description"
+        element="textarea"
+        label="Trip description"
+        validators={[VALIDATOR_MINLENGTH(5)]}
+        errorText="Please enter a valid description"
+        initialValue={formState.inputs.description.value}
+        initialValid={formState.inputs.description.isValid}
+        // valid={true}
+        onInput={formHandler}
+      />
+      <Button
+        variant="contained"
+        type="sumbit"
+        value="UPDATE PLACE"
+        disabled={formState.isValid}
+      >
+        Update Place
+      </Button>
+    </form>
   );
 };
 
