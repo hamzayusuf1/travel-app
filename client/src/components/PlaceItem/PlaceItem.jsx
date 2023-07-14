@@ -2,7 +2,9 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { Delete, Send } from "@mui/icons-material";
+
 import { AuthContext } from "../../context/AuthContext";
+import Auth from "../../utils/Auth";
 
 import "./PlaceItem.css";
 import Map from "../Modal/Map";
@@ -10,6 +12,8 @@ import MapModal from "../Modal/MapModal";
 import ErrorModal from "../Modal/ErrorModal";
 
 const PlaceItem = (props) => {
+  //TODO - Each post should have edit and delete option only for creator. When connected to backend, we can match this info and show buttons accordingly
+
   const { isLoggedIn } = useContext(AuthContext);
 
   const [openModal, setOpenModal] = useState(false);
@@ -65,9 +69,9 @@ const PlaceItem = (props) => {
           >
             View on map
           </button>
-          {isLoggedIn && (
+          {Auth.loggedIn(localStorage.getItem("id_token")) && (
             <>
-              <Link to={`/places/${props.id}`}>
+              <Link to={`/home/edit/${props.id}`}>
                 <button className="text-white bg-yellow-400 hover:bg-yellow-500 font-medium rounded-full text-sm px-5  mr-2 mb-2 transition-all">
                   Edit
                 </button>

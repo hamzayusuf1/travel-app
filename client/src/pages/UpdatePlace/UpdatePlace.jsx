@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import Input from "../components/Input/Input";
-import Button from "../components/Button/button";
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../utils/validators";
-import { useForm } from "../hooks/FormHook";
+import Input from "../../components/Input/Input";
+import Button from "../../components/Button/button";
+import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validators";
+import { useForm } from "../../hooks/FormHook";
 
 const DUMMY_DATA = [
   {
@@ -53,7 +53,8 @@ const UpdatePlace = (props) => {
         isValid: true,
       },
     },
-    false
+    false,
+    ""
   );
 
   useEffect(() => {

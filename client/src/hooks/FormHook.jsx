@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer } from "react";
-import { INPUT_CHANGE, RESET_DATA } from "../utils/actions";
+import { INPUT_CHANGE, POST_IMAGE, RESET_DATA } from "../utils/actions";
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -30,15 +30,22 @@ const formReducer = (state, action) => {
         isValid: action.formIsValid,
       };
 
+    case POST_IMAGE:
+      return {
+        ...state,
+        postImage: action.payload,
+      };
+
     default:
       return state;
   }
 };
 
-export const useForm = (initialInputs, initialValidation) => {
+export const useForm = (initialInputs, initialValidation, initialPost) => {
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: initialInputs,
     isValid: initialValidation,
+    postImage: initialPost,
   });
 
   const formHandler = useCallback((id, value, isValid) => {
@@ -58,5 +65,13 @@ export const useForm = (initialInputs, initialValidation) => {
     });
   }, []);
 
-  return [formState, formHandler, resetData];
+  //I wanted to create a seperate state handler for the image upload...
+  const uploadImage = useCallback((e) => {
+    dispatch({
+      type: POST_IMAGE,
+      payload: e.target.files[0],
+    });
+  });
+
+  return [formState, formHandler, resetData, uploadImage];
 };

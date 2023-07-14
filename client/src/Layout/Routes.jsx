@@ -10,6 +10,7 @@ import {
   UserPlaces,
   Recents,
   NewPlace,
+  UpdatePlace,
 } from "../pages";
 import Banner from "../components/Banner/Banner";
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
           {
             path: "/home/add",
             element: <NewPlace />,
+          },
+          {
+            path: "/home/edit/:placeId",
+            element: <UpdatePlace />,
           },
         ],
       },

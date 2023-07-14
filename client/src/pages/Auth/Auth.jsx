@@ -36,15 +36,16 @@ const AuthForm = () => {
         isValid: false,
       },
     },
-    false
+    false,
+    ""
   );
 
   const signUp = () => {
-    if (authMode) {
+    if (!authMode) {
       resetData(
         {
           ...formState.inputs,
-          name: null,
+          name: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );

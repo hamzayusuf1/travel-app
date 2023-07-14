@@ -18,7 +18,7 @@ import { Landing, Auth, UserPlaces } from "./pages";
 
 import Users from "./pages/UsersPosts/Users";
 import NewPlace from "./pages/NewPlace/NewPlace";
-import UpdatePlace from "./pages/UpdatePlace";
+import UpdatePlace from "./pages/UpdatePlace/UpdatePlace";
 
 import { AuthContext } from "./context/AuthContext";
 import LoginForm from "./components/Login/LoginForm";

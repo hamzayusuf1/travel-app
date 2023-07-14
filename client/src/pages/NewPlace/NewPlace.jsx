@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/button";
 
@@ -11,7 +11,11 @@ import { INPUT_CHANGE } from "../../utils/actions";
 import { useForm } from "../../hooks/FormHook";
 
 const NewPlace = () => {
-  const [formState, formHandler] = useForm(
+  const [imgFile, setImgFile] = useState("");
+
+  console.log(imgFile);
+
+  const [formState, formHandler, uploadImage] = useForm(
     {
       title: {
         value: "",
@@ -30,17 +34,21 @@ const NewPlace = () => {
         isValid: false,
       },
     },
-    false
+    false,
+    ""
   );
 
-  console.log(formState.inputs.image.value);
+  console.log(formState);
 
   const placeSumbitHandler = (e) => {
     e.preventDefault();
   };
   // console.log(formState.isValid);
 
-  const handleImageChange = () => {};
+  // const handleImageChange = (e) => {
+  //   console.log("works");
+  //   setImgFile(e.target.files[0]);
+  // };
 
   return (
     <div className="mt-5 h-screen w-full ">
@@ -80,6 +88,8 @@ const NewPlace = () => {
           label="Image"
           type="file"
           errorText="Please upload an image of your trip"
+          changeImg={setImgFile}
+          // onChange={handleImageChange}
           validators={[VALIDATOR_REQUIRE()]}
           onInput={formHandler}
         />

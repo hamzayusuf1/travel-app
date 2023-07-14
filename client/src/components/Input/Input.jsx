@@ -21,6 +21,7 @@ const inputReducer = (state, action) => {
 };
 
 const Input = (props) => {
+  // console.log(props.onChange);
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue || "",
     isValid: props.initialValid || false,
@@ -30,10 +31,14 @@ const Input = (props) => {
   const { value, isValid } = inputState;
 
   useEffect(() => {
-    if (onInput) {
-      onInput(id, value, isValid);
-    }
+    onInput(id, value, isValid);
   }, [id, value, isValid, onInput]);
+
+  //wont run because e has to be directly run from the onchange
+  const handleImageChange = (e) => {
+    console.log("works");
+    props.changeImg(e.target.files[0]);
+  };
 
   const handleChange = (e) => {
     dispatch({
@@ -41,7 +46,12 @@ const Input = (props) => {
       value: e.target.value,
       validators: props.validators,
     });
+
+    if (props.type === "file") {
+      props.changeImg(e.target.files[0]);
+    }
   };
+
   const element =
     props.element === "textarea" ? (
       <textarea
