@@ -52,7 +52,7 @@ const PlaceItem = (props) => {
         <div className="">
           <img
             className="rounded-lg photo"
-            src={props.image}
+            src={props.image ? props.image : "/images/empire.jpg"}
             alt={props.title}
           />
         </div>

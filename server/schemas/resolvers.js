@@ -23,7 +23,7 @@ const resolvers = {
       return Place.findOne({ _id: placeId });
     },
     places: async () => {
-      return Place.find();
+      return Place.find().sort({ createdAt: -1 });
     },
   },
 
