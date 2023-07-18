@@ -57,7 +57,9 @@ const Dashboard = () => {
     <div className="w-[50%] mx-auto">
       <div className="flex flex-col items-center mb-20">
         <img src="/images/user.png" className="w-[100px] mb-6" />
-        <h1 className="text-3xl font-bold font-rubik">{DUMMY_USERS[0].name}</h1>
+        <h1 className="text-3xl font-bold font-rubik mb-4">
+          {DUMMY_USERS[0].name}
+        </h1>
         <div className="w-[300px] flex justify-evenly">
           <div className="flex flex-col items-center">
             <span className="">{DUMMY_USERS[0].following}</span>

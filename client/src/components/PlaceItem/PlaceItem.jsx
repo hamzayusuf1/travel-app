@@ -62,9 +62,9 @@ const PlaceItem = (props) => {
           </h2>
           <p className="text-xl text-center mb-3">{props.description}</p>
         </div>
-        <div className="flex justify-evenly mx-3">
+        <div className="flex justify-center">
           <button
-            className="text-center  px-5 mr-2 mb-2 text-sm font-medium text-gray-900 bg-lightBlue rounded-full border border-gray-200 hover:bg-gray-200 hover:text-blue-700 transition-all"
+            className="text-center  px-5 mr-6 mb-2 text-sm font-medium text-gray-900 bg-lightBlue rounded-full border border-gray-200 hover:bg-gray-200 hover:text-blue-700 transition-all"
             onClick={() => setOpenModal(true)}
           >
             View on map
@@ -72,12 +72,12 @@ const PlaceItem = (props) => {
           {Auth.loggedIn(localStorage.getItem("id_token")) && (
             <>
               <Link to={`/home/edit/${props.id}`}>
-                <button className="text-white bg-yellow-400 hover:bg-yellow-500 font-medium rounded-full text-sm px-5  mr-2 mb-2 transition-all">
+                <button className="text-white bg-yellow-400 hover:bg-yellow-500 font-medium rounded-full text-sm px-5 mb-2 mr-6 transition-all">
                   Edit
                 </button>
               </Link>
               <button
-                className="text-white bg-red-700 hover:bg-red-800 rounded-full px-4  font-medium mr-2 mb-2 transition-all"
+                className="text-white bg-red-700 hover:bg-red-800 rounded-full px-4  font-medium mb-2 transition-all"
                 onClick={showDeleteWarningHandler}
               >
                 Delete

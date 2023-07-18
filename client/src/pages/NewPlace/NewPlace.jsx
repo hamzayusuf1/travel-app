@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/button";
 
@@ -7,10 +10,16 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_FILE,
 } from "../../utils/validators";
+import Auth from "../../utils/Auth";
 import { INPUT_CHANGE } from "../../utils/actions";
 import { useForm } from "../../hooks/FormHook";
+import { ADD_PLACE } from "../../utils/mutations";
 
 const NewPlace = () => {
+  const navigate = useNavigate();
+
+  const [addPlace, { error }] = useMutation(ADD_PLACE);
+
   const [imgFile, setImgFile] = useState("");
 
   console.log(imgFile);
@@ -38,17 +47,26 @@ const NewPlace = () => {
     ""
   );
 
-  console.log(formState);
+  console.log(formState.inputs.image.value[0]);
 
-  const placeSumbitHandler = (e) => {
+  const placeSumbitHandler = async (e) => {
     e.preventDefault();
-  };
-  // console.log(formState.isValid);
 
-  // const handleImageChange = (e) => {
-  //   console.log("works");
-  //   setImgFile(e.target.files[0]);
-  // };
+    try {
+      const { data } = await addPlace({
+        variables: {
+          title: formState.inputs.title.value,
+          description: formState.inputs.description.value,
+          address: formState.inputs.address.value,
+          // image: imgFile,
+        },
+      });
+      navigate("/home/recents");
+    } catch (error) {
+      console.error(error);
+      // setErr(error.message);
+    }
+  };
 
   return (
     <div className="mt-5 h-screen w-full ">

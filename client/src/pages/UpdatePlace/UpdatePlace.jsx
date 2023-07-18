@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Input from "../../components/Input/Input";
-import Button from "../../components/Button/button";
+import CustomButton from "../../components/Button/button";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validators";
 import { useForm } from "../../hooks/FormHook";
+import { Button } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const DUMMY_DATA = [
   {
@@ -35,6 +37,17 @@ const DUMMY_DATA = [
 ];
 
 const UpdatePlace = (props) => {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#A3A6AC",
+      },
+      secondary: {
+        main: "#A3A6AC",
+      },
+    },
+  });
+
   const [loading, setLoading] = useState(true);
 
   const { placeId } = useParams();
@@ -116,14 +129,23 @@ const UpdatePlace = (props) => {
         // valid={true}
         onInput={formHandler}
       />
-      <Button
-        variant="contained"
-        type="sumbit"
-        value="UPDATE PLACE"
-        disabled={formState.isValid}
-      >
-        Update Place
-      </Button>
+      <div className="flex justify-center">
+        <CustomButton
+          variant="contained"
+          type="sumbit"
+          value="UPDATE PLACE"
+          disabled={formState.isValid}
+        >
+          Update Place
+        </CustomButton>
+        <ThemeProvider theme={theme}>
+          <Link to={"/home/recents"}>
+            <Button variant="contained" color="secondary">
+              Cancel
+            </Button>
+          </Link>
+        </ThemeProvider>
+      </div>
     </form>
   );
 };

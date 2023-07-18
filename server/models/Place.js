@@ -13,7 +13,7 @@ const placeSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  creator: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+  // creator: { type: Schema.Types.ObjectId, required: true, ref: "User" },
 });
 
 const Place = model("Place", placeSchema);

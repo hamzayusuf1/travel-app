@@ -3,7 +3,7 @@ const User = require("../models/User");
 const { signToken } = require("../utils/auth");
 const convertAdressToCoordinates = require("../utils/address");
 
-const { AuthenticationError } = require("apollo-server-express");
+const { ApolloError, AuthenticationError } = require("apollo-server-express");
 
 const resolvers = {
   Query: {
@@ -39,11 +39,11 @@ const resolvers = {
       return { token, user };
     },
 
-    addPlace: async (_, { title, description, address, image, creator }) => {
+    addPlace: async (_, { title, description, address, image }) => {
       let coordinates;
-      // try {
-      //   coordinates = await convertAdressToCoordinates(address);
-      // } catch (error) {}
+      try {
+        coordinates = await convertAdressToCoordinates(address);
+      } catch (error) {}
 
       coordinates = await convertAdressToCoordinates(address);
       console.log(coordinates);
@@ -52,18 +52,18 @@ const resolvers = {
         title,
         description,
         address,
-        creator,
+        // creator,
         location: coordinates,
       });
 
-      await User.findOneAndUpdate(
-        { _id: creator },
-        { $addToSet: { places: place._id } },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
+      // await User.findOneAndUpdate(
+      //   { _id: creator },
+      //   { $addToSet: { places: place._id } },
+      //   {
+      //     new: true,
+      //     runValidators: true,
+      //   }
+      // );
 
       return place;
     },
@@ -72,13 +72,13 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("No user with this email has been found");
+        throw new ApolloError("No user with this email has been found");
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("incorrect password");
+        throw new ApolloError("incorrect password");
       }
 
       const token = signToken(user);

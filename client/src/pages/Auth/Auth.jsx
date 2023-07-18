@@ -19,6 +19,7 @@ const AuthForm = () => {
   const { login } = useContext(AuthContext);
 
   const [authMode, setAuthMode] = useState(true);
+  const [err, setErr] = useState("");
 
   console.log(authMode);
 
@@ -82,6 +83,7 @@ const AuthForm = () => {
       } catch (error) {
         console.error(error);
         // toast.error(error[0].message);
+        setErr(error.message);
       }
     } else {
       try {
@@ -173,6 +175,9 @@ const AuthForm = () => {
               disabled={true}
               onClick={signUp}
             />
+          </div>
+          <div>
+            <p className="text-center text-red-500 text-lg">{err}</p>
           </div>
         </form>
       </div>

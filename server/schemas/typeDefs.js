@@ -18,10 +18,15 @@ const typeDefs = gql`
     address: String
     location: Location
     createdAt: String
-    creator: String
+  }
+
+  input locationInput {
+    lat: Float
+    lng: Float
   }
 
   type Location {
+    _id: ID
     lat: Float
     lng: Float
   }
@@ -41,14 +46,11 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addPlace(
-      title: String!
-      description: String!
-      address: String!
-      creator: String!
-    ): Place
+    addPlace(title: String!, description: String!, address: String!): Place
     deletePlace(placeId: String!, creator: String!): Place
   }
 `;
+
+//Check mutation for locaton maybe needs to be input :locationInput
 
 module.exports = typeDefs;

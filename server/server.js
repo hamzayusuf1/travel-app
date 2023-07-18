@@ -13,7 +13,7 @@ const { typeDefs, resolvers } = require("./schemas");
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware,
+  // context: authMiddleware,
 });
 
 app.use(express.json());

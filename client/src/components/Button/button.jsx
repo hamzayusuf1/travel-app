@@ -1,10 +1,18 @@
 import React, { useContext } from "react";
 import { CgAddR } from "react-icons/cg";
 import { Button } from "@mui/material/";
+import { createTheme } from "@mui/material/styles";
 
 import ButtonCSS from "../Button/Button.css";
 
-const button = (props) => {
+const customButton = (props) => {
+  // const theme = createTheme({
+  //   palette: {
+  //     primary: {
+  //       main: "#A3A6AC",
+  //     },
+  //   },
+  // });
   return (
     <div className="flex justify-center items-center  mx-4">
       <Button
@@ -12,8 +20,9 @@ const button = (props) => {
         disabled={!props.disabled}
         type={props.type}
         size={props.size}
-        color={props.color}
+        color={props.bgColor}
         onClick={props.onClick}
+        sx={{ color: props.textColor }}
       >
         {props.value}
       </Button>
@@ -29,4 +38,4 @@ const button = (props) => {
   );
 };
 
-export default button;
+export default customButton;
