@@ -7,6 +7,8 @@ const typeDefs = gql`
     email: String
     password: String
     image: String
+    followers: Int!
+    following: Int!
     places: [Place]!
   }
 

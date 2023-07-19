@@ -16,7 +16,8 @@ import { useMutation } from "@apollo/client";
 import Auth from "../../utils/Auth";
 
 const AuthForm = () => {
-  const { login } = useContext(AuthContext);
+  const [userData, setUserData] = useState({});
+  console.log(userData);
 
   const [authMode, setAuthMode] = useState(true);
   const [err, setErr] = useState("");
@@ -37,8 +38,7 @@ const AuthForm = () => {
         isValid: false,
       },
     },
-    false,
-    ""
+    false
   );
 
   const signUp = () => {
@@ -46,7 +46,7 @@ const AuthForm = () => {
       resetData(
         {
           ...formState.inputs,
-          name: undefined,
+          username: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -54,7 +54,7 @@ const AuthForm = () => {
       resetData(
         {
           ...formState.inputs,
-          name: {
+          username: {
             value: "",
             isValid: false,
           },
@@ -79,7 +79,9 @@ const AuthForm = () => {
             password: formState.inputs.password.value,
           },
         });
+        setUserData(data?.login?.user);
         Auth.login(data?.login?.token);
+        console.log(data?.login?.user);
       } catch (error) {
         console.error(error);
         // toast.error(error[0].message);

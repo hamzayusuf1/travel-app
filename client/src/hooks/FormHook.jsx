@@ -41,11 +41,10 @@ const formReducer = (state, action) => {
   }
 };
 
-export const useForm = (initialInputs, initialValidation, initialPost) => {
+export const useForm = (initialInputs, initialValidation) => {
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: initialInputs,
     isValid: initialValidation,
-    postImage: initialPost,
   });
 
   const formHandler = useCallback((id, value, isValid) => {
@@ -73,5 +72,5 @@ export const useForm = (initialInputs, initialValidation, initialPost) => {
     });
   });
 
-  return [formState, formHandler, resetData, uploadImage];
+  return [formState, formHandler, resetData];
 };

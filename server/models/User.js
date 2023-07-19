@@ -20,6 +20,15 @@ const userSchema = new Schema({
   image: {
     type: String,
   },
+  followers: {
+    type: Number,
+    required: true,
+  },
+  following: {
+    type: Number,
+    required: true,
+  },
+
   places: [
     {
       type: Schema.Types.ObjectId,

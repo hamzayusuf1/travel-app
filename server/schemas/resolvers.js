@@ -33,6 +33,8 @@ const resolvers = {
         username,
         email,
         password,
+        followers: 0,
+        following: 0,
       });
       const token = signToken(user);
 
@@ -80,6 +82,8 @@ const resolvers = {
       if (!correctPw) {
         throw new ApolloError("incorrect password");
       }
+
+      console.log(user);
 
       const token = signToken(user);
 

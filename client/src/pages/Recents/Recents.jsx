@@ -65,7 +65,7 @@ const Recents = () => {
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      {data.places.map((place) => {
+      {data?.places?.map((place) => {
         return (
           <PlaceItem
             key={place.id}
