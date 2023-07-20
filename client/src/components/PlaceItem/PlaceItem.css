@@ -3,3 +3,11 @@
   width: 100%;
   object-fit: fill;
 }
+
+.icon:hover {
+  /* background-color: red;
+  transition: 0.3s; */
+  transform: scale(1.3);
+  transition: 0.3s;
+  cursor: pointer;
+}

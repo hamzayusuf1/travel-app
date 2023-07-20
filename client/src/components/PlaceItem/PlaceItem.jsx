@@ -12,7 +12,7 @@ import MapModal from "../Modal/MapModal";
 import ErrorModal from "../Modal/ErrorModal";
 
 const PlaceItem = (props) => {
-  //TODO - Each post should have edit and delete option only for creator. When connected to backend, we can match this info and show buttons accordingly
+  const [like, setLike] = useState(false);
 
   const { isLoggedIn } = useContext(AuthContext);
 
@@ -48,7 +48,7 @@ const PlaceItem = (props) => {
         onClose={cancelDeleteHandler}
         layoutStyles={{ width: "75%", bgcolor: "error.main" }}
       />
-      <div className="max-w-md bg-white hover:bg-gray-100 rounded-lg border border-gray-200 shadow-md mb-5 mx-3">
+      <div className="md:w-[446px] bg-black w-[396px] bg-white hover:bg-gray-100 rounded-lg border border-gray-200 shadow-md mb-5 mx-3">
         <div className="">
           <img
             className="rounded-lg photo"
@@ -57,6 +57,47 @@ const PlaceItem = (props) => {
           />
         </div>
         <div className="p-6">
+          <div className="flex space-x-4">
+            <div
+              onClick={() => {
+                setLike(!like);
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon icon-tabler icon-tabler-heart"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke={like ? "#2c3e50" : "#DF4747"}
+                fill={like ? "none" : "#DF4747"}
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+              </svg>
+            </div>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-message-circle-off"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="#2c3e50"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8.595 4.577c3.223 -1.176 7.025 -.61 9.65 1.63c2.982 2.543 3.601 6.523 1.636 9.66m-1.908 2.109c-2.787 2.19 -6.89 2.666 -10.273 1.024l-4.7 1l1.3 -3.9c-2.229 -3.296 -1.494 -7.511 1.68 -10.057" />
+              <path d="M3 3l18 18" />
+            </svg>
+          </div>
+
           <h2 className="font-semibold text-3xl text-center mb-2">
             {props.title}
           </h2>

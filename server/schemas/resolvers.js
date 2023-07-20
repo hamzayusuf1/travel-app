@@ -36,7 +36,7 @@ const resolvers = {
         followers: 0,
         following: 0,
       });
-      const token = signToken(user);
+      const token = signToken({ id: user._id, email: user.email });
 
       return { token, user };
     },

@@ -54,9 +54,10 @@ const DUMMY_DATA = [
 
 const Dashboard = () => {
   return (
-    <div className="w-[50%] mx-auto">
+    <div className="w-[70%] mx-auto">
       <div className="flex flex-col items-center mb-20">
         <img src="/images/user.png" className="w-[100px] mb-6" />
+
         <h1 className="text-3xl font-bold font-rubik mb-4">
           {DUMMY_USERS[0].name}
         </h1>
@@ -75,20 +76,22 @@ const Dashboard = () => {
         <span className="text-lg text-slate-800 font-semibold border-b-2 border-black">
           My Posts
         </span>
-        {DUMMY_DATA.map((place) => {
-          return (
-            <PlaceItem
-              key={place.id}
-              id={place.id}
-              image={place.imageURL}
-              title={place.title}
-              description={place.description}
-              address={place.address}
-              creatorId={place.creator}
-              coordinates={place.location}
-            />
-          );
-        })}
+        <div className="flex flex-col items-center">
+          {DUMMY_DATA.map((place) => {
+            return (
+              <PlaceItem
+                key={place.id}
+                id={place.id}
+                image={place.imageURL}
+                title={place.title}
+                description={place.description}
+                address={place.address}
+                creatorId={place.creator}
+                coordinates={place.location}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
