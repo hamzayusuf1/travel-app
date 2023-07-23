@@ -1,4 +1,5 @@
 const { Schema, model, default: mongoose } = require("mongoose");
+const { required } = require("nodemon/lib/config");
 
 const placeSchema = new Schema({
   title: { type: String, required: true },
@@ -12,6 +13,10 @@ const placeSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  likes: {
+    type: Number,
+    required: true,
   },
   // creator: { type: Schema.Types.ObjectId, required: true, ref: "User" },
 });

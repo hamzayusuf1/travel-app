@@ -47,9 +47,10 @@ const Input = (props) => {
       validators: props.validators,
     });
 
-    if (props.type === "file") {
-      props.changeImg(e.target.files[0]);
-    }
+    // if (props.type === "file") {
+    //   // props.changeImg(e.target.files[0]);
+    //   props.changeImg(e.target.files[0]);
+    // }
   };
 
   const element =
@@ -76,7 +77,12 @@ const Input = (props) => {
           }
           type={props.type}
           placeholder={props.placeholder}
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(e);
+            {
+              props.changeImg && props.changeImg(e);
+            }
+          }}
           value={inputState.value}
         />
       </>

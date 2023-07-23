@@ -97,9 +97,10 @@ const AuthForm = () => {
           },
         });
         console.log(data);
-        Auth.login(data?.login?.token);
+        Auth.login(data?.addUser?.token);
       } catch (error) {
         console.error(error);
+        setErr(error.message);
       }
     }
 

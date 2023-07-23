@@ -66,11 +66,12 @@ export const useForm = (initialInputs, initialValidation) => {
 
   //I wanted to create a seperate state handler for the image upload...
   const uploadImage = useCallback((e) => {
+    console.log("hits");
     dispatch({
       type: POST_IMAGE,
       payload: e.target.files[0],
     });
   });
 
-  return [formState, formHandler, resetData];
+  return [formState, formHandler, resetData, uploadImage];
 };

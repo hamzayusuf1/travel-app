@@ -20,6 +20,7 @@ const typeDefs = gql`
     address: String
     location: Location
     createdAt: String
+    likes: Float
   }
 
   input locationInput {

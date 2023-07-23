@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
@@ -11,7 +11,7 @@ import {
   VALIDATOR_FILE,
 } from "../../utils/validators";
 import Auth from "../../utils/Auth";
-import { INPUT_CHANGE } from "../../utils/actions";
+import { INPUT_CHANGE, POST_IMAGE } from "../../utils/actions";
 import { useForm } from "../../hooks/FormHook";
 import { ADD_PLACE } from "../../utils/mutations";
 
@@ -22,9 +22,24 @@ const NewPlace = () => {
 
   const [imgFile, setImgFile] = useState("");
 
-  console.log(imgFile);
+  const imgReducer = (state, action) => {
+    switch (action.type) {
+      case POST_IMAGE:
+        return {
+          ...state,
+          postImage: action.payload,
+        };
 
-  const [formState, formHandler, uploadImage] = useForm(
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(imgReducer, {
+    postImage: "",
+  });
+
+  const [formState, formHandler, _, uploadImage] = useForm(
     {
       title: {
         value: "",
@@ -47,10 +62,12 @@ const NewPlace = () => {
     ""
   );
 
-  console.log(formState.inputs.image.value[0]);
+  console.log(formState);
 
   const placeSumbitHandler = async (e) => {
     e.preventDefault();
+
+    console.log(formState.postImage);
 
     try {
       const { data } = await addPlace({
@@ -58,7 +75,7 @@ const NewPlace = () => {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
           address: formState.inputs.address.value,
-          // image: imgFile,
+          image: formState.postImage,
         },
       });
       navigate("/home/recents");
@@ -106,11 +123,13 @@ const NewPlace = () => {
           label="Image"
           type="file"
           errorText="Please upload an image of your trip"
-          changeImg={setImgFile}
+          changeImg={uploadImage}
           // onChange={handleImageChange}
           validators={[VALIDATOR_REQUIRE()]}
           onInput={formHandler}
         />
+
+        {/* <input type="file" onChange={uploadImage} /> */}
 
         <Button
           type="sumbit"

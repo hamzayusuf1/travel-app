@@ -14,6 +14,8 @@ import ErrorModal from "../Modal/ErrorModal";
 const PlaceItem = (props) => {
   const [like, setLike] = useState(false);
 
+  const [allLikes, setAllLikes] = useState(0);
+
   const { isLoggedIn } = useContext(AuthContext);
 
   const [openModal, setOpenModal] = useState(false);
@@ -70,8 +72,8 @@ const PlaceItem = (props) => {
                 height="32"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
-                stroke={like ? "#2c3e50" : "#DF4747"}
-                fill={like ? "none" : "#DF4747"}
+                stroke={!like ? "#2c3e50" : "#DF4747"}
+                fill={!like ? "none" : "#DF4747"}
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
@@ -97,6 +99,11 @@ const PlaceItem = (props) => {
               <path d="M3 3l18 18" />
             </svg>
           </div>
+
+          <p className="mt-4 mb-2 font-montserrat">
+            {`Liked by  `}{" "}
+            <span className="font-semibold font-montserrat">{`${allLikes} others`}</span>
+          </p>
 
           <h2 className="font-semibold text-3xl text-center mb-2">
             {props.title}

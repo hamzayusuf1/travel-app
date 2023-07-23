@@ -35,13 +35,18 @@ const resolvers = {
         password,
         followers: 0,
         following: 0,
+        likes: 0,
       });
       const token = signToken({ id: user._id, email: user.email });
+
+      console.log(token);
 
       return { token, user };
     },
 
     addPlace: async (_, { title, description, address, image }) => {
+      console.log("hits");
+
       let coordinates;
       try {
         coordinates = await convertAdressToCoordinates(address);
@@ -50,13 +55,13 @@ const resolvers = {
       coordinates = await convertAdressToCoordinates(address);
       console.log(coordinates);
 
-      const place = await Place.create({
-        title,
-        description,
-        address,
-        // creator,
-        location: coordinates,
-      });
+      // const place = await Place.create({
+      //   title,
+      //   description,
+      //   address,
+      //   // creator,
+      //   location: coordinates,
+      // });
 
       // await User.findOneAndUpdate(
       //   { _id: creator },
