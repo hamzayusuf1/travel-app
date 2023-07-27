@@ -2,6 +2,7 @@ const { Schema, model, default: mongoose } = require("mongoose");
 const { required } = require("nodemon/lib/config");
 
 const placeSchema = new Schema({
+  creator: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   title: { type: String, required: true },
   description: { type: String, required: true },
   image: { type: String },
@@ -18,7 +19,6 @@ const placeSchema = new Schema({
     type: Number,
     required: true,
   },
-  // creator: { type: Schema.Types.ObjectId, required: true, ref: "User" },
 });
 
 const Place = model("Place", placeSchema);

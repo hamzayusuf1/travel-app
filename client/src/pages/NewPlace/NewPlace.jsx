@@ -75,7 +75,6 @@ const NewPlace = () => {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
           address: formState.inputs.address.value,
-          image: formState.postImage,
         },
       });
       navigate("/home/recents");

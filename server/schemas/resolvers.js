@@ -8,16 +8,15 @@ const { ApolloError, AuthenticationError } = require("apollo-server-express");
 const resolvers = {
   Query: {
     users: async (parent, args, context) => {
-      if (context.user) {
-        await User.find().populate("places");
-      }
-      console.log(context);
-      throw new AuthenticationError("Please login");
+      console.log(context.user);
+      return await User.find();
+
+      // throw new AuthenticationError("Please login");
     },
     user: async (parent, { username }, context) => {
       User.findOne({ username }).populate("places");
       console.log(context.user);
-      throw new AuthenticationError("Please login");
+      // throw new AuthenticationError("Please login");
     },
     place: async (parent, { placeId }) => {
       return Place.findOne({ _id: placeId });
@@ -44,8 +43,9 @@ const resolvers = {
       return { token, user };
     },
 
-    addPlace: async (_, { title, description, address, image }) => {
+    addPlace: async (_, { title, description, address, image }, context) => {
       console.log("hits");
+      console.log(context.user);
 
       let coordinates;
       try {
@@ -59,8 +59,9 @@ const resolvers = {
       //   title,
       //   description,
       //   address,
-      //   // creator,
+
       //   location: coordinates,
+      //   likes: 0,
       // });
 
       // await User.findOneAndUpdate(
@@ -72,7 +73,7 @@ const resolvers = {
       //   }
       // );
 
-      return place;
+      // return place;
     },
 
     login: async (parent, { email, password }) => {
@@ -87,8 +88,6 @@ const resolvers = {
       if (!correctPw) {
         throw new ApolloError("incorrect password");
       }
-
-      console.log(user);
 
       const token = signToken(user);
 
