@@ -1,5 +1,7 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
 
+import { GET_ME } from "../../utils/queries";
 import PlaceItem from "../../components/PlaceItem/PlaceItem";
 
 const DUMMY_USERS = [
@@ -53,21 +55,31 @@ const DUMMY_DATA = [
 ];
 
 const Dashboard = () => {
+  const { loading, data } = useQuery(GET_ME);
+
+  const userData = data?.user || {};
+
+  console.log(data?.user.places);
+
+  if (loading) {
+    return <h2>Loading</h2>;
+  }
+
   return (
     <div className="w-[70%] mx-auto">
       <div className="flex flex-col items-center mb-20">
         <img src="/images/user.png" className="w-[100px] mb-6" />
 
         <h1 className="text-3xl font-bold font-rubik mb-4">
-          {DUMMY_USERS[0].name}
+          {userData.username}
         </h1>
         <div className="w-[300px] flex justify-evenly">
           <div className="flex flex-col items-center">
-            <span className="">{DUMMY_USERS[0].following}</span>
+            <span className="">{userData.following || 0}</span>
             <p className="font-semibold text-slate-600">Following</p>
           </div>
           <div className="flex flex-col items-center">
-            <span className="">{DUMMY_USERS[0].following}</span>
+            <span className="">{userData.following || 0}</span>
             <p className="font-semibold text-slate-600">Following</p>
           </div>
         </div>
@@ -76,12 +88,20 @@ const Dashboard = () => {
         <span className="text-lg text-slate-800 font-semibold border-b-2 border-black">
           My Posts
         </span>
+        <h2 className="text-xl text-black font-bold">
+          {" "}
+          {userData?.places?.length
+            ? `Viewing ${userData.places.length} ${
+                userData.places.length === 1 ? "trip" : "trips"
+              }:`
+            : "You have no created trips!"}
+        </h2>
         <div className="flex flex-col items-center">
-          {DUMMY_DATA.map((place) => {
+          {userData?.places?.map((place) => {
             return (
               <PlaceItem
-                key={place.id}
-                id={place.id}
+                key={place._id}
+                id={place._id}
                 image={place.imageURL}
                 title={place.title}
                 description={place.description}

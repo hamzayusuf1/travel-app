@@ -1,7 +1,8 @@
 const { connect, connection, set } = require("mongoose");
 set("strictQuery", true);
+require("dotenv").config();
 
-connect("mongodb://localhost/travelDB", {
+connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

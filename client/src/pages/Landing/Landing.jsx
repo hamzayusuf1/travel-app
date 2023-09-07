@@ -1,10 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useLazyQuery } from "@apollo/client";
+import { HELLO } from "../../utils/queries";
 
 import background from "../../assests/background.jpg";
 import "./Landing.css";
+import { useEffect } from "react";
 
 const Landing = () => {
+  useEffect(() => {
+    getFirst();
+  }, []);
+
+  const getFirst = async () => {
+    const response = await firstQuery();
+    console.log(response.data);
+  };
+
+  const [firstQuery] = useLazyQuery(HELLO);
+
   return (
     <div className="bg flex justify-center">
       <div className="overlay1">

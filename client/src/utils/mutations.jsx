@@ -36,3 +36,32 @@ export const ADD_PLACE = gql`
     }
   }
 `;
+
+export const UPDATE_PLACE = gql`
+  mutation updatePlace($id: ID!, $title: String!, $description: String!) {
+    updatePlace(id: $id, title: $title, description: $description) {
+      title
+      description
+      address
+    }
+  }
+`;
+
+export const ADD_LIKE = gql`
+  mutation addLike($id: ID!) {
+    addLike(id: $id) {
+      title
+      likes {
+        _id
+      }
+    }
+  }
+`;
+
+export const REMOVE_LIKE = gql`
+  mutation removeLike($id: ID!) {
+    removeLike(id: $id) {
+      title
+    }
+  }
+`;

@@ -2,21 +2,34 @@ const Place = require("../models/Place");
 const User = require("../models/User");
 const { signToken } = require("../utils/auth");
 const convertAdressToCoordinates = require("../utils/address");
+const { PubSub } = require("graphql-subscriptions");
+const pubsub = new PubSub();
 
 const { ApolloError, AuthenticationError } = require("apollo-server-express");
 
 const resolvers = {
   Query: {
-    users: async (parent, args, context) => {
-      console.log(context.user);
-      return await User.find();
-
-      // throw new AuthenticationError("Please login");
+    hello: () => {
+      return "hello";
     },
-    user: async (parent, { username }, context) => {
-      User.findOne({ username }).populate("places");
-      console.log(context.user);
-      // throw new AuthenticationError("Please login");
+    users: async (parent, args, context) => {
+      if (context.user) {
+        const users = await User.find().populate("places");
+        return users;
+      }
+
+      throw new AuthenticationError("Please login");
+    },
+    user: async (parent, args, context) => {
+      console.log("hits");
+      if (context.user) {
+        const user = await User.findOne({ email: context.user.email }).populate(
+          "places"
+        );
+        console.log(context.user);
+        return user;
+      }
+      throw new AuthenticationError("Please login");
     },
     place: async (parent, { placeId }) => {
       return Place.findOne({ _id: placeId });
@@ -34,7 +47,6 @@ const resolvers = {
         password,
         followers: 0,
         following: 0,
-        likes: 0,
       });
       const token = signToken({ id: user._id, email: user.email });
 
@@ -44,39 +56,40 @@ const resolvers = {
     },
 
     addPlace: async (_, { title, description, address, image }, context) => {
-      console.log("hits");
-      console.log(context.user);
+      if (context.user) {
+        let coordinates;
+        try {
+          coordinates = await convertAdressToCoordinates(address);
+          console.log(context.user);
+        } catch (error) {}
 
-      let coordinates;
-      try {
         coordinates = await convertAdressToCoordinates(address);
-      } catch (error) {}
 
-      coordinates = await convertAdressToCoordinates(address);
-      console.log(coordinates);
+        const place = await Place.create({
+          title,
+          description,
+          address,
+          location: coordinates,
+          likes: [],
+          creator: context.user._id,
+        });
 
-      // const place = await Place.create({
-      //   title,
-      //   description,
-      //   address,
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { places: place._id } },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
 
-      //   location: coordinates,
-      //   likes: 0,
-      // });
-
-      // await User.findOneAndUpdate(
-      //   { _id: creator },
-      //   { $addToSet: { places: place._id } },
-      //   {
-      //     new: true,
-      //     runValidators: true,
-      //   }
-      // );
-
-      // return place;
+        return place;
+      }
+      throw new AuthenticationError("You need to be logged in");
     },
 
     login: async (parent, { email, password }) => {
+      console.log(email);
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -104,6 +117,73 @@ const resolvers = {
       );
 
       return removedPlace;
+    },
+    updatePlace: async (_, args, context) => {
+      console.log(args);
+
+      try {
+        const updatedPlace = await Place.findOneAndUpdate(
+          { _id: args.id },
+          {
+            $set: { title: args.title, description: args.description },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+
+        return updatedPlace;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    addLike: async (_, args, context) => {
+      console.log(args);
+      console.log(pubsub);
+
+      try {
+        const newLikes = await Place.findOneAndUpdate(
+          { _id: args.id },
+          {
+            // $set: { likes: likes + 1 },
+            $addToSet: { likes: context.user._id },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+        pubsub.publish("LIKE_ADDED", { updatedLikes: newLikes });
+        return newLikes;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    removeLike: async (_, { id }, context) => {
+      try {
+        const removedLike = await Place.findOneAndUpdate(
+          { _id: id },
+          {
+            // $set: { likes: likes + 1 },
+            $pull: { likes: context.user._id },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+        return removedLike;
+      } catch (error) {}
+    },
+  },
+  Subscription: {
+    likesAdded: {
+      subscribe: () => {
+        pubsub.asyncIterator(["LIKE_ADDED"]);
+      },
     },
   },
 };

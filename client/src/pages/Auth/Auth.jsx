@@ -83,7 +83,7 @@ const AuthForm = () => {
         Auth.login(data?.login?.token);
         console.log(data?.login?.user);
       } catch (error) {
-        console.error(error);
+        console.log(JSON.stringify(error));
         // toast.error(error[0].message);
         setErr(error.message);
       }
@@ -99,7 +99,7 @@ const AuthForm = () => {
         console.log(data);
         Auth.login(data?.addUser?.token);
       } catch (error) {
-        console.error(error);
+        console.log(JSON.stringify(error));
         setErr(error.message);
       }
     }

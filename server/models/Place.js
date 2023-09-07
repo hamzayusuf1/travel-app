@@ -15,10 +15,7 @@ const placeSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  likes: {
-    type: Number,
-    required: true,
-  },
+  likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 const Place = model("Place", placeSchema);

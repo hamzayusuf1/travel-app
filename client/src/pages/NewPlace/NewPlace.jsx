@@ -1,6 +1,7 @@
 import React, { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
+import { toast } from "react-hot-toast";
 
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/button";
@@ -77,6 +78,7 @@ const NewPlace = () => {
           address: formState.inputs.address.value,
         },
       });
+      toast.success("Post added successfully");
       navigate("/home/recents");
     } catch (error) {
       console.error(error);

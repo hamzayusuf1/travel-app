@@ -20,7 +20,7 @@ const typeDefs = gql`
     address: String
     location: Location
     createdAt: String
-    likes: Float
+    likes: [User]!
   }
 
   input locationInput {
@@ -41,16 +41,24 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
-    user(username: String!): User
+    user: User
     places: [Place]
     place(placeId: ID!): Place
+    hello: String
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addPlace(title: String!, description: String!, address: String!): Place
+    updatePlace(id: ID!, title: String!, description: String!): Place
     deletePlace(placeId: String!, creator: String!): Place
+    addLike(id: ID!): Place
+    removeLike(id: ID!): Place
+  }
+
+  type Subscription {
+    likesAdded: Place
   }
 `;
 
