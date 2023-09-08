@@ -21,6 +21,7 @@ const typeDefs = gql`
     location: Location
     createdAt: String
     likes: [User]!
+    creator: User
   }
 
   input locationInput {
@@ -45,6 +46,7 @@ const typeDefs = gql`
     places: [Place]
     place(placeId: ID!): Place
     hello: String
+    profile(id: ID!): User
   }
 
   type Mutation {

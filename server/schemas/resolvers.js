@@ -20,22 +20,40 @@ const resolvers = {
 
       throw new AuthenticationError("Please login");
     },
+
     user: async (parent, args, context) => {
-      console.log("hits");
       if (context.user) {
         const user = await User.findOne({ email: context.user.email }).populate(
           "places"
         );
-        console.log(context.user);
+
         return user;
       }
       throw new AuthenticationError("Please login");
     },
+
+    profile: async (_, args, context) => {
+      console.log("hits");
+      console.log(args.id);
+
+      const user = await User.findOne({ _id: args.id }).populate("places");
+      if (user) {
+        return user;
+      }
+
+      throw new Error("User does not exist");
+    },
+
     place: async (parent, { placeId }) => {
       return Place.findOne({ _id: placeId });
     },
     places: async () => {
-      return Place.find().sort({ createdAt: -1 });
+      const allPlaces = await Place.find()
+        .sort({ createdAt: -1 })
+        .populate("creator");
+
+      console.log(allPlaces);
+      return allPlaces;
     },
   },
 
@@ -99,7 +117,7 @@ const resolvers = {
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new ApolloError("incorrect password");
+        throw new ApolloError("Incorrect password");
       }
 
       const token = signToken(user);

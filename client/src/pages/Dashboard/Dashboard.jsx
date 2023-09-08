@@ -1,65 +1,61 @@
-import React from "react";
-import { useQuery } from "@apollo/client";
+import React, { useState } from "react";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
 
-import { GET_ME } from "../../utils/queries";
+import { GET_ME, USER_PROFILE } from "../../utils/queries";
 import PlaceItem from "../../components/PlaceItem/PlaceItem";
-
-const DUMMY_USERS = [
-  {
-    followers: 2,
-    following: 2,
-    name: "Hamza Yusuf",
-  },
-];
-
-const DUMMY_DATA = [
-  {
-    id: 1,
-    title: "empire state building",
-    description: "One of the most tallest skyscrapers in the world",
-    imageURL: "/images/empire.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    creator: "u1",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878531,
-    },
-  },
-
-  {
-    id: 3,
-    title: "Burj Khalifa",
-    description: "The tallest skyscraper in the world",
-    imageURL: "/images/burj.jpg",
-    address:
-      "Sheikh Mohammed bin Rashid Blvd - Downtown Dubai - Dubai - United Arab Emirates",
-    creator: "u3",
-    location: {
-      lat: 25.197197,
-      lng: 55.2721877,
-    },
-  },
-
-  {
-    id: 2,
-    title: "empire state building",
-    description: "One of the most tallest skyscrapers in the world",
-    imageURL: "/images/empire.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    creator: "u2",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878531,
-    },
-  },
-];
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const Dashboard = () => {
-  const { loading, data } = useQuery(GET_ME);
+  // const { loading, data } = useQuery(GET_ME);
 
-  const userData = data?.user || {};
+  // const userData = data?.user || {};
 
-  console.log(data?.user.places);
+  // console.log(data?.user.places);
+
+  const [userData, setUserData] = useState({});
+  console.log(userData?.places);
+
+  const urlId = useParams();
+  console.log(urlId);
+
+  const dummyId = "64f8754bb5ffd31757c22f3e";
+
+  const USER = gql`
+    query profile($id: ID!) {
+      profile(id: $id) {
+        _id
+      }
+    }
+  `;
+  const [profileQuery] = useLazyQuery(USER_PROFILE);
+
+  const loadData = async () => {
+    const { data } = await profileQuery({
+      variables: {
+        id: urlId.id,
+      },
+    });
+    console.log(data);
+    setUserData(data.profile);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  // const loadProfile = async () => {
+  //   const response = profileQuery({
+  //     variables: {
+  //       id: dummyId,
+  //     },
+  //   });
+  //   console.log(response.data);
+  //   return data;
+  // };
+
+  const data = 2;
+  const loading = false;
 
   if (loading) {
     return <h2>Loading</h2>;
@@ -71,15 +67,15 @@ const Dashboard = () => {
         <img src="/images/user.png" className="w-[100px] mb-6" />
 
         <h1 className="text-3xl font-bold font-rubik mb-4">
-          {userData.username}
+          {userData?.username}
         </h1>
         <div className="w-[300px] flex justify-evenly">
           <div className="flex flex-col items-center">
-            <span className="">{userData.following || 0}</span>
+            <span className="">{userData?.following || 0}</span>
             <p className="font-semibold text-slate-600">Following</p>
           </div>
           <div className="flex flex-col items-center">
-            <span className="">{userData.following || 0}</span>
+            <span className="">{userData?.following || 0}</span>
             <p className="font-semibold text-slate-600">Following</p>
           </div>
         </div>
@@ -108,6 +104,7 @@ const Dashboard = () => {
                 address={place.address}
                 creatorId={place.creator}
                 coordinates={place.location}
+                creator={place.creator}
               />
             );
           })}

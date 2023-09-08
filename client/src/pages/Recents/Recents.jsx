@@ -8,6 +8,8 @@ import { GET_POSTS } from "../../utils/queries";
 const Recents = () => {
   const { loading, data, error } = useQuery(GET_POSTS);
 
+  console.log(data);
+
   // useEffect(async () => {
   //   try {
   //     const { data } = await getPosts();
@@ -32,6 +34,7 @@ const Recents = () => {
             address={place.address}
             creatorId={place.creator}
             coordinates={place.location}
+            creator={place.creator}
           />
         );
       })}

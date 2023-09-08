@@ -1,5 +1,7 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
-// import Landing from "../pages/Landing/Landing";
+import { useQuery } from "@apollo/client";
+
+import { GET_ME, USER_PROFILE } from "../utils/queries";
 
 import NavLinks from "../components/Navlinks/NavLinks";
 import {
@@ -23,6 +25,12 @@ export const Main = () => {
     </div>
   );
 };
+
+// const loaderParam = async ({ params }) => {
+//   const { data } = await useQuery(USER_PROFILE, {
+//     variables: { id: params.id },
+//   });
+// };
 
 const router = createBrowserRouter([
   {
@@ -58,7 +66,7 @@ const router = createBrowserRouter([
             element: <NewPlace />,
           },
           {
-            path: "/home/dashboard",
+            path: "/home/dashboard/:id",
             element: <Dashboard />,
           },
           {

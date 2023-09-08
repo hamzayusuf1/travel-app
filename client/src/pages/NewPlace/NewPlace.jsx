@@ -80,6 +80,7 @@ const NewPlace = () => {
       });
       toast.success("Post added successfully");
       navigate("/home/recents");
+      navigate(0);
     } catch (error) {
       console.error(error);
       // setErr(error.message);

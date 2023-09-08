@@ -1,14 +1,16 @@
 import React from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
-import Banner from "../../components/Banner/Banner";
+import { useQuery } from "@apollo/client";
 
+import Banner from "../../components/Banner/Banner";
 import PlaceItem from "../../components/PlaceItem/PlaceItem";
 import Auth from "../../utils/Auth";
+import { GET_ME } from "../../utils/queries";
 
 const menuLinks = [
   {
     name: "Home",
-    link: "/home/recents",
+    link: `/home/recents/`,
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -27,30 +29,7 @@ const menuLinks = [
       </svg>
     ),
   },
-  {
-    name: "Dashboard",
-    link: "/home/dashboard",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="icon icon-tabler icon-tabler-layout-dashboard"
-        width="32"
-        height="32"
-        viewBox="0 0 24 24"
-        stroke-width="2.5"
-        stroke="#2c3e50"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M4 4h6v8h-6z" />
-        <path d="M4 16h6v4h-6z" />
-        <path d="M14 12h6v8h-6z" />
-        <path d="M14 4h6v4h-6z" />
-      </svg>
-    ),
-  },
+
   {
     name: "Posts",
     link: "/home/posts",
@@ -97,51 +76,11 @@ const menuLinks = [
   // },
 ];
 
-const DUMMY_DATA = [
-  {
-    id: 1,
-    title: "empire state building",
-    description: "One of the most tallest skyscrapers in the world",
-    imageURL:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    creator: "u1",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878531,
-    },
-  },
-  {
-    id: 2,
-    title: "empire state building",
-    description: "One of the most tallest skyscrapers in the world",
-    imageURL:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    creator: "u2",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878531,
-    },
-  },
-  {
-    id: 3,
-    title: "Burj Khalifa",
-    description: "The tallest skyscraper in the world",
-    imageURL:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
-    address:
-      "Sheikh Mohammed bin Rashid Blvd - Downtown Dubai - Dubai - United Arab Emirates",
-    creator: "u3",
-    location: {
-      lat: 25.197197,
-      lng: 55.2721877,
-    },
-  },
-];
-
 const Home = () => {
-  const { link } = useParams();
+  //Get user data for post
+  const { loading, data } = useQuery(GET_ME);
+
+  const userData = data?.user || {};
 
   return (
     <div className="w-full h-full bg-lightBlue bg-lightBlue md:flex">
@@ -162,6 +101,36 @@ const Home = () => {
               <span className="text-lg hidden md:block">{nav.name}</span>
             </Link>
           ))}
+
+          {Auth.loggedIn(localStorage.getItem("id_token")) && (
+            <Link
+              key={"Dashboard"}
+              to={`/home/dashboard/${data?.user?._id}`}
+              className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-black hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out text-black flex items-center space-x-2"
+            >
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-layout-dashboard"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="#2c3e50"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 4h6v8h-6z" />
+                  <path d="M4 16h6v4h-6z" />
+                  <path d="M14 12h6v8h-6z" />
+                  <path d="M14 4h6v4h-6z" />
+                </svg>
+              </div>
+              <span className="text-lg hidden md:block">Dashboard</span>
+            </Link>
+          )}
 
           {Auth.loggedIn(localStorage.getItem("id_token")) && (
             <Link

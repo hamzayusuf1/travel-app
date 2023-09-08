@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation, useSubscription } from "@apollo/client";
+import { useMutation, useSubscription, useQuery } from "@apollo/client";
 import { Button } from "@mui/material";
 import { Delete, Send } from "@mui/icons-material";
 
 import { AuthContext } from "../../context/AuthContext";
 import Auth from "../../utils/Auth";
 import { ADD_LIKE, REMOVE_LIKE } from "../../utils/mutations";
+import { GET_ME } from "../../utils/queries";
 
 import "./PlaceItem.css";
 import Map from "../Modal/Map";
@@ -15,6 +16,15 @@ import ErrorModal from "../Modal/ErrorModal";
 import { LIKES_SUBSCRIPTION } from "../../utils/subscriptions";
 
 const PlaceItem = (props) => {
+  //Get user data for post
+  const { loading, data } = useQuery(GET_ME);
+
+  // console.log(props.creator.username);
+
+  const userData = data?.user || {};
+
+  console.log(data?.user.places);
+
   const [addLikes, { error }] = useMutation(ADD_LIKE);
   const [removeLikes, { error2 }] = useMutation(REMOVE_LIKE);
   const { likesSub, error3 } = useSubscription(LIKES_SUBSCRIPTION);
@@ -148,16 +158,20 @@ const PlaceItem = (props) => {
               </svg>
             </div>
           )}
-
-          <p className="mt-4 mb-2 font-montserrat">
-            {`Liked by  `}{" "}
-            <span className="font-semibold font-montserrat">{`${allLikes} others`}</span>
-          </p>
-
-          <h2 className="font-semibold text-3xl text-center mb-2">
-            {props.title}
-          </h2>
-          <p className="text-xl text-center mb-3">{props.description}</p>
+          {/* no of likes and user who posted section */}
+          <div className="flex justify-between items-center mt-4 mb-1">
+            <p className=" text-sm font-montserrat">
+              {`Liked by  `}{" "}
+              <span className="font-semibold font-montserrat">{`${allLikes} others`}</span>
+            </p>
+            <Link to={`/home/dashboard/${props?.creator?._id}`}>
+              {Auth.loggedIn(localStorage.getItem("id_token")) && (
+                <p className="font-medium">{props?.creator?.username}</p>
+              )}
+            </Link>
+          </div>
+          <h2 className="font-semibold text-2xl  mb-1">{props.title}</h2>
+          <p className="text-lg text-gray-700 mb-3">{props.description}</p>
         </div>
         <div className="flex justify-center">
           <button

@@ -19,6 +19,28 @@ export const GET_ME = gql`
         title
         description
         address
+        creator {
+          _id
+          username
+        }
+      }
+    }
+  }
+`;
+
+export const USER_PROFILE = gql`
+  query profile($id: ID!) {
+    profile(id: $id) {
+      _id
+      email
+      username
+      followers
+      following
+      places {
+        _id
+        title
+        description
+        address
       }
     }
   }
@@ -39,6 +61,10 @@ export const GET_POSTS = gql`
       title
       description
       address
+      creator {
+        _id
+        username
+      }
       location {
         lat
         lng
