@@ -82,7 +82,7 @@
 
 const express = require("express");
 const app = express();
-const PORT = process.env.port || 3001;
+const PORT = process.env.PORT || 3001;
 const db = require("./config/connection");
 const path = require("path");
 require("dotenv").config();

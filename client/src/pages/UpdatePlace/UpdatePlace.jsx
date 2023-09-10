@@ -23,8 +23,10 @@ const UpdatePlace = (props) => {
 
   const { placeId } = useParams();
 
+  console.log(placeId);
+
   const handleUpdate = async (e) => {
-    e.preventDafault();
+    e.preventDefault();
 
     try {
       const { data } = await updatePlaces({
@@ -35,6 +37,8 @@ const UpdatePlace = (props) => {
         },
       });
       console.log(data);
+      navigate("/home/recents");
+      navigate(0);
     } catch (error) {
       console.error(error);
     }

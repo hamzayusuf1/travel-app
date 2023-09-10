@@ -23,7 +23,10 @@ module.exports = {
 
     // verify token and get user data out of it
     try {
-      const { data } = jwt.verify(token, secret, { maxAge: expiration });
+      const { data } = jwt.verify(token, process.env.SECRET_KEY, {
+        maxAge: process.env.EXPIRATION,
+      });
+
       req.user = data;
     } catch {
       console.log("Invalid token");
@@ -35,7 +38,7 @@ module.exports = {
   signToken: function ({ username, email, _id }) {
     const payload = { username, email, _id };
 
-    return jwt.sign({ data: payload }, process.env.SEKRET_KEY, {
+    return jwt.sign({ data: payload }, process.env.SECRET_KEY, {
       expiresIn: process.env.EXPIRATION,
     });
   },

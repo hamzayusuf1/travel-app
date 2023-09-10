@@ -23,8 +23,6 @@ const PlaceItem = (props) => {
 
   const userData = data?.user || {};
 
-  console.log(data?.user.places);
-
   const [addLikes, { error }] = useMutation(ADD_LIKE);
   const [removeLikes, { error2 }] = useMutation(REMOVE_LIKE);
   const { likesSub, error3 } = useSubscription(LIKES_SUBSCRIPTION);

@@ -4,6 +4,7 @@ const { signToken } = require("../utils/auth");
 const convertAdressToCoordinates = require("../utils/address");
 const { PubSub } = require("graphql-subscriptions");
 const pubsub = new PubSub();
+require("dotenv").config();
 
 const { ApolloError, AuthenticationError } = require("apollo-server-express");
 
@@ -33,9 +34,6 @@ const resolvers = {
     },
 
     profile: async (_, args, context) => {
-      console.log("hits");
-      console.log(args.id);
-
       const user = await User.findOne({ _id: args.id }).populate("places");
       if (user) {
         return user;
@@ -52,7 +50,6 @@ const resolvers = {
         .sort({ createdAt: -1 })
         .populate("creator");
 
-      console.log(allPlaces);
       return allPlaces;
     },
   },
@@ -68,8 +65,6 @@ const resolvers = {
       });
       const token = signToken({ id: user._id, email: user.email });
 
-      console.log(token);
-
       return { token, user };
     },
 
@@ -78,7 +73,6 @@ const resolvers = {
         let coordinates;
         try {
           coordinates = await convertAdressToCoordinates(address);
-          console.log(context.user);
         } catch (error) {}
 
         coordinates = await convertAdressToCoordinates(address);
@@ -107,7 +101,6 @@ const resolvers = {
     },
 
     login: async (parent, { email, password }) => {
-      console.log(email);
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -138,6 +131,7 @@ const resolvers = {
     },
     updatePlace: async (_, args, context) => {
       console.log(args);
+      console.log("hits");
 
       try {
         const updatedPlace = await Place.findOneAndUpdate(
@@ -158,9 +152,6 @@ const resolvers = {
     },
 
     addLike: async (_, args, context) => {
-      console.log(args);
-      console.log(pubsub);
-
       try {
         const newLikes = await Place.findOneAndUpdate(
           { _id: args.id },
