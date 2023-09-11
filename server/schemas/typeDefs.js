@@ -54,13 +54,13 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addPlace(title: String!, description: String!, address: String!): Place
     updatePlace(id: ID!, title: String!, description: String!): Place
-    deletePlace(placeId: String!, creator: String!): Place
+    deletePlace(placeId: ID!, creator: ID!): Place
     addLike(id: ID!): Place
     removeLike(id: ID!): Place
   }
 
   type Subscription {
-    likesAdded: Place
+    newLike: Place
   }
 `;
 

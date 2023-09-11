@@ -47,6 +47,14 @@ export const UPDATE_PLACE = gql`
   }
 `;
 
+export const DELETE_PLACE = gql`
+  mutation offDatabase($placeId: ID!, $creator: ID!) {
+    deletePlace(placeId: $placeId, creator: $creator) {
+      title
+    }
+  }
+`;
+
 export const ADD_LIKE = gql`
   mutation addLike($id: ID!) {
     addLike(id: $id) {

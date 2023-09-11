@@ -1,16 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useSubscription, useQuery } from "@apollo/client";
-import { Button } from "@mui/material";
-import { Delete, Send } from "@mui/icons-material";
 
 import { AuthContext } from "../../context/AuthContext";
 import Auth from "../../utils/Auth";
-import { ADD_LIKE, REMOVE_LIKE } from "../../utils/mutations";
+import { ADD_LIKE, REMOVE_LIKE, DELETE_PLACE } from "../../utils/mutations";
 import { GET_ME } from "../../utils/queries";
 
 import "./PlaceItem.css";
-import Map from "../Modal/Map";
 import MapModal from "../Modal/MapModal";
 import ErrorModal from "../Modal/ErrorModal";
 import { LIKES_SUBSCRIPTION } from "../../utils/subscriptions";
@@ -21,11 +18,16 @@ const PlaceItem = (props) => {
 
   // console.log(props.creator.username);
 
+  const { likesSub, error3 } = useSubscription(LIKES_SUBSCRIPTION, {
+    variables: { id: props.id },
+  });
+
+  console.log(props.creator);
+
   const userData = data?.user || {};
 
   const [addLikes, { error }] = useMutation(ADD_LIKE);
   const [removeLikes, { error2 }] = useMutation(REMOVE_LIKE);
-  const { likesSub, error3 } = useSubscription(LIKES_SUBSCRIPTION);
 
   const [like, setLike] = useState(false);
 
@@ -108,6 +110,8 @@ const PlaceItem = (props) => {
         open={confirmModal}
         onClose={cancelDeleteHandler}
         layoutStyles={{ width: "75%", bgcolor: "error.main" }}
+        creator={props.creator}
+        id={props.id}
       />
       <div className="md:w-[446px] bg-black w-[396px] bg-white hover:bg-gray-100 rounded-lg border border-gray-200 shadow-md mb-5 mx-3">
         <div className="">

@@ -1,12 +1,37 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
+import { useMutation } from "@apollo/client";
+
+import { DELETE_PLACE } from "../../utils/mutations";
 
 import Button from "../Button/button";
+import { useNavigate } from "react-router-dom";
 
-const ErrorModal = ({ open, layoutStyles, onClose }) => {
+const ErrorModal = ({ open, layoutStyles, onClose, creator, id }) => {
+  const navigate = useNavigate();
+
   const onClick = (e) => {
     if (e.target.id === "container1") {
       onClose();
+    }
+  };
+  const [deletePlace, { error }] = useMutation(DELETE_PLACE);
+
+  const handleDelete = async () => {
+    console.log(creator._id);
+
+    try {
+      const { data } = await deletePlace({
+        variables: {
+          placeId: id,
+          creator: creator._id,
+        },
+      });
+      console.log(data);
+      navigate("/home/recents");
+      navigate(0);
+    } catch (error) {
+      console.error(JSON.stringify(error));
     }
   };
 
@@ -14,13 +39,13 @@ const ErrorModal = ({ open, layoutStyles, onClose }) => {
     <Box>
       {open && (
         <div
-          className="fixed inset-0 mb-4 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
+          className="fixed inset-0 mb-4 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center "
           id="container1"
           onClick={onClick}
         >
-          <div className="w-4/5 h-2/5 bg-white flex flex-col justify-between">
-            <div className="bg-sky-500 h-16 flex flex-col items-center">
-              <p className="text-center text-3xl mt-3 font-semibold">
+          <div className="w-4/5 h-2/5 bg-white flex flex-col justify-between rounded-lg">
+            <div className="bg-sky-500 flex flex-col items-center p-4">
+              <p className="text-center text-3xl font-semibold">
                 Are you sure you want to delete this post?
               </p>
             </div>
@@ -46,6 +71,7 @@ const ErrorModal = ({ open, layoutStyles, onClose }) => {
                 value={"Yes"}
                 variant="contained"
                 size="large"
+                onClick={handleDelete}
               ></Button>
             </div>
           </div>

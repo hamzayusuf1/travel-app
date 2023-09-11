@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const LIKES_SUBSCRIPTION = gql`
-  subscription likesAdded {
-    likesAdded {
+  subscription newLike {
+    newLike {
       _id
       likes {
         _id

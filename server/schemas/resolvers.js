@@ -2,7 +2,7 @@ const Place = require("../models/Place");
 const User = require("../models/User");
 const { signToken } = require("../utils/auth");
 const convertAdressToCoordinates = require("../utils/address");
-const { PubSub } = require("graphql-subscriptions");
+const { PubSub, withFilter } = require("graphql-subscriptions");
 const pubsub = new PubSub();
 require("dotenv").config();
 
@@ -34,7 +34,11 @@ const resolvers = {
     },
 
     profile: async (_, args, context) => {
-      const user = await User.findOne({ _id: args.id }).populate("places");
+      const user = await User.findOne({ _id: args.id }).populate({
+        path: "places",
+        options: { createdAt: -1 },
+      });
+
       if (user) {
         return user;
       }
@@ -119,6 +123,7 @@ const resolvers = {
     },
 
     deletePlace: async (parent, { placeId, creator }) => {
+      console.log(placeId);
       const removedPlace = await Place.findOneAndDelete({ _id: placeId });
 
       await User.findByIdAndUpdate(
@@ -130,9 +135,6 @@ const resolvers = {
       return removedPlace;
     },
     updatePlace: async (_, args, context) => {
-      console.log(args);
-      console.log("hits");
-
       try {
         const updatedPlace = await Place.findOneAndUpdate(
           { _id: args.id },
@@ -164,7 +166,8 @@ const resolvers = {
             runValidators: true,
           }
         );
-        pubsub.publish("LIKE_ADDED", { updatedLikes: newLikes });
+        pubsub.publish("newLike", { updatedLikes: newLikes });
+        console.log(newLikes);
         return newLikes;
       } catch (error) {
         console.log(error);
@@ -189,9 +192,9 @@ const resolvers = {
     },
   },
   Subscription: {
-    likesAdded: {
+    newLike: {
       subscribe: () => {
-        pubsub.asyncIterator(["LIKE_ADDED"]);
+        pubsub.asyncIterator(["newLike"]);
       },
     },
   },
