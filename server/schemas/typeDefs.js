@@ -7,8 +7,8 @@ const typeDefs = gql`
     email: String
     password: String
     image: String
-    followers: Int!
-    following: Int!
+    followers: [User]
+    following: [User]
     places: [Place]!
   }
 
@@ -40,6 +40,11 @@ const typeDefs = gql`
     user: User
   }
 
+  type twoUsers {
+    newFollowers: User
+    newFollowing: User
+  }
+
   type Query {
     users: [User]
     user: User
@@ -57,6 +62,8 @@ const typeDefs = gql`
     deletePlace(placeId: ID!, creator: ID!): Place
     addLike(id: ID!): Place
     removeLike(id: ID!): Place
+    addFollower(id: ID!): twoUsers
+    removeFollower(id: ID!): User
   }
 
   type Subscription {

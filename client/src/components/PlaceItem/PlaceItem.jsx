@@ -22,8 +22,6 @@ const PlaceItem = (props) => {
     variables: { id: props.id },
   });
 
-  console.log(props.creator);
-
   const userData = data?.user || {};
 
   const [addLikes, { error }] = useMutation(ADD_LIKE);

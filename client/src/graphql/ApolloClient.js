@@ -11,7 +11,7 @@ import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: "http://localhost:4000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -27,7 +27,7 @@ const authLink = setContext((_, { headers }) => {
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: "ws://localhost:3001/graphq1",
+    url: "ws://localhost:3000/graphql",
   })
 );
 
@@ -40,11 +40,11 @@ const splitLink = split(
     );
   },
   wsLink,
-  authLink.concat(httpLink)
+  httpLink
 );
 
 export const client = new ApolloClient({
   //configure client to execute the 'authlink' middleware prior to every request to the backend
-  link: splitLink,
+  link: authLink.concat(splitLink),
   cache: new InMemoryCache(),
 });

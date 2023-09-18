@@ -7,8 +7,12 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
-        followers
-        following
+        followers {
+          _id
+        }
+        following {
+          _id
+        }
       }
     }
   }
@@ -70,6 +74,17 @@ export const REMOVE_LIKE = gql`
   mutation removeLike($id: ID!) {
     removeLike(id: $id) {
       title
+    }
+  }
+`;
+
+export const ADD_FOLLOWER = gql`
+  mutation ADD_FOLLOWER($id: ID!) {
+    addFollower(id: $id) {
+      username
+      follower {
+        _id
+      }
     }
   }
 `;

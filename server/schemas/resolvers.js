@@ -7,6 +7,7 @@ const pubsub = new PubSub();
 require("dotenv").config();
 
 const { ApolloError, AuthenticationError } = require("apollo-server-express");
+const { Context } = require("express-validator/src/context");
 
 const resolvers = {
   Query: {
@@ -64,15 +65,14 @@ const resolvers = {
         username,
         email,
         password,
-        followers: 0,
-        following: 0,
       });
-      const token = signToken({ id: user._id, email: user.email });
+      const token = signToken({ _id: user._id, email: user.email });
 
       return { token, user };
     },
 
     addPlace: async (_, { title, description, address, image }, context) => {
+      console.log(context.user);
       if (context.user) {
         let coordinates;
         try {
@@ -166,7 +166,7 @@ const resolvers = {
             runValidators: true,
           }
         );
-        pubsub.publish("newLike", { updatedLikes: newLikes });
+        pubsub.publish("NEW_LIKE", { updatedLikes: newLikes });
         console.log(newLikes);
         return newLikes;
       } catch (error) {
@@ -190,11 +190,59 @@ const resolvers = {
         return removedLike;
       } catch (error) {}
     },
+    addFollower: async (_, args, context) => {
+      try {
+        const newFollowing = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: { following: args.id },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+
+        const newFollowers = await User.findOneAndUpdate(
+          { _id: args.id },
+          {
+            // $set: { likes: likes + 1 },
+            $addToSet: { followers: "6507fc00788e3ed1795c64a1" },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+
+        console.log(newFollowers);
+        return { newFollowers, newFollowing };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    removeFollower: async (_, args, context) => {
+      try {
+        const removedFollower = await Place.findOneAndUpdate(
+          { _id: args.id },
+          {
+            // $set: { likes: likes + 1 },
+            $pull: { likes: context.user._id },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+        return removedFollower;
+      } catch (error) {}
+    },
   },
   Subscription: {
     newLike: {
       subscribe: () => {
-        pubsub.asyncIterator(["newLike"]);
+        return pubsub.asyncIterator(["NEW_LIKE"]);
       },
     },
   },

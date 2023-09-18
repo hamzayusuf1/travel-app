@@ -20,14 +20,9 @@ const userSchema = new Schema({
   image: {
     type: String,
   },
-  followers: {
-    type: Number,
-    required: true,
-  },
-  following: {
-    type: Number,
-    required: true,
-  },
+
+  followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  following: [{ type: Schema.Types.ObjectId, ref: "User" }],
 
   places: [
     {

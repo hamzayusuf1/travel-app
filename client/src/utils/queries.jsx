@@ -12,8 +12,12 @@ export const GET_ME = gql`
       _id
       email
       username
-      followers
-      following
+      followers {
+        _id
+      }
+      following {
+        _id
+      }
       places {
         _id
         title
@@ -34,8 +38,12 @@ export const USER_PROFILE = gql`
       _id
       email
       username
-      followers
-      following
+      followers {
+        _id
+      }
+      following {
+        _id
+      }
       places {
         _id
         title

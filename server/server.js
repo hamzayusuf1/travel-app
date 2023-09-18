@@ -82,7 +82,7 @@
 
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3001;
+const port = process.env.PORT || 4000;
 const db = require("./config/connection");
 const path = require("path");
 require("dotenv").config();
@@ -106,13 +106,16 @@ const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 const wsServer = new WebSocketServer({
   server: httpServer,
-  path: "/graphq1",
+  path: "/graphql",
 });
 
 const apolloServer = new ApolloServer({
   schema,
   context: authMiddleware,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  // subscriptions: {
+  //   path: "/subscriptions",
+  // },
 });
 
 app.use(express.json());
@@ -136,9 +139,12 @@ app.use(routes);
   useServer({ schema }, wsServer);
   await apolloServer.start();
   apolloServer.applyMiddleware({ app });
-  httpServer.listen(PORT, () => {
+  httpServer.listen(port, () => {
     console.log(
-      `🚀 Query endpoint ready at http://localhost:${PORT}${apolloServer.graphqlPath}`
+      `🚀 Query endpoint ready at http://localhost:${port}${apolloServer.graphqlPath}`
+    );
+    console.log(
+      `🚀 Subscription endpoint ready at ws://localhost:${port}${apolloServer.graphqlPath}`
     );
   });
 })();

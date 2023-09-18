@@ -80,6 +80,8 @@ const Home = () => {
   //Get user data for post
   const { loading, data } = useQuery(GET_ME);
 
+  console.log(data);
+
   const userData = data?.user || {};
 
   return (
