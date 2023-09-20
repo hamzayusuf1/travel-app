@@ -83,7 +83,7 @@ export const ADD_FOLLOWER = gql`
     addFollower(id: $id) {
       newFollowing {
         username
-        follower {
+        followers {
           _id
         }
         following {
@@ -92,7 +92,7 @@ export const ADD_FOLLOWER = gql`
       }
       newFollowers {
         username
-        follower {
+        followers {
           _id
         }
         following {

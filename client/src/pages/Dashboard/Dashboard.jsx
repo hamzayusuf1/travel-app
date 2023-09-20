@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { CLoadingButton } from "@coreui/react-pro";
 
 import { GET_ME, USER_PROFILE } from "../../utils/queries";
 import { ADD_FOLLOWER } from "../../utils/mutations";
@@ -17,7 +18,10 @@ const Dashboard = () => {
 
   const [followed, setFollowed] = useState(false);
 
-  const [addFollower, { error }] = useMutation(ADD_FOLLOWER);
+  const [state, setState] = useState(false);
+
+  const [addFollower, { error, loading2 }] = useMutation(ADD_FOLLOWER);
+  const [profileQuery] = useLazyQuery(USER_PROFILE);
 
   const handleFollow = async () => {
     try {
@@ -32,8 +36,6 @@ const Dashboard = () => {
 
   const [userData, setUserData] = useState({});
 
-  console.log(userData?.following);
-
   const urlId = useParams();
 
   const dummyId = "64f8754bb5ffd31757c22f3e";
@@ -45,7 +47,6 @@ const Dashboard = () => {
       }
     }
   `;
-  const [profileQuery] = useLazyQuery(USER_PROFILE);
 
   const loadData = async () => {
     const { data } = await profileQuery({
@@ -83,12 +84,15 @@ const Dashboard = () => {
       <div className="flex flex-col items-center mb-20">
         <div className=" flex flex-col items-center">
           <div className="flex w-full justify-end mb-4">
-            <button
-              onClick={handleFollow}
-              className="font-bold flex items-center gap-2 inline-block rounded bg-[#637194] px-4 py-2  text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-sky-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600"
+            <CLoadingButton
+              onClick={() => {
+                setState(!state);
+              }}
+              loading={state}
+              className=""
             >
               Follow <span className="text-xl">➕</span>
-            </button>
+            </CLoadingButton>
           </div>
 
           <img src="/images/user.png" className="w-[100px] mb-6" />

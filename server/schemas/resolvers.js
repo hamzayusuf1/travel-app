@@ -191,7 +191,9 @@ const resolvers = {
       } catch (error) {}
     },
     addFollower: async (_, args, context) => {
+      console.log("hits");
       console.log(args);
+      console.log(context.user);
       try {
         const newFollowing = await User.findOneAndUpdate(
           { _id: context.user._id },
