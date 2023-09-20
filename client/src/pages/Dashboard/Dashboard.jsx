@@ -15,15 +15,18 @@ const Dashboard = () => {
 
   // console.log(data?.user.places);
 
+  const [followed, setFollowed] = useState(false);
+
   const [addFollower, { error }] = useMutation(ADD_FOLLOWER);
 
-  const handleFollow = () => {
+  const handleFollow = async () => {
     try {
-      const { data } = addFollower({
+      const { data } = await addFollower({
         variables: {
           id: urlId.id,
         },
       });
+      console.log(data);
     } catch (error) {}
   };
 

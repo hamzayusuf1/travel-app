@@ -163,7 +163,13 @@ const AuthForm = () => {
             errorText="Please enter a valid passowrd, minimum 5 characters"
             onInput={formHandler}
           ></Input>
-
+          {err && (
+            <div className="border-2 rounded-lg border-red-400 p-1 my-3 bg-red-100">
+              <p className="text-center text-red-500 text-lg font-bold">
+                {err}
+              </p>
+            </div>
+          )}
           <div className="mt-6">
             <Button
               type="sumbit"
@@ -178,9 +184,6 @@ const AuthForm = () => {
               disabled={true}
               onClick={signUp}
             />
-          </div>
-          <div>
-            <p className="text-center text-red-500 text-lg">{err}</p>
           </div>
         </form>
       </div>

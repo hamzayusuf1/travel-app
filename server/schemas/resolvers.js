@@ -191,6 +191,7 @@ const resolvers = {
       } catch (error) {}
     },
     addFollower: async (_, args, context) => {
+      console.log(args);
       try {
         const newFollowing = await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -207,7 +208,7 @@ const resolvers = {
           { _id: args.id },
           {
             // $set: { likes: likes + 1 },
-            $addToSet: { followers: "6507fc00788e3ed1795c64a1" },
+            $addToSet: { followers: context.user._id },
           },
           {
             new: true,
@@ -215,8 +216,7 @@ const resolvers = {
           }
         );
 
-        console.log(newFollowers);
-        return { newFollowers, newFollowing };
+        return { newFollowing, newFollowers };
       } catch (error) {
         console.log(error);
       }
@@ -224,11 +224,11 @@ const resolvers = {
 
     removeFollower: async (_, args, context) => {
       try {
-        const removedFollower = await Place.findOneAndUpdate(
+        const removedFollower = await User.findOneAndUpdate(
           { _id: args.id },
           {
             // $set: { likes: likes + 1 },
-            $pull: { likes: context.user._id },
+            $pull: { followers: "6507fc00788e3ed1795c64a1" },
           },
           {
             new: true,

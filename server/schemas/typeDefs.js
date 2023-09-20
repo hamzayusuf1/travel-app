@@ -62,7 +62,7 @@ const typeDefs = gql`
     deletePlace(placeId: ID!, creator: ID!): Place
     addLike(id: ID!): Place
     removeLike(id: ID!): Place
-    addFollower(id: ID!): twoUsers
+    addFollower(id: ID!, id2: ID!): twoUsers
     removeFollower(id: ID!): User
   }
 

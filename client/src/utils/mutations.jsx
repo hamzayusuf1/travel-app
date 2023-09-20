@@ -79,11 +79,25 @@ export const REMOVE_LIKE = gql`
 `;
 
 export const ADD_FOLLOWER = gql`
-  mutation ADD_FOLLOWER($id: ID!) {
+  mutation addFollower($id: ID!) {
     addFollower(id: $id) {
-      username
-      follower {
-        _id
+      newFollowing {
+        username
+        follower {
+          _id
+        }
+        following {
+          _id
+        }
+      }
+      newFollowers {
+        username
+        follower {
+          _id
+        }
+        following {
+          _id
+        }
       }
     }
   }
