@@ -84,7 +84,7 @@ const Dashboard = () => {
       <div className="flex flex-col items-center mb-20">
         <div className=" flex flex-col items-center">
           <div className="flex w-full justify-end mb-4">
-            <CLoadingButton
+            {/* <CLoadingButton
               onClick={() => {
                 setState(!state);
               }}
@@ -92,7 +92,7 @@ const Dashboard = () => {
               className=""
             >
               Follow <span className="text-xl">➕</span>
-            </CLoadingButton>
+            </CLoadingButton> */}
           </div>
 
           <img src="/images/user.png" className="w-[100px] mb-6" />
@@ -102,12 +102,12 @@ const Dashboard = () => {
           </h1>
           <div className="w-[300px] flex justify-evenly">
             <div className="flex flex-col items-center">
-              <span className="">{userData?.following || 0}</span>
+              <span className="">{userData?.following?.length || 0}</span>
               <p className="font-semibold text-slate-600">Following</p>
             </div>
             <div className="flex flex-col items-center">
-              <span className="">{userData?.following || 0}</span>
-              <p className="font-semibold text-slate-600">Following</p>
+              <span className="">{userData?.followers?.length || 0}</span>
+              <p className="font-semibold text-slate-600">Followers</p>
             </div>
           </div>
         </div>
@@ -119,7 +119,7 @@ const Dashboard = () => {
         <h2 className="text-xl text-black font-bold">
           {" "}
           {userData?.places?.length
-            ? `Viewing ${userData.places.length} ${
+            ? `Viewing ${userData?.places.length} ${
                 userData.places.length === 1 ? "trip" : "trips"
               }:`
             : "You have no created trips!"}
@@ -134,7 +134,6 @@ const Dashboard = () => {
                 title={place.title}
                 description={place.description}
                 address={place.address}
-                creatorId={place.creator}
                 coordinates={place.location}
                 creator={place.creator}
               />

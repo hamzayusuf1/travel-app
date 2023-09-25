@@ -31,8 +31,6 @@ const PlaceItem = (props) => {
 
   const [allLikes, setAllLikes] = useState(0);
 
-  const { isLoggedIn } = useContext(AuthContext);
-
   const [openModal, setOpenModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
 

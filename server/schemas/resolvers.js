@@ -35,9 +35,10 @@ const resolvers = {
     },
 
     profile: async (_, args, context) => {
+      console.log(args);
       const user = await User.findOne({ _id: args.id }).populate({
         path: "places",
-        options: { createdAt: -1 },
+        options: { sort: { createdAt: -1 } },
       });
 
       if (user) {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useMutation } from "@apollo/client";
+import { toast } from "react-hot-toast";
 
 import { DELETE_PLACE } from "../../utils/mutations";
 
@@ -28,7 +29,7 @@ const ErrorModal = ({ open, layoutStyles, onClose, creator, id }) => {
         },
       });
       console.log(data);
-      navigate("/home/recents");
+      toast.success("Post deleted successfully");
       navigate(0);
     } catch (error) {
       console.error(JSON.stringify(error));

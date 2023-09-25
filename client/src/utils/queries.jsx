@@ -49,6 +49,9 @@ export const USER_PROFILE = gql`
         title
         description
         address
+        creator {
+          _id
+        }
       }
     }
   }
