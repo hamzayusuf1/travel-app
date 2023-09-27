@@ -9,7 +9,11 @@ require("dotenv").config();
 const { ApolloError, AuthenticationError } = require("apollo-server-express");
 const { Context } = require("express-validator/src/context");
 
+const { GraphQLUpload } = require("graphql-upload-minimal");
+
 const resolvers = {
+  Upload: GraphQLUpload,
+
   Query: {
     hello: () => {
       return "hello";
@@ -61,6 +65,22 @@ const resolvers = {
   },
 
   Mutation: {
+    singleUpload: async (parent, { file }) => {
+      const { createReadStream, filename, mimetype, encoding } = await file;
+
+      // Invoking the `createReadStream` will return a Readable Stream.
+      // See https://nodejs.org/api/stream.html#stream_readable_streams
+      const stream = createReadStream();
+
+      // This is purely for demonstration purposes and will overwrite the
+      // local-file-output.txt in the current working directory on EACH upload.
+      const out = require("fs").createWriteStream("local-file-output.txt");
+      stream.pipe(out);
+      await finished(out);
+
+      return { filename, mimetype, encoding };
+    },
+
     addUser: async (parent, { email, username, password }) => {
       const user = await User.create({
         username,
@@ -73,36 +93,36 @@ const resolvers = {
     },
 
     addPlace: async (_, { title, description, address, image }, context) => {
-      console.log(context.user);
-      if (context.user) {
-        let coordinates;
-        try {
-          coordinates = await convertAdressToCoordinates(address);
-        } catch (error) {}
+      console.log(title, image);
+      // if (context.user) {
+      //   let coordinates;
+      //   try {
+      //     coordinates = await convertAdressToCoordinates(address);
+      //   } catch (error) {}
 
-        coordinates = await convertAdressToCoordinates(address);
+      //   coordinates = await convertAdressToCoordinates(address);
 
-        const place = await Place.create({
-          title,
-          description,
-          address,
-          location: coordinates,
-          likes: [],
-          creator: context.user._id,
-        });
+      //   const place = await Place.create({
+      //     title,
+      //     description,
+      //     address,
+      //     location: coordinates,
+      //     likes: [],
+      //     creator: context.user._id,
+      //   });
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { places: place._id } },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
+      //   await User.findOneAndUpdate(
+      //     { _id: context.user._id },
+      //     { $addToSet: { places: place._id } },
+      //     {
+      //       new: true,
+      //       runValidators: true,
+      //     }
+      //   );
 
-        return place;
-      }
-      throw new AuthenticationError("You need to be logged in");
+      //   return place;
+      // }
+      // throw new AuthenticationError("You need to be logged in");
     },
 
     login: async (parent, { email, password }) => {

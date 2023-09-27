@@ -1,6 +1,8 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  scalar Upload
+
   type User {
     _id: ID
     username: String
@@ -45,6 +47,12 @@ const typeDefs = gql`
     newFollowing: User
   }
 
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+
   type Query {
     users: [User]
     user: User
@@ -57,13 +65,19 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addPlace(title: String!, description: String!, address: String!): Place
+    addPlace(
+      title: String!
+      description: String!
+      address: String!
+      image: Upload!
+    ): Place
     updatePlace(id: ID!, title: String!, description: String!): Place
     deletePlace(placeId: ID!, creator: ID!): Place
     addLike(id: ID!): Place
     removeLike(id: ID!): Place
     addFollower(id: ID!): twoUsers
     removeFollower(id: ID!): User
+    singleUpload(file: Upload!): File!
   }
 
   type Subscription {

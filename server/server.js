@@ -101,6 +101,8 @@ const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
 const { default: mongoose } = require("mongoose");
 
+const { graphqlUploadExpress } = require("graphql-upload-minimal");
+
 const httpServer = createServer(app);
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
@@ -120,6 +122,7 @@ const apolloServer = new ApolloServer({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(graphqlUploadExpress());
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));

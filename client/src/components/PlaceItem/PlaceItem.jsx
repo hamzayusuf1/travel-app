@@ -164,7 +164,9 @@ const PlaceItem = (props) => {
             </p>
             <Link to={`/home/dashboard/${props?.creator?._id}`}>
               {Auth.loggedIn(localStorage.getItem("id_token")) && (
-                <p className="font-medium">{props?.creator?.username}</p>
+                <p className="font-semibold transition-all hover:font-normal">
+                  {props?.creator?.username}
+                </p>
               )}
             </Link>
           </div>

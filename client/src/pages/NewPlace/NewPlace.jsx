@@ -76,13 +76,14 @@ const NewPlace = () => {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
           address: formState.inputs.address.value,
+          image: formState.postImage,
         },
       });
       toast.success("Post added successfully");
       navigate("/home/recents");
       navigate(0);
     } catch (error) {
-      console.error(error);
+      console.error(JSON.stringify(error));
       // setErr(error.message);
     }
   };
