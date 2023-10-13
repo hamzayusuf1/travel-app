@@ -3,7 +3,8 @@ import { useQuery } from "@apollo/client";
 
 import { GET_ME, USER_PROFILE } from "../utils/queries";
 
-import NavLinks from "../components/Navlinks/NavLinks";
+import Sidebar from "../components/SideBar/Sidebar";
+import Navbar from "../components/Navbar/Navbar";
 import {
   Landing,
   Home,
@@ -20,8 +21,8 @@ import Banner from "../components/Banner/Banner";
 export const Main = () => {
   return (
     <div>
-      {/* <Banner /> */}
-      <Outlet />;
+      <Navbar />
+      <Sidebar />
     </div>
   );
 };

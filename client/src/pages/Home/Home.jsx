@@ -85,9 +85,9 @@ const Home = () => {
   const userData = data?.user || {};
 
   return (
-    <div className="w-full h-full bg-lightBlue bg-lightBlue md:flex">
+    <div className="w-full h-full md:flex">
       {/* Sidebar */}
-      <div className="h-[60px] md:h-screen md:block shadow-[rgba(0,15,15,0)_10px_5px_4px_0px] px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out">
+      {/* <div className="h-[60px] md:h-screen md:block shadow-[rgba(0,15,15,0)_10px_5px_4px_0px] px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out">
         {" "}
         <div
           id="menu"
@@ -220,9 +220,9 @@ const Home = () => {
             </Link>
           )}
         </div>
-      </div>
+      </div> */}
       {/* Main div */}
-      <div className="h-fit w-full">
+      <div className="w-full">
         <Banner></Banner>
         <Outlet></Outlet>
       </div>

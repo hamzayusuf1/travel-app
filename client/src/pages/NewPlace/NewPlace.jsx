@@ -71,17 +71,24 @@ const NewPlace = () => {
     console.log(formState.postImage);
 
     try {
-      const { data } = await addPlace({
-        variables: {
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          address: formState.inputs.address.value,
-          image: formState.postImage,
-        },
-      });
-      toast.success("Post added successfully");
-      navigate("/home/recents");
-      navigate(0);
+      const res = await fetch("127.0.0.1:4000/upload");
+
+      console.log(res.json(res));
+      // const { data } = await addPlace({
+      //   variables: {
+      //     title: formState.inputs.title.value,
+      //     description: formState.inputs.description.value,
+      //     address: formState.inputs.address.value,
+      //   },
+      // });
+      // await fetch("http://localhost:4000/upload", {
+      //   method: "POST",
+      //   body: formState.postImage,
+      // });
+
+      // toast.success("Post added successfully");
+      // navigate("/home/recents");
+      // navigate(0);
     } catch (error) {
       console.error(JSON.stringify(error));
       // setErr(error.message);

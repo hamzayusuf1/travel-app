@@ -31,18 +31,8 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_PLACE = gql`
-  mutation addPlace(
-    $title: String!
-    $description: String!
-    $address: String!
-    $image: Upload!
-  ) {
-    addPlace(
-      title: $title
-      description: $description
-      address: $address
-      image: $image
-    ) {
+  mutation addPlace($title: String!, $description: String!, $address: String!) {
+    addPlace(title: $title, description: $description, address: $address) {
       title
       location {
         lat

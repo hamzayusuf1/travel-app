@@ -2,6 +2,7 @@ const Place = require("../models/Place");
 const User = require("../models/User");
 const { signToken } = require("../utils/auth");
 const convertAdressToCoordinates = require("../utils/address");
+const uploadToAws = require("../utils/uploadS3");
 const { PubSub, withFilter } = require("graphql-subscriptions");
 const pubsub = new PubSub();
 require("dotenv").config();
@@ -92,37 +93,37 @@ const resolvers = {
       return { token, user };
     },
 
-    addPlace: async (_, { title, description, address, image }, context) => {
-      console.log(title, image);
-      // if (context.user) {
-      //   let coordinates;
-      //   try {
-      //     coordinates = await convertAdressToCoordinates(address);
-      //   } catch (error) {}
+    addPlace: async (_, { title, description, address }, context) => {
+      console.log(title);
+      if (context.user) {
+        let coordinates;
+        try {
+          coordinates = await convertAdressToCoordinates(address);
+        } catch (error) {}
 
-      //   coordinates = await convertAdressToCoordinates(address);
+        coordinates = await convertAdressToCoordinates(address);
 
-      //   const place = await Place.create({
-      //     title,
-      //     description,
-      //     address,
-      //     location: coordinates,
-      //     likes: [],
-      //     creator: context.user._id,
-      //   });
+        const place = await Place.create({
+          title,
+          description,
+          address,
+          location: coordinates,
+          likes: [],
+          creator: context.user._id,
+        });
 
-      //   await User.findOneAndUpdate(
-      //     { _id: context.user._id },
-      //     { $addToSet: { places: place._id } },
-      //     {
-      //       new: true,
-      //       runValidators: true,
-      //     }
-      //   );
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { places: place._id } },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
 
-      //   return place;
-      // }
-      // throw new AuthenticationError("You need to be logged in");
+        return place;
+      }
+      throw new AuthenticationError("You need to be logged in");
     },
 
     login: async (parent, { email, password }) => {

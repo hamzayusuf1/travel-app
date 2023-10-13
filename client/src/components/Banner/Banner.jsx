@@ -13,7 +13,7 @@ const Banner = () => {
   // useEffect(() => {}, []);
 
   return (
-    <div className="hidden md:flex bg-lightBlue  justify-center items-center h-[150px] font-title mb-10">
+    <div className="hidden md:flex justify-center items-center h-[150px] font-title mb-10">
       <h1
         onClick={() => {
           handleGetUsers();

@@ -86,6 +86,30 @@ const port = process.env.PORT || 4000;
 const db = require("./config/connection");
 const path = require("path");
 require("dotenv").config();
+const multer = require("multer");
+const uuid = require("uuid").v4;
+
+app.get("/upload", (req, res) => {
+  res.send({ msg: "Hits" });
+});
+
+//image endpoints
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    const { originalname } = file;
+    cb(null, `${uuid()}-${originalname}`);
+  },
+});
+const upload = multer({ storage, limits: { fileSize: 100000000, files: 2 } });
+app.post("/upload", upload.single("file"), (req, res) => {
+  res.status();
+  res.json({ msg: "success" });
+});
+
+//uuid-original-name
 
 const { ApolloServer } = require("apollo-server-express");
 const { WebSocketServer } = require("ws");
@@ -123,6 +147,21 @@ const apolloServer = new ApolloServer({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(graphqlUploadExpress());
+//multer error handling
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    if (err.code === "LIMIT_FILE_SIZE") {
+      return res.json({
+        msg: "file is too large",
+      });
+    }
+    if (err.code === "LIMIT_FIELD_COUNT") {
+      return res.json({
+        msg: "file limit reached",
+      });
+    }
+  }
+});
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
