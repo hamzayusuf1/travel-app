@@ -1,447 +1,257 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import React from "react";
 
-const Sidebar = () => {
-  const [openSide, setOpenSide] = useState(false);
+import Img from "../../assests/NomadLogo.png";
+import { useState } from "react";
+import { Outlet, Link } from "react-router-dom";
+import Auth from "../../utils/Auth";
+
+const SideBar = () => {
+  const [open, setOpen] = useState(true);
+  const Menus = [1, 2, 3];
+
   return (
-    <div>
-      {" "}
-      {/* <div className="bg-white">
-        <div className="flex-col flex">
-          <div className="flex bg-gray-100  overflow-x-hidden">
-            <div className="bg-white md:flex md:w-64 md:flex-col hidden">
-              <div className="flex-col pt-5 flex overflow-y-auto">
-                <div className="h-full flex-col justify-between px-4 flex">
-                  <div className="space-y-4">
-                    <div className="bg-top bg-cover space-y-1">
-                      <p className="px-4 font-semibold text-xs tracking-widest text-gray-400 uppercase">
-                        Menu
-                      </p>
-                      <a
-                        href="#"
-                        className="font-medium text-sm rounded-lg text-gray-900 px-4 py-2.5 flex
-      transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                      >
-                        <span className="justify-center flex">
-                          <svg
-                            className="flex-shrink-0 w-5 h-5 mr-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewbox="0 0 24 24"
-                            stroke="currentColor"
-                            stroke-width="2"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1
-                              1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                            />
-                          </svg>
+    <>
+      {/* Main sidebar div */}
+      <div
+        className={` ${
+          open ? "w-72 sticky top-0 left-0 z-10 " : "w-20 "
+        } bg-white h-screen px-5  pt-8 relative duration-300 border-r-2 border-gray-100 flex flex-col justify-between sticky top-0 left-0 z-10`}
+      >
+        {/* Back icon */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-arrow-left"
+          width="44"
+          height="44"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#2c3e50"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          className={`absolute cursor-pointer -right-4 top-9 bg-white border-gray-900
+          border-2 rounded-full  ${!open && "rotate-180"}`}
+          onClick={() => setOpen(!open)}
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M5 12l14 0" />
+          <path d="M5 12l6 6" />
+          <path d="M5 12l6 -6" />
+        </svg>
 
-                          <span>Dashboard</span>
-                        </span>
-                      </a>
-                      <a
-                        href="#"
-                        className="font-medium text-sm rounded-lg text-gray-900 px-4 py-2.5 flex
-      transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                      >
-                        <span className="justify-center flex">
-                          <svg
-                            className="flex-shrink-0 w-5 h-5 mr-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="icon icon-tabler icon-tabler-tilde"
-                            width="44"
-                            height="44"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="#2c3e50"
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M4 12c0 -1.657 1.592 -3 3.556 -3c1.963 0 3.11 1.5 4.444 3c1.333 1.5 2.48 3 4.444 3s3.556 -1.343 3.556 -3" />
-                          </svg>
+        {/* Top portion of sidebar */}
+        <div className="flex flex-col justify-between">
+          <div className="flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md hover:bg-gray-100 dark:bg-gray-900 dark:text-white mb-10">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-category"
+              width="36"
+              height="36"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="#000000"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className={`cursor-pointer duration-500 ${
+                open && "rotate-[360deg]"
+              }`}
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M4 4h6v6h-6z" />
+              <path d="M14 4h6v6h-6z" />
+              <path d="M4 14h6v6h-6z" />
+              <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+            </svg>
+            <h1
+              className={`text-black origin-left font-medium text-2xl duration-200 ${
+                !open && "scale-0"
+              }`}
+            >
+              Menu
+            </h1>
+          </div>
+          <nav
+            className="hs-accordion-group w-full flex flex-col flex-wrap"
+            data-hs-accordion-always-open
+          >
+            <ul class="space-y-3">
+              {/* Dashboard */}
+              <li>
+                <a
+                  className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md  dark:bg-gray-900 dark:text-white `}
+                  href="javascript:;"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    stroke="#222222"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
+                    />
+                  </svg>
+                  <h3 className={`${!open && "scale-0"}`}>Dashboards</h3>
+                </a>
+              </li>
 
-                          <span>About</span>
-                        </span>
-                      </a>
-                      <a
-                        href="#"
-                        className="font-medium text-sm rounded-lg text-gray-900 px-4 py-2.5 flex
-      transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                      >
-                        <span className="justify-center flex">
-                          <svg
-                            className="flex-shrink-0 w-5 h-5 mr-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewbox="0 0 24 24"
-                            stroke="currentColor"
-                            stroke-width="2"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1
-                              1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                            />
-                          </svg>
+              {/* Users */}
+              <li>
+                <a
+                  className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md  dark:bg-gray-900 dark:text-white `}
+                  href="javascript:;"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
+                  </svg>
+                  <h3 className={`${!open && "scale-0"}`}>Users</h3>
+                </a>
+              </li>
 
-                          <span>Dashboard</span>
-                        </span>
-                      </a>
-                    </div>
-                    <div>
-                      <p className="px-4 font-semibold text-xs tracking-widest text-gray-400 uppercase">
-                        Data
-                      </p>
-                      <div className="mt-4 bg-top bg-cover space-y-1">
-                        <a
-                          href="#"
-                          className="font-medium text-sm items-center rounded-lg text-gray-900 px-4 py-2.5 block
-        transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                        >
-                          <span className="justify-center items-center flex">
-                            <span className="justify-center items-center flex">
-                              <span className="justify-center items-center flex">
-                                <span className="items-center justify-center flex">
-                                  <svg
-                                    className="mr-4"
-                                    width="24"
-                                    height="24"
-                                    viewbox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <ellipse
-                                      cx="12"
-                                      cy="7"
-                                      rx="7"
-                                      ry="3"
-                                      stroke="#4F4F4F"
-                                      stroke-width="2"
-                                    />
-                                  </svg>
-                                </span>
-                              </span>
-                            </span>
-                          </span>
-                          <span>Folders</span>
-                        </a>
-                        <a
-                          href="#"
-                          className="font-medium text-sm items-center rounded-lg text-gray-900 px-4 py-2.5 block
-        transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                        >
-                          <span className="justify-center items-center flex">
-                            <span className="justify-center items-center flex">
-                              <span className="justify-center items-center flex">
-                                <span className="items-center justify-center flex">
-                                  <svg
-                                    className="mr-4"
-                                    width="24"
-                                    height="24"
-                                    viewbox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  />
-                                  <path
-                                    d="M6.90112 11.8461C7.55156 9.56955 9.63235 8
-                  12 8V8C14.3676 8 16.4484 9.56954 17.0989 11.8461L17.6571 13.7998C17.8843 14.5951 18.2336
-                  15.3504 18.6924 16.0386L18.8012 16.2018C18.9408 16.4111 19.0105 16.5158 19.045
-                  16.5932C19.3105 17.1894 18.943 17.8759 18.2997 17.9857C18.2162 18 18.0904 18 17.8388
-                  18H6.16116C5.90958 18 5.78379 18 5.70027 17.9857C5.05697 17.8759 4.68952 17.1894 4.955
-                  16.5932C4.98947 16.5158 5.05924 16.4111 5.19879 16.2018L5.30758 16.0386C5.76642 15.3504
-                  6.11569 14.5951 6.34293 13.7998L6.90112 11.8461Z"
-                                    fill="#4F4F4F"
-                                  />
-                                  <path
-                                    d="M11 9L12 3"
-                                    stroke="#4F4F4F"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                  />
-                                  <path
-                                    d="M13 9L12 3"
-                                    stroke="#4F4F4F"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                  />
-                                  <path
-                                    d="M12.5 21H11.5"
-                                    stroke="#4F4F4F"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                  />
-                                </span>
-                              </span>
-                            </span>
-                          </span>
-                          <span>Alerts</span>
-                        </a>
-                        <a
-                          href="#"
-                          className="font-medium text-sm items-center rounded-lg text-gray-900 px-4 py-2.5 flex
-        transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                        >
-                          <span className="justify-center items-center flex">
-                            <span className="justify-center items-center flex">
-                              <span className="justify-center items-center flex">
-                                <span className="items-center justify-center flex">
-                                  <svg
-                                    className="flex-shrink-0 w-5 h-5 mr-4"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewbox="0 0 24 24"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                  >
-                                    <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2
-                  2 0 00-2 2v12a2 2 0 002 2z"
-                                    />
-                                  </svg>
-                                </span>
-                              </span>
-                            </span>
-                          </span>
-                          <span>Statistics</span>
-                          <span
-                            className="px-2 py-0.5 items-center font-semibold text-xs ml-auto bg-indigo-50 text-indigo-600
-          rounded-full uppercase border border-indigo-300 inline-flex"
-                          >
-                            New
-                          </span>
-                        </a>
-                      </div>
-                    </div>
-                    <div>
-                      <p className="px-4 font-semibold text-xs tracking-widest text-gray-400 uppercase">
-                        Contact
-                      </p>
-                      <div className="mt-4 bg-top bg-cover space-y-1">
-                        <a
-                          href="#"
-                          className="font-medium text-sm items-center rounded-lg text-gray-900 px-4 py-2.5 flex
-        transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                        >
-                          <span className="justify-center items-center flex">
-                            <span className="justify-center items-center flex">
-                              <span className="justify-center items-center flex">
-                                <span className="items-center justify-center flex">
-                                  <svg
-                                    className="flex-shrink-0 w-5 h-5 mr-4"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewbox="0 0 24 24"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                  />
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0
-                  002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0
-                  012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                                  />
-                                </span>
-                              </span>
-                            </span>
-                          </span>
-                          <span>Forms</span>
-                          <span
-                            className="px-2 py-0.5 items-center font-semibold text-xs ml-auto bg-gray-500 text-white
-          rounded-full uppercase border border-transparent inline-flex"
-                          >
-                            15
-                          </span>
-                        </a>
-                        <a
-                          href="#"
-                          className="font-medium text-sm items-center rounded-lg text-gray-900 px-4 py-2.5 flex
-        transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                        >
-                          <span className="justify-center items-center flex">
-                            <span className="justify-center items-center flex">
-                              <span className="justify-center items-center flex">
-                                <span className="items-center justify-center flex">
-                                  <svg
-                                    className="mr-4"
-                                    width="24"
-                                    height="24"
-                                    viewbox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  />
-                                  <circle
-                                    cx="12"
-                                    cy="12"
-                                    r="10"
-                                    stroke="#4F4F4F"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                  />
-                                  <path
-                                    d="M7.88124 15.7559C8.37391 16.1826
-                  9.02309 16.4909 9.72265 16.6928C10.4301 16.897 11.2142 17 12 17C12.7858 17 13.5699
-                  16.897 14.2774 16.6928C14.9769 16.4909 15.6261 16.1826 16.1188 15.7559"
-                                    stroke="#4F4F4F"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                  />
-                                  <circle
-                                    cx="9"
-                                    cy="10"
-                                    r="1.25"
-                                    fill="#4F4F4F"
-                                    stroke="#4F4F4F"
-                                    stroke-width="0.5"
-                                    stroke-linecap="round"
-                                  />
-                                  <circle
-                                    cx="15"
-                                    cy="10"
-                                    r="1.25"
-                                    fill="#4F4F4F"
-                                    stroke="#4F4F4F"
-                                    stroke-width="0.5"
-                                    stroke-linecap="round"
-                                  />
-                                </span>
-                              </span>
-                            </span>
-                          </span>
-                          <span>Agents</span>
-                        </a>
-                        <a
-                          href="#"
-                          className="font-medium text-sm items-center rounded-lg text-gray-900 px-4 py-2.5 flex
-        transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                        >
-                          <span className="justify-center items-center flex">
-                            <span className="justify-center items-center flex">
-                              <span className="justify-center items-center flex">
-                                <span className="items-center justify-center flex">
-                                  <svg
-                                    className="flex-shrink-0 w-5 h-5 mr-4"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewbox="0 0 24 24"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                  />
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0
-                  0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                                  />
-                                </span>
-                              </span>
-                            </span>
-                          </span>
-                          <span>Customers</span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-12 pb-4">
-                    <div className="bg-top bg-cover space-y-1">
-                      <a
-                        href="#"
-                        className="font-medium text-sm items-center rounded-lg text-gray-900 px-4 py-2.5 flex
-      transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                      >
-                        <span className="justify-center items-center flex">
-                          <span className="justify-center items-center flex">
-                            <span className="justify-center items-center flex">
-                              <span className="items-center justify-center flex">
-                                <svg
-                                  className="flex-shrink-0 w-5 h-5 mr-4"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewbox="0 0 24 24"
-                                  stroke="currentColor"
-                                  stroke-width="2"
-                                />
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0
-                002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756
-                2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0
-                00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0
-                00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0
-                00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0
-                001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                                />
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M15 12a3 3 0 11-6 0 3 3 0 016
-                0z"
-                                />
-                              </span>
-                            </span>
-                          </span>
-                        </span>
-                        <span>Settings</span>
-                      </a>
-                      <a
-                        href="#"
-                        className="font-medium text-sm items-center rounded-lg text-gray-900 px-4 py-2.5 flex
-      transition-all duration-200 hover:bg-gray-200 group cursor-pointer"
-                      >
-                        <span className="justify-center items-center flex">
-                          <span className="justify-center items-center flex">
-                            <span className="justify-center items-center flex">
-                              <span className="items-center justify-center flex">
-                                <svg
-                                  className="mr-4"
-                                  width="24"
-                                  height="24"
-                                  viewbox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                />
-                                <path
-                                  d="M8 18.9282C9.21615 19.6303 10.5957 20 12
-                20C13.4043 20 14.7838 19.6303 16 18.9282C17.2162 18.2261 18.2261 17.2162 18.9282
-                16C19.6303 14.7838 20 13.4043 20 12C20 10.5957 19.6303 9.21615 18.9282 8C18.2261 6.78385
-                17.2162 5.77394 16 5.0718C14.7838 4.36965 13.4043 4 12 4C10.5957 4 9.21615 4.36965 8
-                5.0718"
-                                  stroke="#4F4F4F"
-                                  stroke-width="2"
-                                />
-                                <path
-                                  d="M2 12L1.21913 11.3753L0.719375
-                12L1.21913 12.6247L2 12ZM11 13C11.5523 13 12 12.5523 12 12C12 11.4477 11.5523 11 11
-                11V13ZM5.21913 6.3753L1.21913 11.3753L2.78087 12.6247L6.78087 7.6247L5.21913
-                6.3753ZM1.21913 12.6247L5.21913 17.6247L6.78087 16.3753L2.78087 11.3753L1.21913 12.6247ZM2
-                13H11V11H2V13Z"
-                                  fill="#4F4F4F"
-                                />
-                              </span>
-                            </span>
-                          </span>
-                        </span>
-                        <span>Logout</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+              {/* Account */}
+              <li>
+                <a
+                  className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md dark:bg-gray-900 dark:text-white `}
+                  href="javascript:;"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler"
+                    width="26"
+                    height="26"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+                    />
+                  </svg>
+                  <h3 className={`${!open && "scale-0"}`}>Account</h3>
+                </a>
+              </li>
+
+              {/* Projects */}
+              <li>
+                <a
+                  className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md  dark:bg-gray-900 dark:text-white `}
+                  href="javascript:;"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler"
+                    width="30"
+                    height="30"
+                    stroke-width="1.5"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5V13a1 1 0 0 0 1 1V1.5a.5.5 0 0 1 .5-.5H14a1 1 0 0 0-1-1H1.5z"></path>
+                    <path d="M3.5 2A1.5 1.5 0 0 0 2 3.5v11A1.5 1.5 0 0 0 3.5 16h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 16 9.586V3.5A1.5 1.5 0 0 0 14.5 2h-11zM3 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V9h-4.5A1.5 1.5 0 0 0 9 10.5V15H3.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V10.5a.5.5 0 0 1 .5-.5h4.293L10 14.793z"></path>
+                  </svg>
+                  <h3 className={`${!open && "scale-0"}`}>Account</h3>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        {/* logout button */}
+        <div className="hs-accordion-group w-full flex flex-col flex-wrap space-y-3">
+          <div className="w-full border-y-[1px] border-gray-200 shadow-sm py-4">
+            <div className="justify-start items-center flex relative">
+              <img
+                src="/images/user.png"
+                className="object-cover btn- h-10 w-10 rounded-full mr-2 bg-gray-300"
+                alt=""
+              />
+              <div>
+                <p className={`font-semibold text-md ${!open && "scale-0"}`}>
+                  Hamza Yusuf
+                </p>
+                <p className={`text-sm ${!open && "scale-0"}`}>
+                  Software Engineer
+                </p>
               </div>
             </div>
           </div>
+          {!Auth.loggedIn(localStorage.getItem("id_token")) ? (
+            <Link
+              key={"Login"}
+              to={`/home/auth`}
+              className="flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md dark:bg-gray-900 dark:text-white "
+            >
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-login"
+                  width="44"
+                  height="44"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="#2c3e50"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                  <path d="M20 12h-13l3 -3m0 6l-3 -3" />
+                </svg>
+              </div>
+              <h3 className={`${!open && "scale-0"}`}>Login</h3>
+            </Link>
+          ) : (
+            <Link
+              key={"Logout"}
+              onClick={() => {
+                Auth.logout();
+              }}
+              className="flex items-center gap-x-3.5  px-2.5 text-md text-black rounded-md dark:bg-gray-900 dark:text-white "
+            >
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-logout"
+                  width="36"
+                  height="36"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="#2c3e50"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                  <path d="M9 12h12l-3 -3" />
+                  <path d="M18 15l3 -3" />
+                </svg>
+              </div>
+              <h3 className={`${!open && "scale-0"}`}>Logout</h3>
+            </Link>
+          )}
         </div>
-      </div> */}
-    </div>
+      </div>
+    </>
   );
 };
 
-export default Sidebar;
+export default SideBar;

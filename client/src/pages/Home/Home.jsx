@@ -85,7 +85,7 @@ const Home = () => {
   const userData = data?.user || {};
 
   return (
-    <div className="w-full h-full md:flex">
+    <div className="w-full h-fit md:flex">
       {/* Sidebar */}
       {/* <div className="h-[60px] md:h-screen md:block shadow-[rgba(0,15,15,0)_10px_5px_4px_0px] px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out">
         {" "}

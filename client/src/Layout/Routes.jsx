@@ -3,8 +3,9 @@ import { useQuery } from "@apollo/client";
 
 import { GET_ME, USER_PROFILE } from "../utils/queries";
 
-import Sidebar from "../components/SideBar/Sidebar";
+import SideBar from "../components/SideBar/SideBar";
 import Navbar from "../components/Navbar/Navbar";
+
 import {
   Landing,
   Home,
@@ -20,9 +21,14 @@ import Banner from "../components/Banner/Banner";
 
 export const Main = () => {
   return (
-    <div>
-      <Navbar />
-      <Sidebar />
+    <div className="flex">
+      <SideBar />
+      <div className="w-full">
+        <div className="sticky top-0 left-0 h-fit">
+          <Navbar />
+        </div>
+        <Outlet />
+      </div>
     </div>
   );
 };

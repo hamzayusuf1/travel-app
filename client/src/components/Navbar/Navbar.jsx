@@ -1,209 +1,108 @@
 import React from "react";
 
-import Img from "../../assests/NomadLogo.png";
-import { useState } from "react";
+import logo from "../../assests/NomadLogo.png";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(true);
-  const Menus = [1, 2, 3];
-
   return (
-    <>
-      <div className="flex">
-        {/* Main sidebar div */}
-        <div
-          className={` ${
-            open ? "w-72" : "w-20 "
-          } bg-white h-screen p-5  pt-8 relative duration-300 border-r-2 border-gray-100 flex flex-col justify-between`}
-        >
-          {/* Back icon */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-arrow-left"
-            width="44"
-            height="44"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="#2c3e50"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            className={`absolute cursor-pointer -right-4 top-9 bg-white border-gray-900
-          border-2 rounded-full  ${!open && "rotate-180"}`}
-            onClick={() => setOpen(!open)}
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M5 12l14 0" />
-            <path d="M5 12l6 6" />
-            <path d="M5 12l6 -6" />
-          </svg>
-
-          {/* Top portion of sidebar */}
-          <div className="flex flex-col justify-between">
-            <div className="flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md hover:bg-gray-100 dark:bg-gray-900 dark:text-white mb-10">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-category"
-                width="36"
-                height="36"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="#000000"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                className={`cursor-pointer duration-500 ${
-                  open && "rotate-[360deg]"
-                }`}
+    <div className="flex-col flex">
+      <div className="w-full border-b-2 border-gray-200 px-6">
+        <div className="bg-white h-16 justify-between items-center mx-auto px-4 flex">
+          <div>
+            <img src={logo} className="block btn- h-12 w-auto" alt="" />
+          </div>
+          <div className="lg:block mr-auto ml-40 hidden relative max-w-xs">
+            <p className="pl-3 items-center flex absolute inset-y-0 left-0 pointer-events-none">
+              <span className="justify-center items-center flex">
+                <span className="justify-center items-center flex">
+                  <span className="items-center justify-center flex">
+                    <svg
+                      className="w-5 h-5 text-gray-400"
+                      fill="none"
+                      viewbox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 21l-6-6m2-5a7 7 0
+              11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </span>
+            </p>
+            <input
+              placeholder="Type to search"
+              type="search"
+              className="border border-gray-300 focus:ring-indigo-600
+      focus:border-indigo-600 sm:text-sm w-full rounded-lg pt-2 pb-2 pl-10 px-3 py-2"
+            />
+          </div>
+          <div className="md:space-x-6 justify-end items-center ml-auto flex space-x-3">
+            <div className="relative">
+              <p
+                className="pt-1 pr-1 pb-1 pl-1 bg-white text-gray-700 rounded-full transition-all duration-200
+        hover:text-gray-900 focus:outline-none hover:bg-gray-100"
               >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M4 4h6v6h-6z" />
-                <path d="M14 4h6v6h-6z" />
-                <path d="M4 14h6v6h-6z" />
-                <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-              </svg>
-              <h1
-                className={`text-black origin-left font-medium text-2xl duration-200 ${
-                  !open && "scale-0"
-                }`}
-              >
-                Menu
-              </h1>
+                <span className="items-center justify-center flex">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.2rem"
+                    height="1.2rem"
+                    viewbox="0 0 456.147 456.147"
+                    style={{ enableBackground: "new 0 0 456.147 456.147" }}
+                  >
+                    <g>
+                      <path d="M445.666,4.445c-4.504-4.858-11.756-5.954-17.211-2.19L12.694,290.14c-3.769,2.609-5.878,7.012-5.555,11.586 c0.323,4.574,3.041,8.635,7.139,10.686l95.208,47.607l37.042,86.43c1.78,4.156,5.593,7.082,10.064,7.727 c0.621,0.091,1.242,0.136,1.856,0.136c3.833,0,7.506-1.697,9.989-4.701l38.91-46.994l107.587,52.227 c1.786,0.867,3.725,1.306,5.663,1.306c1.836,0,3.674-0.393,5.384-1.171c3.521-1.604,6.138-4.694,7.146-8.432L448.37,18.128 C449.314,14.629,449.878,8.988,445.666,4.445z M343.154,92.883L116.681,334.604l-71.208-35.603L343.154,92.883z M162.003,416.703 l-27.206-63.48L359.23,113.665L197.278,374.771c-0.836,0.612-1.634,1.305-2.331,2.146L162.003,416.703z M312.148,424.651 l-88.604-43.014L400.427,96.462L312.148,424.651z" />
+                    </g>
+                  </svg>
+                </span>
+              </p>
             </div>
-            <nav
-              className="hs-accordion-group w-full flex flex-col flex-wrap"
-              data-hs-accordion-always-open
-            >
-              <ul class="space-y-3">
-                {/* Dashboard */}
-                <li>
-                  <a
-                    className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md  dark:bg-gray-900 dark:text-white `}
-                    href="javascript:;"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="icon icon-tabler"
-                      width="30"
-                      height="30"
-                      fill="currentColor"
-                      stroke="#222222"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
-                      />
-                      <path
-                        fill-rule="evenodd"
-                        d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
-                      />
-                    </svg>
-                    <h3 className={`${!open && "scale-0"}`}>Dashboards</h3>
-                  </a>
-                </li>
-
-                {/* Users */}
-                <li>
-                  <a
-                    className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md  dark:bg-gray-900 dark:text-white `}
-                    href="javascript:;"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="icon icon-tabler"
-                      width="30"
-                      height="30"
-                      fill="currentColor"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
-                    </svg>
-                    <h3 className={`${!open && "scale-0"}`}>Users</h3>
-                  </a>
-                </li>
-
-                {/* Account */}
-                <li>
-                  <a
-                    className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md dark:bg-gray-900 dark:text-white `}
-                    href="javascript:;"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="icon icon-tabler"
-                      width="26"
-                      height="26"
-                      fill="currentColor"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                      <path
-                        fill-rule="evenodd"
-                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
-                      />
-                    </svg>
-                    <h3 className={`${!open && "scale-0"}`}>Account</h3>
-                  </a>
-                </li>
-
-                {/* Projects */}
-                <li>
-                  <a
-                    className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md  dark:bg-gray-900 dark:text-white `}
-                    href="javascript:;"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="icon icon-tabler"
-                      width="30"
-                      height="30"
-                      stroke-width="1.5"
-                      fill="currentColor"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5V13a1 1 0 0 0 1 1V1.5a.5.5 0 0 1 .5-.5H14a1 1 0 0 0-1-1H1.5z"></path>
-                      <path d="M3.5 2A1.5 1.5 0 0 0 2 3.5v11A1.5 1.5 0 0 0 3.5 16h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 16 9.586V3.5A1.5 1.5 0 0 0 14.5 2h-11zM3 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V9h-4.5A1.5 1.5 0 0 0 9 10.5V15H3.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V10.5a.5.5 0 0 1 .5-.5h4.293L10 14.793z"></path>
-                    </svg>
-                    <h3 className={`${!open && "scale-0"}`}>Account</h3>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-
-          {/* logout button */}
-          <div className="hs-accordion-group w-full flex flex-col flex-wrap space-y-3">
-            <a
-              className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md dark:bg-gray-900 dark:text-white `}
-              href="javascript:;"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-logout-2"
-                width="30"
-                height="30"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="#333333"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+            <div className="relative">
+              <p
+                className="pt-1 pr-1 pb-1 pl-1 bg-white text-gray-700 rounded-full transition-all duration-200
+        hover:text-gray-900 focus:outline-none hover:bg-gray-100"
               >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-                <path d="M15 12h-12l3 -3" />
-                <path d="M6 15l-3 -3" />
-              </svg>
-              <h3 className={`${!open && "scale-0"}`}>Logout</h3>
-            </a>
+                <span className="justify-center items-center flex">
+                  <span className="justify-center items-center flex">
+                    <span className="items-center justify-center flex">
+                      <svg
+                        className="w-6 h-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewbox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4
+                0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6
+                0H9"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+              </p>
+              <p
+                className="px-1.5 py-0.5 font-semibold text-xs items-center bg-black text-white rounded-full inline-flex
+        absolute -top-px -right-1"
+              >
+                2
+              </p>
+            </div>
+            <button className="bg-black text-white px-8 py-3 flex items-center rounded-lg text-sm">
+              Post
+            </button>
           </div>
-        </div>
-        <div className="h-screen flex-1 p-7">
-          <h1 className="text-2xl font-semibold ">Home Page</h1>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
