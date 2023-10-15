@@ -58,8 +58,8 @@ const Input = (props) => {
       <textarea
         className={
           inputState.isValid
-            ? "rounded-lg text-sm font-medium  border border-grey-400 placeholder-grey-400 w-full p-1.5 h-40 min-w-[300px]"
-            : "rounded-lg text-sm font-medium  border border-red-400  bg-red-100 placeholder-grey-400 w-full p-1.5 h-40 min-w-[300px]"
+            ? "rounded-lg text-sm font-medium  border border-grey-400 placeholder-grey-400 w-full p-1.5 h-20 min-w-[200px]"
+            : "rounded-lg text-sm font-medium  border border-red-400  bg-red-100 placeholder-grey-400 w-full p-1.5 h-20 min-w-[200px]"
         }
         rows={props.rows || 3}
         id={props.id}
@@ -72,8 +72,12 @@ const Input = (props) => {
           id={props.id}
           className={
             inputState.isValid
-              ? "rounded-lg text-sm font-medium  border border-grey-400 placeholder-grey-400 w-full p-1.5 min-w-[300px]"
-              : "rounded-lg text-sm font-medium  border border-red-400  bg-red-100 placeholder-grey-400 w-full p-1.5 min-w-[300px]"
+              ? `rounded-lg text-sm font-medium  border border-grey-400 placeholder-grey-400 w-full p-0.5 min-w-[300px] flex items-center justify-center ${
+                  props.id === "image" ? "min-h-[60px]" : "min-h-[30px]"
+                }`
+              : `rounded-lg text-sm font-medium  border border-red-400  bg-red-100 placeholder-grey-400 w-full min-w-[300px] p-0.5 flex items-center justify-center ${
+                  props.id === "image" ? "min-h-[300px]" : "min-h-[30px]"
+                }`
           }
           type={props.type}
           placeholder={props.placeholder}
@@ -92,7 +96,7 @@ const Input = (props) => {
     <div className="mx-3">
       <label
         htmlFor="Add trip"
-        className="mb-2 text-xl font-medium text-slate-500"
+        className="mb-2 text-lg font-semibold text-black"
       >
         {props.label}
       </label>

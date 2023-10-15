@@ -7,6 +7,9 @@ import PlaceItem from "../../components/PlaceItem/PlaceItem";
 import Auth from "../../utils/Auth";
 import { GET_ME } from "../../utils/queries";
 
+import { NewPlace } from "../../pages";
+import AddPost from "../../components/AddPost/AddPost";
+
 const menuLinks = [
   {
     name: "Home",
@@ -223,7 +226,7 @@ const Home = () => {
       </div> */}
       {/* Main div */}
       <div className="w-full">
-        <Banner></Banner>
+        <AddPost></AddPost>
         <Outlet></Outlet>
       </div>
     </div>

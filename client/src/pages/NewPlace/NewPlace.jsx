@@ -1,7 +1,8 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { toast } from "react-hot-toast";
+import { useDropzone } from "react-dropzone";
 
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/button";
@@ -18,6 +19,14 @@ import { ADD_PLACE } from "../../utils/mutations";
 
 const NewPlace = () => {
   const navigate = useNavigate();
+
+  const onDrop = useCallback((acceptedFiles) => {
+    // Do something with the files
+
+    uploadImage();
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const [addPlace, { error }] = useMutation(ADD_PLACE);
 
@@ -96,7 +105,10 @@ const NewPlace = () => {
   };
 
   return (
-    <div className="mt-5 h-screen w-full ">
+    <div className="">
+      <h1 className="text-3xl text-black  text-center">
+        Like To Share Your Recent Adventure?{" "}
+      </h1>
       <form onSubmit={placeSumbitHandler} className="w-[50%] mx-auto">
         <Input
           id="title"
@@ -118,16 +130,8 @@ const NewPlace = () => {
           placeholder={"Describe your wonderful trip"}
           onInput={formHandler}
         />
-        <Input
-          id="description"
-          element="textarea"
-          label="Trip description"
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText="Please enter a detailed description"
-          onInput={formHandler}
-        />
 
-        <Input
+        {/* <Input
           id="image"
           element="input"
           label="Image"
@@ -137,7 +141,24 @@ const NewPlace = () => {
           // onChange={handleImageChange}
           validators={[VALIDATOR_REQUIRE()]}
           onInput={formHandler}
+        /> */}
+        <Input
+          id="description"
+          element="textarea"
+          label="Trip description"
+          validators={[VALIDATOR_MINLENGTH(5)]}
+          errorText="Please enter a detailed description"
+          onInput={formHandler}
         />
+
+        <div {...getRootProps()}>
+          <input {...getInputProps()} id="image" label="image" />
+          {isDragActive ? (
+            <p>Drop the files here ...</p>
+          ) : (
+            <p>Drag 'n' drop some files here, or click to select files</p>
+          )}
+        </div>
 
         {/* <input type="file" onChange={uploadImage} /> */}
 
