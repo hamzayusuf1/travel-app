@@ -1,11 +1,12 @@
 import React from "react";
 
+import "./index.css";
 import logo from "../../assests/NomadLogo.png";
 
 const Navbar = () => {
   return (
-    <div className="flex-col flex">
-      <div className="w-full border-b-2 border-gray-200 px-6">
+    <div className="flex-col flex custom z-10">
+      <div className="w-full border-b-2 border-gray-200">
         <div className="bg-white h-16 justify-between items-center mx-auto px-4 flex">
           <div>
             <img src={logo} className="block btn- h-12 w-auto" alt="" />

@@ -22,9 +22,11 @@ import Banner from "../components/Banner/Banner";
 export const Main = () => {
   return (
     <div className="flex">
-      <SideBar />
+      <div className="z-10">
+        <SideBar />
+      </div>
       <div className="w-full">
-        <div className="sticky top-0 left-0 h-fit">
+        <div className="sticky top-0 left-0 h-fit w-full h-[64px]">
           <Navbar />
         </div>
         <Outlet />

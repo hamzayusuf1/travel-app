@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/button";
@@ -16,6 +17,7 @@ import { useMutation } from "@apollo/client";
 import Auth from "../../utils/Auth";
 
 const AuthForm = () => {
+  //useState Configuration
   const [userData, setUserData] = useState({});
   console.log(userData);
 
@@ -24,6 +26,14 @@ const AuthForm = () => {
 
   console.log(authMode);
 
+  //useNavigate config
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
+  //Queries and mutations Configuration
   const [loginUser, { error }] = useMutation(LOGIN_USER);
   const [addUser, { error2 }] = useMutation(ADD_USER);
 
@@ -115,8 +125,8 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="h-screen w-full flex justify-center">
-      <div className="mt-6 w-3/5 h-3/rounded-lg   flex flex-col items-center gap-6">
+    <div className="h-full w-full flex justify-center">
+      <div className="mt-6 w-3/5 h-3/5 rounded-lg   flex flex-col items-center gap-6">
         <img
           className="w-[100px] bg-darkLightBlue border-charcoal border-2 rounded-circular"
           src={"/images/logo.png"}
@@ -170,19 +180,30 @@ const AuthForm = () => {
               </p>
             </div>
           )}
-          <div className="mt-6">
+          <div className="mt-6 flex flex-col gap-6">
+            <div>
+              <Button
+                type="sumbit"
+                value={authMode ? "Login" : "SignUp"}
+                variant="contained"
+                disabled={formState.isValid}
+                onClick={() => {}}
+              />
+              <Button
+                value={authMode ? "Switch to SignUp" : "Switch to Login"}
+                variant="outlined"
+                disabled={true}
+                onClick={signUp}
+              />
+            </div>
             <Button
-              type="sumbit"
-              value={authMode ? "Login" : "SignUp"}
-              variant="contained"
-              disabled={formState.isValid}
-              onClick={() => {}}
-            />
-            <Button
-              value={authMode ? "Switch to SignUp" : "Switch to Login"}
+              value={"Cancel"}
               variant="outlined"
               disabled={true}
-              onClick={signUp}
+              onClick={handleCancel}
+              textColor="black"
+              borderSize="2"
+              borderColor="black"
             />
           </div>
         </form>

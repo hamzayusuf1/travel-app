@@ -27,13 +27,13 @@ input {
     scale: 1;
   }
   to {
-    scale: 1.2;
+    scale: 1.3;
   }
 }
 
 .check {
   animation: enlarge;
-  animation-duration: 0.4s;
+  animation-duration: 0.7s;
   animation-timing-function: ease-in;
   animation-delay: 0s;
   animation-iteration-count: 1;

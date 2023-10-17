@@ -22,7 +22,7 @@ const Recents = () => {
   // }, []);
 
   return (
-    <div className="w-full flex flex-col justify-center items-center mt-10">
+    <div className="w-full flex flex-col justify-center items-center mt-20">
       {data?.places?.map((place) => {
         return (
           <PlaceItem

@@ -226,7 +226,8 @@ const Home = () => {
       </div> */}
       {/* Main div */}
       <div className="w-full">
-        <AddPost></AddPost>
+        {Auth.loggedIn(localStorage.getItem("id_token")) && <AddPost></AddPost>}
+
         <Outlet></Outlet>
       </div>
     </div>

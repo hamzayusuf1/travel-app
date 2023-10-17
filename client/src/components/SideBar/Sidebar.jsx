@@ -14,8 +14,8 @@ const SideBar = () => {
       {/* Main sidebar div */}
       <div
         className={` ${
-          open ? "w-72 sticky top-0 left-0 z-10 " : "w-20 "
-        } bg-white h-screen px-5  pt-8 relative duration-300 border-r-2 border-gray-100 flex flex-col justify-between sticky top-0 left-0 z-10`}
+          open ? "w-72 sticky top-0 left-0" : "w-20 "
+        } bg-white h-screen px-5  pt-8 relative duration-300 border-r-2 border-gray-100 flex flex-col justify-between sticky top-0 left-0`}
       >
         {/* Back icon */}
         <svg

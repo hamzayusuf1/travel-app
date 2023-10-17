@@ -21,7 +21,11 @@ const customButton = (props) => {
         size={props.size}
         color={props.bgColor}
         onClick={props.onClick}
-        sx={{ color: props.textColor }}
+        sx={{
+          color: props.textColor,
+          border: props.borderSize,
+          borderColor: props.borderColor,
+        }}
       >
         {props.value}
       </Button>
