@@ -41,6 +41,27 @@ export const ADD_PLACE = gql`
   }
 `;
 
+export const ADD_THOUGHTS = gql`
+  mutation addThoughts(
+    $title: String!
+    $description: String!
+    $address: String!
+    $image: Upload!
+  ) {
+    addThoughts(
+      title: $title
+      description: $description
+      address: $address
+      image: $image
+    ) {
+      title
+      location {
+        lat
+      }
+    }
+  }
+`;
+
 export const UPDATE_PLACE = gql`
   mutation updatePlace($id: ID!, $title: String!, $description: String!) {
     updatePlace(id: $id, title: $title, description: $description) {

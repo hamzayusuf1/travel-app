@@ -1,11 +1,5 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  RouterProvider,
-  Outlet,
-} from "react-router-dom";
-import React, { useCallback, useState, useEffect } from "react";
+import { BrowserRouter as Router, RouterProvider } from "react-router-dom";
+import React, { useCallback, useState, useEffect, createContext } from "react";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./graphql/ApolloClient";
 
@@ -14,28 +8,17 @@ import { AuthContext } from "./context/AuthContext";
 
 import router from "./Layout/Routes";
 
+export const UserContext = createContext(null);
+
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
-  }, []);
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-  }, []);
-
-  let validRoutes;
-
+  const [user, setUser] = useState({});
   return (
-    <ApolloProvider client={client}>
-      <AuthContext.Provider
-        value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
-      >
+    <UserContext.Provider value={{ user: user, setUser: setUser }}>
+      <ApolloProvider client={client}>
         <RouterProvider router={router}></RouterProvider>
         <Toaster></Toaster>
-      </AuthContext.Provider>
-    </ApolloProvider>
+      </ApolloProvider>
+    </UserContext.Provider>
   );
 }
 

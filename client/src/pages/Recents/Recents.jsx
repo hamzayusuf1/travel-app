@@ -2,13 +2,16 @@ import React, { useEffect } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 
+import Auth from "../../utils/Auth";
+import AddPost from "../../components/AddPost/AddPost";
+
 import PlaceItem from "../../components/PlaceItem/PlaceItem";
 import { GET_POSTS } from "../../utils/queries";
 
 const Recents = () => {
   const { loading, data, error } = useQuery(GET_POSTS);
 
-  console.log(data);
+  const handleImage = () => {};
 
   // useEffect(async () => {
   //   try {
@@ -22,23 +25,27 @@ const Recents = () => {
   // }, []);
 
   return (
-    <div className="w-full flex flex-col justify-center items-center mt-20">
-      {data?.places?.map((place) => {
-        return (
-          <PlaceItem
-            key={place._id}
-            id={place._id}
-            image={place.imageURL}
-            title={place.title}
-            description={place.description}
-            address={place.address}
-            creatorId={place.creator}
-            coordinates={place.location}
-            creator={place.creator}
-          />
-        );
-      })}
-    </div>
+    <>
+      {<AddPost></AddPost>}
+
+      <div className="w-full flex flex-col justify-center items-center mt-20">
+        {data?.places?.map((place) => {
+          return (
+            <PlaceItem
+              key={place._id}
+              id={place._id}
+              image={place.imageURL}
+              title={place.title}
+              description={place.description}
+              address={place.address}
+              creatorId={place.creator}
+              coordinates={place.location}
+              creator={place.creator}
+            />
+          );
+        })}
+      </div>
+    </>
   );
 };
 

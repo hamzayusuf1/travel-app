@@ -11,6 +11,7 @@ import {
 } from "../../utils/validators";
 
 import { useForm } from "../../hooks/FormHook";
+import { UserContext } from "../../App";
 import { AuthContext } from "../../context/AuthContext";
 import { LOGIN_USER, ADD_USER } from "../../utils/mutations";
 import { useMutation } from "@apollo/client";
@@ -19,12 +20,13 @@ import Auth from "../../utils/Auth";
 const AuthForm = () => {
   //useState Configuration
   const [userData, setUserData] = useState({});
-  console.log(userData);
 
   const [authMode, setAuthMode] = useState(true);
   const [err, setErr] = useState("");
 
-  console.log(authMode);
+  //setting up global context to save user login data
+  const { user, setUser } = useContext(UserContext);
+  console.log(user);
 
   //useNavigate config
   const navigate = useNavigate();
@@ -90,8 +92,9 @@ const AuthForm = () => {
           },
         });
         setUserData(data?.login?.user);
+        setUser(data?.login?.user);
+        localStorage.setItem("uuid", data?.login?.user._id);
         Auth.login(data?.login?.token);
-        console.log(data?.login?.user);
       } catch (error) {
         console.log(JSON.stringify(error));
         // toast.error(error[0].message);

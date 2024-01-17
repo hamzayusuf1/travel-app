@@ -15,13 +15,16 @@ const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
 });
 
+const imgLink = createUploadLink({
+  uri: "http://localhost:4000/graphql",
+});
+
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
 
   return {
     headers: {
       ...headers,
-      "Content-Type": "application/json",
       authorization: token ? `Bearer ${token}` : "",
     },
   };
@@ -33,10 +36,6 @@ const wsLink = new GraphQLWsLink(
   })
 );
 
-const imgLink = createUploadLink({
-  uri: "http://localhost:4000/graphql",
-});
-
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
@@ -46,11 +45,12 @@ const splitLink = split(
     );
   },
   wsLink,
+  httpLink,
   imgLink
 );
 
 export const client = new ApolloClient({
   //configure client to execute the 'authlink' middleware prior to every request to the backend
-  link: imgLink,
+  link: authLink.concat(splitLink),
   cache: new InMemoryCache(),
 });

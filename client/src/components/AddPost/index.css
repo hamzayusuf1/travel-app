@@ -9,17 +9,12 @@ label {
   font-size: medium;
 }
 
-input {
+input,
+textarea {
   background-color: rgb(240, 240, 240);
   padding: 5px;
   border-radius: 10px;
-}
-
-.container {
-  padding-left: 10rem;
-  padding-right: 10rem;
-  padding-bottom: 2rem;
-  padding-top: 3rem;
+  border: none;
 }
 
 @keyframes enlarge {
@@ -39,4 +34,14 @@ input {
   animation-iteration-count: 1;
   animation-direction: normal;
   animation-fill-mode: none;
+}
+
+/* Media Queries */
+@media screen and (min-width: 50rem) {
+  .container {
+    padding-left: 10rem;
+    padding-right: 10rem;
+    padding-bottom: 2rem;
+    padding-top: 3rem;
+  }
 }

@@ -2,6 +2,8 @@ import React from "react";
 
 import "./index.css";
 import logo from "../../assests/NomadLogo.png";
+import { Link } from "react-router-dom";
+import Auth from "../../utils/Auth";
 
 const Navbar = () => {
   return (
@@ -97,9 +99,13 @@ const Navbar = () => {
                 2
               </p>
             </div>
-            <button className="bg-black text-white px-8 py-3 flex items-center rounded-lg text-sm">
-              Post
-            </button>
+            {Auth.loggedIn(localStorage.getItem("id_token")) && (
+              <Link to={"/home/add"}>
+                <button className="bg-black text-white px-8 py-3 flex items-center rounded-lg text-sm">
+                  Post
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

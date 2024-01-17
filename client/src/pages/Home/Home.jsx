@@ -83,8 +83,6 @@ const Home = () => {
   //Get user data for post
   const { loading, data } = useQuery(GET_ME);
 
-  console.log(data);
-
   const userData = data?.user || {};
 
   return (
@@ -225,9 +223,7 @@ const Home = () => {
         </div>
       </div> */}
       {/* Main div */}
-      <div className="w-full">
-        {Auth.loggedIn(localStorage.getItem("id_token")) && <AddPost></AddPost>}
-
+      <div className="w-full ">
         <Outlet></Outlet>
       </div>
     </div>

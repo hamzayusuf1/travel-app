@@ -75,9 +75,8 @@ const Input = (props) => {
               ? `rounded-lg text-sm font-medium  border border-grey-400 placeholder-grey-400 w-full p-0.5 min-w-[300px] flex items-center justify-center ${
                   props.id === "image" ? "min-h-[60px]" : "min-h-[30px]"
                 }`
-              : `rounded-lg text-sm font-medium  border border-red-400  bg-red-100 placeholder-grey-400 w-full min-w-[300px] p-0.5 flex items-center justify-center ${
-                  props.id === "image" ? "min-h-[300px]" : "min-h-[30px]"
-                }`
+              : `rounded-lg text-sm font-medium  border border-red-400  bg-red-100 placeholder-grey-400 w-full min-w-[300px] p-2 flex items-center justify-center 
+                `
           }
           type={props.type}
           placeholder={props.placeholder}

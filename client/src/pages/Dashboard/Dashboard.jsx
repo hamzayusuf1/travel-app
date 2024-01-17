@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { CLoadingButton } from "@coreui/react-pro";
+import jwtDecode from "jwt-decode";
 
 import { GET_ME, USER_PROFILE } from "../../utils/queries";
 import { ADD_FOLLOWER } from "../../utils/mutations";

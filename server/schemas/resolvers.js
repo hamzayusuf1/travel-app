@@ -93,8 +93,41 @@ const resolvers = {
       return { token, user };
     },
 
-    addPlace: async (_, { title, description, address }, context) => {
+    // Adding post on above the fold
+    addThoughts: async (_, { title, address, description, image }, context) => {
+      console.log("hits");
       console.log(title);
+      console.log(image);
+      // let coordinates;
+      // try {
+      //   coordinates = await convertAdressToCoordinates(address);
+      // } catch (error) {}
+
+      // coordinates = await convertAdressToCoordinates(address);
+
+      // const place = await Place.create({
+      //   title,
+      //   description,
+      //   address,
+      //   location: coordinates,
+      //   likes: [],
+      //   // creator: context.user._id,
+      // });
+
+      // await User.findOneAndUpdate(
+      //   { _id: context.user._id },
+      //   { $addToSet: { places: place._id } },
+      //   {
+      //     new: true,
+      //     runValidators: true,
+      //   }
+      // );
+
+      return place;
+    },
+
+    addPlace: async (_, { title, description, address }, context) => {
+      console.log(context.user);
       if (context.user) {
         let coordinates;
         try {

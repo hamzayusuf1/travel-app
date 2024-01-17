@@ -1,85 +1,3 @@
-// const express = require("express");
-// const app = express();
-// const db = require("./config/connection");
-// const path = require("path");
-// const PORT = process.env.port || 3001;
-// const { authMiddleware } = require("./utils/auth");
-
-// const { ApolloServer } = require("@apollo/server");
-// const { createServer } = require("http");
-// const { makeExecutableSchema } = require("@graphql-tools/schema");
-// const { expressMiddleware } = require("@apollo/server/express4");
-// const {
-//   ApolloServerPluginDrainHttpServer,
-// } = require("@apollo/server/plugin/drainHttpServer");
-// const bodyParser = require("body-parser");
-
-// const routes = require("./routes");
-
-// const { typeDefs, resolvers } = require("./schemas");
-
-// const server = new ApolloServer({
-//   typeDefs,
-//   resolvers,
-//   context: authMiddleware,
-// });
-
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "../client/build")));
-// }
-
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../client/build/index.html"));
-// });
-
-// app.use(routes);
-
-// const schema = makeExecutableSchema({ typeDefs, resolvers });
-
-// const httpServer = createServer(app);
-
-// const apolloServer = new ApolloServer({
-//   schema,
-//   context: authMiddleware,
-//   plugins: [
-//     //proper shutdown for HTTP Server
-//     ApolloServerPluginDrainHttpServer({ httpServer }),
-//   ],
-// });
-
-// // const startApolloServer = async (typeDefs, resolvers) => {
-// //   await server.start();
-// //   server.applyMiddleware({ app });
-
-// //   db.once("open", () => {
-// //     app.listen(PORT, () => {
-// //       console.log(`API server running on port ${PORT}!`);
-// //       console.log(
-// //         `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
-// //       );
-// //     });
-// //   });
-// // };
-
-// // startApolloServer(typeDefs, resolvers);
-
-// //starting apollo server to expose endpoint to client
-// await apolloServer.start();
-
-// app.use("graphql", bodyParser.json(), expressMiddleware(apolloServer));
-
-// db.once("open", () => {
-//   httpServer.listen(PORT, () => {
-//     console.log(`🚀 Query endpoint ready at http://localhost:${PORT}/graphql`);
-//     console.log(
-//       `🚀 Subscription endpoint ready at ws://localhost:${PORT}/graphql`
-//     );
-//   });
-// });
-
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 4000;
@@ -89,11 +7,14 @@ require("dotenv").config();
 const multer = require("multer");
 const uuid = require("uuid").v4;
 
-app.get("/upload", (req, res) => {
-  res.send({ msg: "Hits" });
-});
+const convertAdressToCoordinates = require("./utils/address");
+const Place = require("./models/Place");
 
 //image endpoints
+// const upload = multer({ dest: "uploads/" });
+// app.post("/upload", upload.single("file"), (req, res) => {
+//   res.json({ msg: "succcess" });
+// });
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
@@ -105,7 +26,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage, limits: { fileSize: 100000000, files: 2 } });
 app.post("/upload", upload.single("file"), (req, res) => {
-  res.status();
   res.json({ msg: "success" });
 });
 
@@ -134,6 +54,42 @@ const wsServer = new WebSocketServer({
   server: httpServer,
   path: "/graphql",
 });
+
+//New post resolver using specific middleWare
+// const imageMiddleware = {
+//   Mutation: {
+//     addThoughts: async (_, { title, address, description, image }, context) => {
+//       console.log(title);
+//       console.log(image);
+//       // let coordinates;
+//       // try {
+//       //   coordinates = await convertAdressToCoordinates(address);
+//       // } catch (error) {}
+
+//       // coordinates = await convertAdressToCoordinates(address);
+
+//       // const place = await Place.create({
+//       //   title,
+//       //   description,
+//       //   address,
+//       //   location: coordinates,
+//       //   likes: [],
+//       //   // creator: context.user._id,
+//       // });
+
+//       // await User.findOneAndUpdate(
+//       //   { _id: context.user._id },
+//       //   { $addToSet: { places: place._id } },
+//       //   {
+//       //     new: true,
+//       //     runValidators: true,
+//       //   }
+//       // );
+
+//       return place;
+//     },
+//   },
+// };
 
 const apolloServer = new ApolloServer({
   schema,

@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { toast } from "react-hot-toast";
+import jwtDecode from "jwt-decode";
 
 import { DELETE_PLACE } from "../../utils/mutations";
 
 import Button from "../Button/button";
 import { useNavigate } from "react-router-dom";
+import Auth from "../../utils/Auth";
 
 const ErrorModal = ({ open, layoutStyles, onClose, creator, id }) => {
   const navigate = useNavigate();
@@ -19,28 +21,31 @@ const ErrorModal = ({ open, layoutStyles, onClose, creator, id }) => {
   const [deletePlace, { error }] = useMutation(DELETE_PLACE);
 
   const handleDelete = async () => {
-    console.log(creator._id);
+    const decoded = jwtDecode(localStorage.getItem("id_token"));
 
-    try {
-      const { data } = await deletePlace({
-        variables: {
-          placeId: id,
-          creator: creator._id,
-        },
-      });
-      console.log(data);
-      toast.success("Post deleted successfully");
-      navigate(0);
-    } catch (error) {
-      console.error(JSON.stringify(error));
-    }
+    console.log(decoded.data._id);
+
+    if (decoded.data._id === creator._id)
+      try {
+        const { data } = await deletePlace({
+          variables: {
+            placeId: id,
+            creator: creator._id,
+          },
+        });
+        console.log(data);
+        toast.success("Post deleted successfully");
+        navigate(0);
+      } catch (error) {
+        console.error(JSON.stringify(error));
+      }
   };
 
   return (
     <Box>
       {open && (
         <div
-          className="fixed inset-0 mb-4 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center "
+          className="fixed inset-0 mb-4 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-10"
           id="container1"
           onClick={onClick}
         >
