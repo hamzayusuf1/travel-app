@@ -37,6 +37,8 @@ class AuthService {
     //clears user token from localStorage
     localStorage.removeItem("id_token");
     localStorage.removeItem("uuid");
+    localStorage.removeItem("job");
+    localStorage.removeItem("username");
     //this will reload the page and hence reset the state of the application
     window.location.assign("/home/recents");
   }

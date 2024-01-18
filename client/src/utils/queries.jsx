@@ -12,6 +12,7 @@ export const GET_ME = gql`
       _id
       email
       username
+      job
       followers {
         _id
       }
@@ -38,6 +39,7 @@ export const USER_PROFILE = gql`
       _id
       email
       username
+      job
       followers {
         _id
       }

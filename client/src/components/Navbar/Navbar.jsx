@@ -39,8 +39,8 @@ const Navbar = () => {
             <input
               placeholder="Type to search"
               type="search"
-              className="border border-gray-300 focus:ring-indigo-600
-      focus:border-indigo-600 sm:text-sm w-full rounded-lg pt-2 pb-2 pl-10 px-3 py-2"
+              className="w-80 border-solid border-2 border-slate-300 focus:ring-slate-600
+      focus:border-slate-600 sm:text-sm w-full rounded-lg pt-2 pb-2 pl-10 px-8 py-2 transition-all duration-100"
             />
           </div>
           <div className="md:space-x-6 justify-end items-center ml-auto flex space-x-3">

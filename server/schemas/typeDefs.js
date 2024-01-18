@@ -9,6 +9,7 @@ const typeDefs = gql`
     email: String
     password: String
     image: String
+    job: String
     followers: [User]
     following: [User]
     places: [Place]!
@@ -63,7 +64,12 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
+    addUser(
+      username: String!
+      email: String!
+      password: String!
+      job: String!
+    ): Auth
     login(email: String!, password: String!): Auth
     addPlace(
       title: String!

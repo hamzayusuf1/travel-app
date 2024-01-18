@@ -92,8 +92,10 @@ const AuthForm = () => {
           },
         });
         setUserData(data?.login?.user);
-        setUser(data?.login?.user);
+        console.log(data?.login?.user);
         localStorage.setItem("uuid", data?.login?.user._id);
+        localStorage.setItem("job", data?.login?.user.job);
+        localStorage.setItem("username", data?.login?.user.username);
         Auth.login(data?.login?.token);
       } catch (error) {
         console.log(JSON.stringify(error));
@@ -107,9 +109,10 @@ const AuthForm = () => {
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
             username: formState.inputs.username.value,
+            job: formState.inputs.job.value,
           },
         });
-        console.log(data);
+        localStorage.setItem("uuid", data?.login?.user._id);
         Auth.login(data?.addUser?.token);
       } catch (error) {
         console.log(JSON.stringify(error));
@@ -155,6 +158,16 @@ const AuthForm = () => {
               label="Your username"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please enter your username"
+              onInput={formHandler}
+            />
+          )}
+          {!authMode && (
+            <Input
+              id="job"
+              type="text"
+              label="Your job title"
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText="Please enter your job title"
               onInput={formHandler}
             />
           )}

@@ -7,6 +7,7 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
+        job
         followers {
           _id
         }
@@ -19,12 +20,23 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation addUser($username: String!, $email: String!, $password: String!) {
-    addUser(username: $username, email: $email, password: $password) {
+  mutation addUser(
+    $username: String!
+    $email: String!
+    $password: String!
+    $job: String!
+  ) {
+    addUser(
+      username: $username
+      email: $email
+      password: $password
+      job: $job
+    ) {
       token
       user {
         _id
         username
+        job
       }
     }
   }

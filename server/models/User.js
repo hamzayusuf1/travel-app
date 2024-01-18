@@ -20,6 +20,9 @@ const userSchema = new Schema({
   image: {
     type: String,
   },
+  job: {
+    type: String,
+  },
 
   followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
   following: [{ type: Schema.Types.ObjectId, ref: "User" }],

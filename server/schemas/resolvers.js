@@ -82,12 +82,15 @@ const resolvers = {
       return { filename, mimetype, encoding };
     },
 
-    addUser: async (parent, { email, username, password }) => {
+    addUser: async (parent, { email, username, password, job }) => {
+      console.log(job);
       const user = await User.create({
         username,
         email,
         password,
+        job,
       });
+
       const token = signToken({ _id: user._id, email: user.email });
 
       return { token, user };
@@ -171,6 +174,8 @@ const resolvers = {
       if (!correctPw) {
         throw new ApolloError("Incorrect password");
       }
+
+      console.log(user);
 
       const token = signToken(user);
 

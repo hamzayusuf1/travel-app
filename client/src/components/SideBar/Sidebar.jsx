@@ -13,9 +13,11 @@ const SideBar = () => {
   const { user, setUser } = useContext(UserContext);
   console.log(user);
 
-  //retrive the uuid from localstorage to access dashboard
+  //retrive the uuid, job and name from localstorage to access dashboard
   const uuid = localStorage.getItem("uuid");
   console.log(uuid);
+  const job = localStorage.getItem("job");
+  const username = localStorage.getItem("username");
 
   return (
     <>
@@ -194,11 +196,9 @@ const SideBar = () => {
               />
               <div>
                 <p className={`font-semibold text-md ${!open && "scale-0"}`}>
-                  Hamza Yusuf
+                  {username ? username : ""}
                 </p>
-                <p className={`text-sm ${!open && "scale-0"}`}>
-                  Software Engineer
-                </p>
+                <p className={`text-sm ${!open && "scale-0"}`}>{job}</p>
               </div>
             </div>
           </div>
