@@ -8,17 +8,33 @@ import { AuthContext } from "./context/AuthContext";
 
 import router from "./Layout/Routes";
 
-export const UserContext = createContext(null);
+export const AppContext = createContext(null);
 
 function App() {
+  //handle width
+  const [width, setWidth] = useState(window.innerWidth);
+
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, [width]);
+
   const [user, setUser] = useState({});
   return (
-    <UserContext.Provider value={{ user: user, setUser: setUser }}>
+    <AppContext.Provider
+      value={{ user: user, setUser: setUser, width, setWidth }}
+    >
       <ApolloProvider client={client}>
         <RouterProvider router={router}></RouterProvider>
         <Toaster></Toaster>
       </ApolloProvider>
-    </UserContext.Provider>
+    </AppContext.Provider>
   );
 }
 

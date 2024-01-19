@@ -11,8 +11,7 @@ import {
 } from "../../utils/validators";
 
 import { useForm } from "../../hooks/FormHook";
-import { UserContext } from "../../App";
-import { AuthContext } from "../../context/AuthContext";
+import { AppContext } from "../../App";
 import { LOGIN_USER, ADD_USER } from "../../utils/mutations";
 import { useMutation } from "@apollo/client";
 import Auth from "../../utils/Auth";
@@ -25,7 +24,7 @@ const AuthForm = () => {
   const [err, setErr] = useState("");
 
   //setting up global context to save user login data
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(AppContext);
   console.log(user);
 
   //useNavigate config

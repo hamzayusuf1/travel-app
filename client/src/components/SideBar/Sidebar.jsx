@@ -1,16 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import { UserContext } from "../../App";
+import { AppContext } from "../../App";
 import Img from "../../assests/NomadLogo.png";
-import { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import Auth from "../../utils/Auth";
 
 const SideBar = () => {
+  //Use Global context
+  const { width, setWidth } = useContext(AppContext);
+
   const [open, setOpen] = useState(true);
+  console.log(open);
+  console.log(width);
   const Menus = [1, 2, 3];
 
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(AppContext);
   console.log(user);
 
   //retrive the uuid, job and name from localstorage to access dashboard
@@ -19,11 +23,18 @@ const SideBar = () => {
   const job = localStorage.getItem("job");
   const username = localStorage.getItem("username");
 
+  //Create isMobile condition
+  const isMobile = width <= 800;
+
+  useEffect(() => {
+    setOpen(false);
+  }, [width]);
+
   return (
     <>
       {/* Main sidebar div */}
       <div
-        className={` ${
+        className={`${
           open ? "w-72 sticky top-0 left-0" : "w-20 "
         } bg-white h-screen px-5  pt-8 pb-4 relative duration-300 border-r-2 border-gray-100 flex flex-col justify-between sticky top-0 left-0`}
       >
@@ -39,8 +50,12 @@ const SideBar = () => {
           fill="none"
           stroke-linecap="round"
           stroke-linejoin="round"
-          className={`absolute cursor-pointer -right-4 top-9 bg-white border-gray-900
-          border-2 rounded-full  ${!open && "rotate-180"}`}
+          className={`${
+            !isMobile
+              ? `absolute cursor-pointer -right-4 top-9 bg-white border-gray-900
+          border-2 rounded-full  ${!open && "rotate-180"}`
+              : "hidden"
+          }`}
           onClick={() => setOpen(!open)}
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />

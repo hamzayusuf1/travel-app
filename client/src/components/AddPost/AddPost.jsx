@@ -12,6 +12,7 @@ import { ADD_THOUGHTS } from "../../utils/mutations";
 const AddPost = () => {
   const [myFiles, setMyFiles] = useState([]);
   const [sent, setSent] = useState(false);
+  console.log(sent);
 
   // UseNavigate Config
   const navigate = useNavigate();
@@ -223,6 +224,9 @@ const AddPost = () => {
                 <button
                   type="submit"
                   className="flex justify-center items-center text-white py-2 px-8 rounded-lg bg-black text-sm  transition-all duration-200 hover:scale-110"
+                  onSubmit={() => {
+                    setSent(true);
+                  }}
                 >
                   Submit
                 </button>
