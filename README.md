@@ -10,10 +10,6 @@ This is _NomadTravels_: a full-stack application that allows users to connect an
 
 _NomadTravels_ aims to be the go-to platform for tech professionals to share work-friendly travel spots. Unlike conventional travel apps, it spotlights locations that offer an excellent travel experience while ensuring a seamless remote work environment.
 
-## UI Screenshot
-
-![Screenshot of the landing page on the application.](/client/src/assests/NomadTravelsSC)
-
 ## Quick Start
 
 Just navigate to https://www.http://nomadtravels.world/ and start sharing!
