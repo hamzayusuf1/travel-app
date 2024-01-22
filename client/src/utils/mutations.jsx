@@ -58,14 +58,8 @@ export const ADD_THOUGHTS = gql`
     $title: String!
     $description: String!
     $address: String!
-    $image: Upload!
   ) {
-    addThoughts(
-      title: $title
-      description: $description
-      address: $address
-      image: $image
-    ) {
+    addThoughts(title: $title, description: $description, address: $address) {
       title
       location {
         lat

@@ -11,7 +11,6 @@ const SideBar = () => {
 
   const [open, setOpen] = useState(true);
   console.log(open);
-  console.log(width);
   const Menus = [1, 2, 3];
 
   const { user, setUser } = useContext(AppContext);
@@ -27,7 +26,9 @@ const SideBar = () => {
   const isMobile = width <= 800;
 
   useEffect(() => {
-    setOpen(false);
+    if (isMobile) {
+      setOpen(false);
+    }
   }, [width]);
 
   return (
@@ -153,7 +154,11 @@ const SideBar = () => {
                 <Link
                   className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md dark:bg-gray-900 dark:text-white `}
                   href="javascript:;"
-                  to={`/home/dashboard/${uuid}`}
+                  to={`${
+                    Auth.loggedIn(localStorage.getItem("id_token"))
+                      ? `/home/dashboard/${uuid}`
+                      : `/home/auth`
+                  }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -249,17 +254,17 @@ const SideBar = () => {
               onClick={() => {
                 Auth.logout();
               }}
-              className="flex items-center gap-x-3.5 py-1 px-2.5 text-md text-black rounded-lg dark:bg-gray-900 dark:text-white hover:bg-gray-700"
+              className="flex items-center gap-x-3.5 py-1 px-1 text-md text-black rounded-xl bg-gray-900 hover:bg-gray-700 tansition-all duration-75"
             >
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="icon icon-tabler icon-tabler-logout"
-                  width="36"
-                  height="36"
+                  width="44"
+                  height="44"
                   viewBox="0 0 24 24"
-                  stroke-width="2.5"
-                  stroke="#2c3e50"
+                  stroke-width="1.5"
+                  stroke="#ffffff"
                   fill="none"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -270,7 +275,9 @@ const SideBar = () => {
                   <path d="M18 15l3 -3" />
                 </svg>
               </div>
-              <h3 className={`${!open && "scale-0"}`}>Logout</h3>
+              <h3 className={`${!open && "scale-0 hidden"} text-white`}>
+                Logout
+              </h3>
             </Link>
           )}
         </div>

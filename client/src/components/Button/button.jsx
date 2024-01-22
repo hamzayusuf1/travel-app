@@ -21,6 +21,7 @@ const customButton = (props) => {
         size={props.size}
         color={props.bgColor}
         onClick={props.onClick}
+        onSubmit={props.onSubmit}
         sx={{
           color: props.textColor,
           border: props.borderSize,

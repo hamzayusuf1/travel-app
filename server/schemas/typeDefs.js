@@ -3,6 +3,13 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   scalar Upload
 
+  type File {
+    id: ID!
+    filename: String!
+    mimetype: String!
+    path: String!
+  }
+
   type User {
     _id: ID
     username: String
@@ -64,6 +71,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    uploadFile(file: Upload!): File!
     addUser(
       username: String!
       email: String!
@@ -77,12 +85,7 @@ const typeDefs = gql`
       address: String!
       image: Upload!
     ): Place
-    addThoughts(
-      title: String!
-      description: String!
-      address: String!
-      image: Upload!
-    ): Place
+    addThoughts(title: String!, description: String!, address: String!): Place
     updatePlace(id: ID!, title: String!, description: String!): Place
     deletePlace(placeId: ID!, creator: ID!): Place
     addLike(id: ID!): Place

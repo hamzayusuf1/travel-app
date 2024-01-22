@@ -4,6 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
+import Auth from "../../utils/Auth";
 
 import check from "../../assests/check-sign.png";
 import "./index.css";
@@ -104,137 +105,143 @@ const AddPost = () => {
     );
   } else {
     return (
-      <div
-        className={
-          sent
-            ? `hidden`
-            : `w-full flex flex-col justify-center items-center border-b-2 h-[690px] sm:h-[650px]`
-        }
-      >
-        <div className="class mb-10 px-10 container max-w-[1200px] ">
-          <h1 className="text-4xl font-semibold font-title my-6">
-            Add your latest thoughts
-          </h1>
-
-          <form
-            className="flex flex-col gap-2 "
-            onSubmit={handleSubmit(onSubmit)}
+      <>
+        {Auth.loggedIn(localStorage.getItem("id_token")) && (
+          <div
+            className={
+              sent
+                ? `hidden`
+                : `w-full flex flex-col justify-center items-center border-b-2 h-[690px] sm:h-[650px]`
+            }
           >
-            <div className="flex flex-col w-full h-24">
-              {Object.keys(errors).length ? (
-                <h2 className="font-semibold text-lg text-red-400">
-                  Oops, Something went wrong
-                </h2>
-              ) : (
-                <div></div>
-              )}
-              {errors.title && (
-                <span className="text-sm text-red-400">
-                  - Please add a title for your trip
-                </span>
-              )}
-              {errors.address && (
-                <span className="text-sm text-red-400">
-                  - Please add an address so others can visit too
-                </span>
-              )}
-              {errors.image && (
-                <span className="text-red-400 text-sm">
-                  - Your must provide an image
-                </span>
-              )}
-            </div>
-            <label htmlFor="">Trip Title</label>
-            <input
-              className={errors.title && `border-2 border-solid border-red-300`}
-              placeholder="Describe your trip"
-              {...register("title", { required: true })}
-            ></input>
-            <label htmlFor="">Location</label>
-            <input
-              className={
-                errors.address && `border-2 border-solid border-red-300`
-              }
-              placeholder="Share the exact address, so others can experience too!"
-              {...register("address", { required: true })}
-            ></input>
-            <label htmlFor="">Description</label>
-            <textarea
-              placeholder="Tell us all the wonderful things you saw and did!"
-              {...register("description")}
-            ></textarea>
+            <div className="class mb-10 px-10 container max-w-[1200px] ">
+              <h1 className="text-4xl font-semibold font-title my-6">
+                Add your latest thoughts{" "}
+              </h1>
 
-            {/* Drag n Drop */}
-            <div
-              className={
-                errors.image &&
-                `border-2 border-solid border-red-300 rounded-lg`
-              }
-            >
-              <div
-                className={
-                  isDragActive
-                    ? `h-40 flex flex-col justify-center items-center bg-gray-100 border-dotted border-2 border-gray-700 bg-gray-200 rounded-lg`
-                    : `h-40 flex flex-col justify-center items-center bg-gray-100 rounded-lg`
-                }
-                {...getRootProps()}
+              <form
+                className="flex flex-col gap-2 "
+                onSubmit={handleSubmit(onSubmit)}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-upload"
-                  width="36"
-                  height="36"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="#2c3e50"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
-                  <path d="M7 9l5 -5l5 5" />
-                  <path d="M12 4l0 12" />
-                </svg>
-                <h3 className="font-semibold font-rubik">Upload</h3>
+                <div className="flex flex-col w-full h-24">
+                  {Object.keys(errors).length ? (
+                    <h2 className="font-semibold text-lg text-red-400">
+                      Oops, Something went wrong
+                    </h2>
+                  ) : (
+                    <div></div>
+                  )}
+                  {errors.title && (
+                    <span className="text-sm text-red-400">
+                      - Please add a title for your trip
+                    </span>
+                  )}
+                  {errors.address && (
+                    <span className="text-sm text-red-400">
+                      - Please add an address so others can visit too
+                    </span>
+                  )}
+                  {errors.image && (
+                    <span className="text-red-400 text-sm">
+                      - Your must provide an image
+                    </span>
+                  )}
+                </div>
+                <label htmlFor="">Trip Title</label>
                 <input
-                  type={"image"}
-                  {...register("image")}
-                  {...getInputProps()}
-                />
+                  className={
+                    errors.title && `border-2 border-solid border-red-300`
+                  }
+                  placeholder="Describe your trip"
+                  {...register("title", { required: true })}
+                ></input>
+                <label htmlFor="">Location</label>
+                <input
+                  className={
+                    errors.address && `border-2 border-solid border-red-300`
+                  }
+                  placeholder="Share the exact address, so others can experience too!"
+                  {...register("address", { required: true })}
+                ></input>
+                <label htmlFor="">Description</label>
+                <textarea
+                  placeholder="Tell us all the wonderful things you saw and did!"
+                  {...register("description")}
+                ></textarea>
 
-                {isDragActive ? (
-                  <p>Drop the files here ...</p>
-                ) : (
-                  <p>
-                    Drag 'n' drop some files here, or{" "}
-                    <span className="underline cursor-pointer">click</span> to
-                    select files
-                  </p>
-                )}
-              </div>
-            </div>
-            {myFiles.length >= 1 && (
-              <aside className="flex justify-between">
-                <ul className="w-full">{files}</ul>
-              </aside>
-            )}
-            <div>
-              <a href="#">
-                <button
-                  type="submit"
-                  className="flex justify-center items-center text-white py-2 px-8 rounded-lg bg-black text-sm  transition-all duration-200 hover:scale-110"
-                  onSubmit={() => {
-                    setSent(true);
-                  }}
+                {/* Drag n Drop */}
+                <div
+                  className={
+                    errors.image &&
+                    `border-2 border-solid border-red-300 rounded-lg`
+                  }
                 >
-                  Submit
-                </button>
-              </a>
+                  <div
+                    className={
+                      isDragActive
+                        ? `h-40 flex flex-col justify-center items-center bg-gray-100 border-dotted border-2 border-gray-700 bg-gray-200 rounded-lg`
+                        : `h-40 flex flex-col justify-center items-center bg-gray-100 rounded-lg`
+                    }
+                    {...getRootProps()}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="icon icon-tabler icon-tabler-upload"
+                      width="36"
+                      height="36"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="#2c3e50"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                      <path d="M7 9l5 -5l5 5" />
+                      <path d="M12 4l0 12" />
+                    </svg>
+                    <h3 className="font-semibold font-rubik">Upload</h3>
+                    <input
+                      type={"image"}
+                      {...register("image")}
+                      {...getInputProps()}
+                    />
+
+                    {isDragActive ? (
+                      <p>Drop the files here ...</p>
+                    ) : (
+                      <p>
+                        Drag 'n' drop some files here, or{" "}
+                        <span className="underline cursor-pointer">click</span>{" "}
+                        to select files
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {myFiles.length >= 1 && (
+                  <aside className="flex justify-between">
+                    <ul className="w-full">{files}</ul>
+                  </aside>
+                )}
+                <div>
+                  <a href="#">
+                    <button
+                      type="submit"
+                      className="flex justify-center items-center text-white py-2 px-8 rounded-lg bg-black text-sm  transition-all duration-200 hover:scale-110"
+                      onSubmit={() => {
+                        setSent(true);
+                      }}
+                    >
+                      Submit
+                    </button>
+                  </a>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
-      </div>
+          </div>
+        )}
+      </>
     );
   }
 };

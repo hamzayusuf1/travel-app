@@ -87,6 +87,30 @@ const NewPlace = () => {
     }
   };
 
+  //Sending image function
+  const handleSendingImage = async (e) => {
+    e.preventDefault();
+    console.log("hits");
+
+    const formData = new FormData();
+    formData.append("file", formState.postImage);
+
+    const response = await fetch("http://localhost:4000/upload", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      return await response.json().then((res) => {
+        // setErrorMessage(res.message);
+        console.log(res.message);
+      });
+    }
+  };
+
   return (
     <div className="h-screen w-full mt-20">
       <div className="mb-10">
@@ -94,7 +118,7 @@ const NewPlace = () => {
           Share your recent trip with others!
         </h2>
       </div>
-      <form onSubmit={placeSumbitHandler} className="w-[50%] mx-auto">
+      <form onSubmit={placeSumbitHandler} className="sm:w-[70%] p-5 mx-auto">
         <Input
           id="title"
           element="input"
@@ -123,7 +147,7 @@ const NewPlace = () => {
           errorText="Please enter a detailed description"
           onInput={formHandler}
         />
-
+        {/* 
         <Input
           id="image"
           element="input"
@@ -134,9 +158,18 @@ const NewPlace = () => {
           // onChange={handleImageChange}
           validators={[VALIDATOR_REQUIRE()]}
           onInput={formHandler}
-        />
-
-        {/* <input type="file" onChange={uploadImage} /> */}
+        /> */}
+        <form>
+          <input type="file" onChange={uploadImage} />
+          <button
+            type="sumbit"
+            value="Add place"
+            variant="contained"
+            onClick={handleSendingImage}
+          >
+            Sumbit
+          </button>
+        </form>
 
         <Button
           type="sumbit"

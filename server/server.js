@@ -11,10 +11,6 @@ const convertAdressToCoordinates = require("./utils/address");
 const Place = require("./models/Place");
 
 //image endpoints
-// const upload = multer({ dest: "uploads/" });
-// app.post("/upload", upload.single("file"), (req, res) => {
-//   res.json({ msg: "succcess" });
-// });
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
