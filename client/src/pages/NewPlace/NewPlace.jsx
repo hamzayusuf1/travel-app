@@ -1,4 +1,5 @@
 import React, { useReducer, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { toast } from "react-hot-toast";
@@ -54,21 +55,44 @@ const NewPlace = () => {
         value: "",
         isValid: false,
       },
-      image: {
-        value: "",
-        isValid: false,
-      },
+      // image: {
+      //   value: "",
+      //   isValid: false,
+      // },
     },
     false,
     ""
   );
 
-  console.log(formState);
-
   const placeSumbitHandler = async (e) => {
     e.preventDefault();
 
     console.log(formState.postImage);
+
+    const formData = new FormData();
+    formData.append("file", formState.postImage);
+
+    return await fetch("http://localhost:4000/upload", {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: formData,
+    })
+      .then((res) => {
+        if (!res.ok)
+          throw `Server error: ${res.status} ${res.statusText} ${res.url}`;
+        return res.json();
+      })
+      .then((result) => {
+        console.log(result.message);
+      })
+      .catch((err) => {
+        console.debug("Errors in fetch,", err);
+      });
 
     try {
       const { data } = await addPlace({
@@ -88,28 +112,60 @@ const NewPlace = () => {
   };
 
   //Sending image function
-  const handleSendingImage = async (e) => {
-    e.preventDefault();
-    console.log("hits");
+  // const handleSendingImage = async (e) => {
+  //   e.preventDefault();
+  //   console.log("hits");
+  //   console.log(formState.postImage);
 
-    const formData = new FormData();
-    formData.append("file", formState.postImage);
+  //   const formData = new FormData();
+  //   formData.append("file", formState.postImage);
 
-    const response = await fetch("http://localhost:4000/upload", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: formData,
-    });
+  //   // try {
+  //   //   var requestOptions = {
+  //   //     method: "POST",
+  //   //     body: formData,
+  //   //     redirect: "follow",
+  //   //   };
 
-    if (!response.ok) {
-      return await response.json().then((res) => {
-        // setErrorMessage(res.message);
-        console.log(res.message);
-      });
-    }
-  };
+  //   //   fetch("http://localhost:4000/upload", requestOptions)
+  //   //     .then((response) => {
+  //   //       return response.json();
+  //   //     })
+  //   //     .then((result) => console.log(result))
+  //   //     .catch((error) => console.log("error", error));
+  //   // } catch (error) {
+  //   //   console.error(error);
+  //   // }
+
+  //   return await fetch("http://localhost:4000/upload", {
+  //     method: "POST",
+  //     mode: "no-cors",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //       "Access-Control-Allow-Credentials": true,
+  //     },
+  //     body: formData,
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok)
+  //         throw `Server error: ${res.status} ${res.statusText} ${res.url}`;
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       console.log(result.message);
+  //     })
+  //     .catch((err) => {
+  //       console.debug("Errors in fetch,", err);
+  //     });
+
+  //   // if (!response.ok) {
+  //   //   return response.json().then((res) => {
+  //   //     // setErrorMessage(res.message);
+  //   //     console.log(res.message);
+  //   //   });
+  //   // }
+  // };
 
   return (
     <div className="h-screen w-full mt-20">
@@ -159,17 +215,13 @@ const NewPlace = () => {
           validators={[VALIDATOR_REQUIRE()]}
           onInput={formHandler}
         /> */}
-        <form>
+
+        <div className="rounded-lg p-3 flex flex-col">
+          <label className="mb-2 text-lg font-semibold text-black">
+            Add an image
+          </label>
           <input type="file" onChange={uploadImage} />
-          <button
-            type="sumbit"
-            value="Add place"
-            variant="contained"
-            onClick={handleSendingImage}
-          >
-            Sumbit
-          </button>
-        </form>
+        </div>
 
         <Button
           type="sumbit"

@@ -10,15 +10,12 @@ const SideBar = () => {
   const { width, setWidth } = useContext(AppContext);
 
   const [open, setOpen] = useState(true);
-  console.log(open);
   const Menus = [1, 2, 3];
 
   const { user, setUser } = useContext(AppContext);
-  console.log(user);
 
   //retrive the uuid, job and name from localstorage to access dashboard
   const uuid = localStorage.getItem("uuid");
-  console.log(uuid);
   const job = localStorage.getItem("job");
   const username = localStorage.getItem("username");
 

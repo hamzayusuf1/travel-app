@@ -90,12 +90,13 @@ const AuthForm = () => {
             password: formState.inputs.password.value,
           },
         });
-        setUserData(data?.login?.user);
-        console.log(data?.login?.user);
+        setUser(data?.login?.user);
+        console.log(user);
         localStorage.setItem("uuid", data?.login?.user._id);
         localStorage.setItem("job", data?.login?.user.job);
         localStorage.setItem("username", data?.login?.user.username);
-        Auth.login(data?.login?.token);
+        await Auth.login(data?.login?.token);
+        navigate("/home/recents");
       } catch (error) {
         console.log(JSON.stringify(error));
         // toast.error(error[0].message);

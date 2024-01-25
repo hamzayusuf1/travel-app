@@ -6,6 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 import Auth from "../../utils/Auth";
 import { ADD_LIKE, REMOVE_LIKE, DELETE_PLACE } from "../../utils/mutations";
 import { GET_ME } from "../../utils/queries";
+import { AppContext } from "../../App";
 
 import "./PlaceItem.css";
 import MapModal from "../Modal/MapModal";
@@ -16,13 +17,17 @@ const PlaceItem = (props) => {
   //Get user data for post
   const { loading, data } = useQuery(GET_ME);
 
-  // console.log(props.creator.username);
+  //User Context with sign in info
+  const { user, setUser } = useContext(AppContext);
 
+  //Subscriptions for followers
   const { likesSub, error3 } = useSubscription(LIKES_SUBSCRIPTION, {
     variables: { id: props.id },
   });
 
-  const userData = data?.user || {};
+  //Request for coworking data
+  // useEffect(async () => {await fetch("", )}, []);
+  // const userData = data?.user || {};
 
   const [addLikes, { error }] = useMutation(ADD_LIKE);
   const [removeLikes, { error2 }] = useMutation(REMOVE_LIKE);
@@ -47,28 +52,8 @@ const PlaceItem = (props) => {
     console.log(props.coordinates);
   };
 
-  // useEffect(async () => {
-  //   try {
-  //     const { data } = await likesSub({
-  //       variables: { postID: props.id },
-  //     });
-  //   } catch (error) {
-  //     console.log(JSON.stringify(error));
-  //   }
-  // }, []);
-
   const changeLike = async (e) => {
     e.preventDefault();
-
-    // if (!like) {
-    //   try {
-    //     const { data } = await addLike({
-    //       variables: {
-    //         id: props.id,
-    //       },
-    //     });
-    //     setLike(true);
-    //   } catch (error) {}
 
     if (!like) {
       try {
@@ -187,12 +172,14 @@ const PlaceItem = (props) => {
                   Edit
                 </button>
               </Link>
-              <button
-                className="text-white bg-red-700 hover:bg-red-800 rounded-full px-4  font-medium mb-2 transition-all"
-                onClick={showDeleteWarningHandler}
-              >
-                Delete
-              </button>
+              {props.id === localStorage.getItem("uuid") && (
+                <button
+                  className="text-white bg-red-700 hover:bg-red-800 rounded-full px-4  font-medium mb-2 transition-all"
+                  onClick={showDeleteWarningHandler}
+                >
+                  Delete
+                </button>
+              )}
             </>
           )}
         </div>
