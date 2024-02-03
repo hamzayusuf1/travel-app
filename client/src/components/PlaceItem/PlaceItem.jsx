@@ -2,11 +2,11 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useSubscription, useQuery } from "@apollo/client";
 
-import { AuthContext } from "../../context/AuthContext";
 import Auth from "../../utils/Auth";
 import { ADD_LIKE, REMOVE_LIKE, DELETE_PLACE } from "../../utils/mutations";
 import { GET_ME } from "../../utils/queries";
 import { AppContext } from "../../App";
+import LikeButton from "../LikeButton/LikeButton";
 
 import "./PlaceItem.css";
 import MapModal from "../Modal/MapModal";
@@ -14,20 +14,28 @@ import ErrorModal from "../Modal/ErrorModal";
 import { LIKES_SUBSCRIPTION } from "../../utils/subscriptions";
 
 const PlaceItem = (props) => {
+  const likes = props.likes;
+
+  console.log(likes);
   //Get user data for post
   const { loading, data } = useQuery(GET_ME);
 
   //User Context with sign in info
   const { user, setUser } = useContext(AppContext);
 
-  //Subscriptions for followers
-  const { likesSub, error3 } = useSubscription(LIKES_SUBSCRIPTION, {
-    variables: { id: props.id },
-  });
+  //defining the like button
+  const [initialLiked, setInitialLiked] = useState(false);
+  console.log(initialLiked);
 
-  //Request for coworking data
-  // useEffect(async () => {await fetch("", )}, []);
-  // const userData = data?.user || {};
+  //check if the user has liked the post
+  useEffect(() => {
+    if (
+      Auth.loggedIn(localStorage.getItem("id_token")) &&
+      (props.likes || []).find((user) => user === localStorage.getItem("uuid"))
+    ) {
+      setInitialLiked(true);
+    } else setInitialLiked(false);
+  }, [props.likes]);
 
   const [addLikes, { error }] = useMutation(ADD_LIKE);
   const [removeLikes, { error2 }] = useMutation(REMOVE_LIKE);
@@ -104,43 +112,15 @@ const PlaceItem = (props) => {
         </div>
         <div className="p-6">
           {Auth.loggedIn(localStorage.getItem("id_token")) && (
-            <div className={"flex space-x-4"}>
-              <div onClick={changeLike}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-heart"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke={!like ? "#2c3e50" : "#DF4747"}
-                  fill={!like ? "none" : "#DF4747"}
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                </svg>
-              </div>
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-message-circle-off"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="#2c3e50"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M8.595 4.577c3.223 -1.176 7.025 -.61 9.65 1.63c2.982 2.543 3.601 6.523 1.636 9.66m-1.908 2.109c-2.787 2.19 -6.89 2.666 -10.273 1.024l-4.7 1l1.3 -3.9c-2.229 -3.296 -1.494 -7.511 1.68 -10.057" />
-                <path d="M3 3l18 18" />
-              </svg>
-            </div>
+            <div className={"flex space-x-4"}></div>
           )}
+          <div>
+            <LikeButton
+              id={props.id}
+              likes={likes}
+              initialLiked={initialLiked}
+            />
+          </div>
           {/* no of likes and user who posted section */}
           <div className="flex justify-between items-center mt-4 mb-1">
             <p className=" text-sm font-montserrat">

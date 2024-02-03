@@ -183,7 +183,6 @@ const resolvers = {
     },
 
     deletePlace: async (parent, { placeId, creator }) => {
-      console.log(placeId);
       const removedPlace = await Place.findOneAndDelete({ _id: placeId });
 
       await User.findByIdAndUpdate(
@@ -215,11 +214,13 @@ const resolvers = {
 
     addLike: async (_, args, context) => {
       try {
+        console.log(context.user._id);
+
         const newLikes = await Place.findOneAndUpdate(
           { _id: args.id },
           {
             // $set: { likes: likes + 1 },
-            $addToSet: { likes: context.user._id },
+            $addToSet: { likes: context.user._ids },
           },
           {
             new: true,

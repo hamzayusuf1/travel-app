@@ -72,27 +72,27 @@ const NewPlace = () => {
     const formData = new FormData();
     formData.append("file", formState.postImage);
 
-    return await fetch("http://localhost:4000/upload", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": true,
-      },
-      body: formData,
-    })
-      .then((res) => {
-        if (!res.ok)
-          throw `Server error: ${res.status} ${res.statusText} ${res.url}`;
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result.message);
-      })
-      .catch((err) => {
-        console.debug("Errors in fetch,", err);
-      });
+    // return await fetch("http://localhost:4000/upload", {
+    //   method: "POST",
+    //   mode: "no-cors",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Access-Control-Allow-Origin": "*",
+    //     "Access-Control-Allow-Credentials": true,
+    //   },
+    //   body: formData,
+    // })
+    //   .then((res) => {
+    //     if (!res.ok)
+    //       throw `Server error: ${res.status} ${res.statusText} ${res.url}`;
+    //     return res.json();
+    //   })
+    //   .then((result) => {
+    //     console.log(result.message);
+    //   })
+    //   .catch((err) => {
+    //     console.debug("Errors in fetch,", err);
+    //   });
 
     try {
       const { data } = await addPlace({
@@ -106,7 +106,7 @@ const NewPlace = () => {
       navigate("/home/recents");
       navigate(0);
     } catch (error) {
-      console.error(error);
+      console.error(JSON.stringify(error));
       // setErr(error.message);
     }
   };

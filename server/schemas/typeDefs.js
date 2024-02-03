@@ -79,12 +79,7 @@ const typeDefs = gql`
       job: String!
     ): Auth
     login(email: String!, password: String!): Auth
-    addPlace(
-      title: String!
-      description: String!
-      address: String!
-      image: Upload!
-    ): Place
+    addPlace(title: String!, description: String!, address: String!): Place
     addThoughts(title: String!, description: String!, address: String!): Place
     updatePlace(id: ID!, title: String!, description: String!): Place
     deletePlace(placeId: ID!, creator: ID!): Place

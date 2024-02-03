@@ -82,6 +82,9 @@ export const GET_POSTS = gql`
         lat
         lng
       }
+      likes {
+        _id
+      }
     }
   }
 `;

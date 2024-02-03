@@ -11,6 +11,8 @@ import { GET_POSTS } from "../../utils/queries";
 const Recents = () => {
   const { loading, data, error } = useQuery(GET_POSTS);
 
+  console.log(data);
+
   const handleImage = () => {};
 
   // useEffect(async () => {
@@ -26,8 +28,6 @@ const Recents = () => {
 
   return (
     <>
-      {<AddPost></AddPost>}
-
       <div className="w-full flex flex-col justify-center items-center mt-20">
         {data?.places?.map((place) => {
           return (
@@ -41,6 +41,7 @@ const Recents = () => {
               creatorId={place.creator}
               coordinates={place.location}
               creator={place.creator}
+              likes={place.likes}
             />
           );
         })}
