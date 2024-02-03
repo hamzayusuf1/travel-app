@@ -13,6 +13,11 @@ const Recents = () => {
 
   console.log(data);
 
+  const filteredData = data?.places?.filter(
+    (place) => !(place.creator._id === localStorage.getItem("uuid"))
+  );
+  console.log(filteredData);
+
   const handleImage = () => {};
 
   // useEffect(async () => {
@@ -29,7 +34,7 @@ const Recents = () => {
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center mt-20">
-        {data?.places?.map((place) => {
+        {filteredData?.map((place) => {
           return (
             <PlaceItem
               key={place._id}
