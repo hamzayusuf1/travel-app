@@ -16,7 +16,6 @@ import { LIKES_SUBSCRIPTION } from "../../utils/subscriptions";
 const PlaceItem = (props) => {
   const likes = props.likes;
 
-  console.log(likes);
   //Get user data for post
   const { loading, data } = useQuery(GET_ME);
 
@@ -25,13 +24,12 @@ const PlaceItem = (props) => {
 
   //defining the like button
   const [initialLiked, setInitialLiked] = useState(false);
-  console.log(initialLiked);
 
   //check if the user has liked the post
   useEffect(() => {
     if (
       Auth.loggedIn(localStorage.getItem("id_token")) &&
-      (props.likes || []).find((user) => user === localStorage.getItem("uuid"))
+      props.likes?.find((user) => user._id === localStorage.getItem("uuid"))
     ) {
       setInitialLiked(true);
     } else setInitialLiked(false);
@@ -114,13 +112,15 @@ const PlaceItem = (props) => {
           {Auth.loggedIn(localStorage.getItem("id_token")) && (
             <div className={"flex space-x-4"}></div>
           )}
-          <div>
-            <LikeButton
-              id={props.id}
-              likes={likes}
-              initialLiked={initialLiked}
-            />
-          </div>
+          {Auth.loggedIn(localStorage.getItem("id_token")) && (
+            <div>
+              <LikeButton
+                id={props.id}
+                likes={likes}
+                initialLiked={initialLiked}
+              />
+            </div>
+          )}
           {/* no of likes and user who posted section */}
           <div className="flex justify-between items-center mt-4 mb-1">
             <p className=" text-sm font-montserrat">
@@ -147,11 +147,13 @@ const PlaceItem = (props) => {
           </button>
           {Auth.loggedIn(localStorage.getItem("id_token")) && (
             <>
-              <Link to={`/home/edit/${props.id}`}>
-                <button className="text-white bg-yellow-400 hover:bg-yellow-500 font-medium rounded-full text-sm px-5 mb-2 mr-6 transition-all">
-                  Edit
-                </button>
-              </Link>
+              {props.id === localStorage.getItem("uuid") && (
+                <Link to={`/home/edit/${props.id}`}>
+                  <button className="text-white bg-yellow-400 hover:bg-yellow-500 font-medium rounded-full text-sm px-5 mb-2 mr-6 transition-all">
+                    Edit
+                  </button>
+                </Link>
+              )}
               {props.id === localStorage.getItem("uuid") && (
                 <button
                   className="text-white bg-red-700 hover:bg-red-800 rounded-full px-4  font-medium mb-2 transition-all"

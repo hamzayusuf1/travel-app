@@ -220,7 +220,7 @@ const resolvers = {
           { _id: args.id },
           {
             // $set: { likes: likes + 1 },
-            $addToSet: { likes: context.user._ids },
+            $addToSet: { likes: context.user._id },
           },
           {
             new: true,

@@ -112,8 +112,9 @@ const AuthForm = () => {
             job: formState.inputs.job.value,
           },
         });
-        localStorage.setItem("uuid", data?.login?.user._id);
-        Auth.login(data?.addUser?.token);
+        // localStorage.setItem("uuid", data?.login?.user._id);
+        // Auth.login(data?.addUser?.token);
+        window.location.reload();
       } catch (error) {
         console.log(JSON.stringify(error));
         setErr(error.message);

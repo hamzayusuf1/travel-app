@@ -5,8 +5,13 @@ import { Button, Icon } from "@mui/material/";
 import { useMutation } from "@apollo/client";
 import { ADD_LIKE } from "../../utils/mutations";
 
-const LikeButton = (id, likes, initialLiked) => {
+const LikeButton = ({ id, likes, initialLiked }) => {
   const [liked, setLiked] = useState(initialLiked);
+  console.log(liked);
+
+  useEffect(() => {
+    setLiked(initialLiked);
+  }, [liked]);
 
   //heart SVG
   const heart = (
@@ -51,7 +56,7 @@ const LikeButton = (id, likes, initialLiked) => {
     try {
       const { data } = await addLike({
         variables: {
-          id: id.id,
+          id: id,
         },
       });
     } catch (error) {
