@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { AppContext } from "../../App";
-import Img from "../../assests/NomadLogo.png";
+import "../SideBar/Sidebar.css";
 import { Outlet, Link } from "react-router-dom";
 import Auth from "../../utils/Auth";
 
@@ -10,7 +10,6 @@ const SideBar = () => {
   const { width, setWidth } = useContext(AppContext);
 
   const [open, setOpen] = useState(true);
-  const Menus = [1, 2, 3];
 
   const { user, setUser } = useContext(AppContext);
 
@@ -100,9 +99,9 @@ const SideBar = () => {
           >
             <ul class="space-y-3">
               {/* Home */}
-              <li>
+              <li className={`${open && "li"}`}>
                 <a
-                  className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md  dark:bg-gray-900 dark:text-white `}
+                  className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black transition-all rounded-md  dark:bg-gray-900 dark:text-white `}
                   href={"/home/recents"}
                 >
                   <svg
@@ -122,12 +121,12 @@ const SideBar = () => {
                       d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
                     />
                   </svg>
-                  <h3 className={`${!open && "scale-0"}`}>Home</h3>
+                  <h3 className={`${!open && "scale-0"} `}>Home</h3>
                 </a>
               </li>
 
               {/* Users */}
-              <li>
+              <li className={`${open && "li"}`}>
                 <a
                   className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md  dark:bg-gray-900 dark:text-white `}
                   href="javascript:;"
@@ -147,9 +146,9 @@ const SideBar = () => {
               </li>
 
               {/* Account */}
-              <li>
+              <li className={`${open && "li"}`}>
                 <Link
-                  className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md dark:bg-gray-900 dark:text-white `}
+                  className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md hover:text-lg text-black rounded-md dark:bg-gray-900 dark:text-white `}
                   href="javascript:;"
                   to={`${
                     Auth.loggedIn(localStorage.getItem("id_token"))
@@ -177,7 +176,7 @@ const SideBar = () => {
 
               {/* Create */}
               {Auth.loggedIn(localStorage.getItem("id_token")) && (
-                <li>
+                <li className={`${open && "li"}`}>
                   <a
                     className={`flex items-center gap-x-3.5 py-2 px-2.5 text-md text-black rounded-md  dark:bg-gray-900 dark:text-white `}
                     href={"/home/add"}

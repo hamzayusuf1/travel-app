@@ -11,10 +11,6 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const Dashboard = () => {
-  // const { loading, data } = useQuery(GET_ME);
-
-  // const userData = data?.user || {};
-
   // console.log(data?.user.places);
 
   const [followed, setFollowed] = useState(false);
@@ -36,18 +32,9 @@ const Dashboard = () => {
   };
 
   const [userData, setUserData] = useState({});
+  console.log(userData.places);
 
   const urlId = useParams();
-
-  const dummyId = "64f8754bb5ffd31757c22f3e";
-
-  const USER = gql`
-    query profile($id: ID!) {
-      profile(id: $id) {
-        _id
-      }
-    }
-  `;
 
   const loadData = async () => {
     const { data } = await profileQuery({

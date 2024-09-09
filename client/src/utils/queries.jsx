@@ -24,6 +24,10 @@ export const GET_ME = gql`
         title
         description
         address
+        location {
+          lat
+          lng
+        }
         creator {
           _id
           username
@@ -53,6 +57,10 @@ export const USER_PROFILE = gql`
         address
         creator {
           _id
+        }
+        location {
+          lat
+          lng
         }
       }
     }
